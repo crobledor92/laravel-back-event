@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   class="canvas"
+   version="1.1"
+   xml:space="preserve"
+   id="svg16"
+   sodipodi:docname="logo.svg"
+   width="143.13982"
+   height="164.99791"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs20" /><sodipodi:namedview
+   id="namedview18"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="2.8944238"
+   inkscape:cx="43.704727"
+   inkscape:cy="94.664784"
+   inkscape:window-width="1920"
+   inkscape:window-height="1009"
+   inkscape:window-x="1072"
+   inkscape:window-y="434"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg16" />
+<g
+   class="ng-scope"
+   ng-if="$root.removeAll != true"
+   ng-repeat="shape in logo.shapes   | orderBy:'zindex'"
+   id="g14"
+   transform="translate(-380,-915.28)">
+<g
+   class="logo-item ng-scope"
+   transform="matrix(1.7301,0,0,1.7301,380,915.28)"
+   ng-attr-transform="translate({{(shape.symetrieX == 1 ? shape.x : shape.x + shape.width)}} {{(shape.symetrieY == 1 ? shape.y : shape.y + shape.height)}}) scale({{shape.width / shape.originalWidth * shape.symetrieX}} {{shape.height / shape.originalHeight * shape.symetrieY}}) rotate({{shape.rotate * shape.symetrieX * shape.symetrieY}} {{shape.originalWidth / 2}} {{shape.originalHeight / 2}})"
+   ng-class="{'active': shape.selected, 'dragging': dragging}"
+   ng-click="clickOnItem($event,shape)"
+   ng-if="shape.type == 'logo' || shape.type == 'shape'"
+   ng-mousedown="mouseDownItem($event,shape)"
+   ng-mouseout="mouseOutItem($event,shape)"
+   ng-mouseover="mouseUpItem($event,shape)"
+   ng-right-click="rightClick($event)"
+   type="container-logo"
+   id="g12">
+<g
+   class="svg-item ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty"
+   ng-click="skav($event, shape)"
+   ng-model="shape"
+   ng-shape=""
+   type="logo"
+   id="g10"><path
+     class="ng-scope"
+     d="M 82.735,19.074 V 38.148 L 66.223,47.684 H 66.209 L 49.698,57.221 V 38.148 l 16.511,-9.537 h 0.014 z m -71.841,3.322 10.854,6.27 -10.854,6.27 z"
+     fill="#03477d"
+     ng-click="mouseDown($event,0)"
+     id="path2" /><path
+     class="ng-scope"
+     d="m 13.666,16.768 -7.792,-4.5 7.792,-4.5 z"
+     fill="#00abe1"
+     ng-click="mouseDown($event,1)"
+     id="path4" /><path
+     class="ng-scope"
+     d="M 10.894,41.83 4.925,38.383 10.894,34.936 Z M 0,14.938 5.874,18.33 0,21.723 Z M 82.735,76.295 49.698,95.369 16.659,76.295 33.171,66.758 h 0.014 l 16.513,9.537 16.511,-9.537 h 0.014 z"
+     fill="#03477d"
+     ng-click="mouseDown($event,2)"
+     id="path6" /><path
+     class="ng-scope"
+     d="M 33.171,28.611 V 66.758 L 16.659,76.295 V 38.148 Z m 49.564,28.61 V 76.295 L 66.223,66.758 H 66.209 L 49.698,57.221 66.209,47.684 h 0.014 z M 16.659,19.074 27.478,25.324 V 12.828 Z M 49.698,0 33.171,9.541 v 19.07 h 0.014 l 16.513,-9.537 16.511,9.537 h 0.014 l 16.512,-9.537 z"
+     fill="#00abe1"
+     ng-click="mouseDown($event,3)"
+     id="path8" /></g>
+</g>
+</g>
+</svg>
