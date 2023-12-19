@@ -4,11 +4,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Usuario extends Model
-{
-    protected $table = 'Usuarios'; // Specify the table name
+class Usuario extends Model{
+    protected $table = 'usuarios'; // Specify the table name
 
-    protected $fillable = ['mail', 'Username', 'Password', 'Id_persona', 'Id_tipo_usuario'];
+    protected $fillable = ['mail', 'username', 'password', 'id_persona', 'id_tipo_usuario'];
 
     public function __construct(array $attributes = [])
     {
@@ -19,25 +18,25 @@ class Usuario extends Model
     // Automatically hash the password when setting it
     public function setPasswordAttribute($value)
     {
-        $this->attributes['Password'] = bcrypt($value);
+        $this->attributes['password'] = bcrypt($value);
     }
 
     public function addUser($userData)
     {
         // Insert into Personas
-        $personaId = DB::table('Personas')->insertGetId([
-            'Nombre' => $userData['nombre'],
-            'Apellido1' => $userData['apellido1'],
-            'Apellido2' => $userData['apellido2'],
+        $personaId = DB::table('personas')->insertGetId([
+            'nombre' => $userData['nombre'],
+            'apellido1' => $userData['apellido1'],
+            'apellido2' => $userData['apellido2'],
         ]);
 
         // Insert into Usuarios
         $userId = $this->create([
             'mail' => $userData['email'],
-            'Username' => $userData['username'],
-            'Password' => $userData['password'],
-            'Id_persona' => $personaId,
-            'Id_tipo_usuario' => $userData['tipoUser'],
+            'username' => $userData['username'],
+            'password' => $userData['password'],
+            'id_persona' => $personaId,
+            'id_tipo_usuario' => $userData['tipoUser'],
         ])->id;
 
         return $userId > 0;
@@ -45,30 +44,30 @@ class Usuario extends Model
 
     public function getUser($username)
     {
-        return $this->where('Username', $username)->get();
+        return $this->where('username', $username)->get();
     }
 
     public function userExists($username)
     {
-        return $this->where('Username', $username)->exists();
+        return $this->where('username', $username)->exists();
     }
 
     public function updateUser($userData)
     {
         $updateData = [
             'mail' => $userData['email'],
-            'Username' => $userData['username'],
+            'username' => $userData['username'],
         ];
 
         if ($userData['password'] !== null) {
-            $updateData['Password'] = bcrypt($userData['password']);
+            $updateData['password'] = bcrypt($userData['password']);
         }
 
-        return $this->where('Id_usuario', $userData['Id_usuario'])->update($updateData);
+        return $this->where('id_usuario', $userData['id_usuario'])->update($updateData);
     }
 
     public function getPersonas()
     {
-        return DB::table('Personas')->get();
+        return DB::table('personas')->get();
     }
 }

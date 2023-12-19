@@ -10,8 +10,8 @@ class TipoActoSeeder extends Seeder
     public function run()
     {
         DB::table('tipo_acto')->insert([
-            ['Id_tipo_acto' => 1, 'Descripcion' => 'Acto de tipo 1'],
-            ['Id_tipo_acto' => 2, 'Descripcion' => 'Acto de tipo 2'],
+            ['id_tipo_acto' => 1, 'descripcion' => 'Acto de tipo 1'],
+            ['id_tipo_acto' => 2, 'descripcion' => 'Acto de tipo 2'],
         ]);
     }
 }

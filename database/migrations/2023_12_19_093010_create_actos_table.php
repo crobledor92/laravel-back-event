@@ -9,17 +9,17 @@ class CreateActosTable extends Migration
     public function up()
     {
         Schema::create('actos', function (Blueprint $table) {
-            $table->id('Id_acto');
-            $table->date('Fecha');
-            $table->time('Hora');
-            $table->string('Titulo', 100);
-            $table->string('Descripcion_corta', 2000);
-            $table->text('Descripcion_larga');
-            $table->integer('Num_asistentes');
-            $table->unsignedBigInteger('Id_tipo_acto');
+            $table->id('id_acto');
+            $table->date('fecha');
+            $table->time('hora');
+            $table->string('titulo', 100);
+            $table->string('descripcion_corta', 2000);
+            $table->text('descripcion_larga');
+            $table->integer('num_asistentes');
+            $table->unsignedBigInteger('id_tipo_acto');
             $table->timestamps();
 
-            $table->foreign('Id_tipo_acto')->references('Id_tipo_acto')->on('tipo_acto');
+            $table->foreign('id_tipo_acto')->references('id_tipo_acto')->on('tipo_acto');
         });
     }
 

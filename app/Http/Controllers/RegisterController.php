@@ -41,7 +41,7 @@ class RegisterController extends Controller{
         ];
 
         try {
-            $userCreated = Usuario::create($userData);
+            $userCreated = Usuario::addUser($userData);
 
             if ($userCreated) {
                 // Redireccionar a la página de inicio de sesión o realizar alguna acción después de registrar al usuario

@@ -11,7 +11,7 @@ class Acto extends Model
         $this->conexion = new Conexion();
     }
     public function getActos() {
-        $sql = "SELECT * FROM Actos";
+        $sql = "SELECT * FROM actos";
         $query = $this->conexion->prepare($sql);
         $query -> execute();
         $results = $query -> fetchAll(PDO::FETCH_OBJ);
@@ -24,8 +24,8 @@ class Acto extends Model
     }
     #Se usa para añadirse a la tabla de inscripciones como asistente al acto o evento.
     public function asitenciaActo($data) {
-        $sql = "INSERT INTO Inscritos (Id_persona, id_acto, Fecha_inscripcion) VALUES (:Id_persona, :id_acto, :Fecha_inscripcion)";
-        $params = [':Id_persona' => $data['Id_persona'],':id_acto' => $data['id_acto'],':Fecha_inscripcion' => $data['Fecha_inscripcion'],];
+        $sql = "INSERT INTO inscritos (id_persona, id_acto, fecha_inscripcion) VALUES (:id_persona, :id_acto, :fecha_inscripcion)";
+        $params = [':id_persona' => $data['id_persona'],':id_acto' => $data['id_acto'],':fecha_inscripcion' => $data['fecha_inscripcion'],];
         try {
             $query = $this->conexion->prepare($sql);
             $query->execute($params);
@@ -37,8 +37,8 @@ class Acto extends Model
     }
     #Se usa para eliminarse de la tabla de inscripciones como asistente al acto o evento.
     public function eliminarAsistenciaActo($data) {
-        $sql = "DELETE FROM Inscritos WHERE Id_persona = :Id_persona AND id_acto = :id_acto";
-        $params = [':Id_persona' => $data['Id_persona'], ':id_acto' => $data['id_acto']];
+        $sql = "DELETE FROM inscritos WHERE id_persona = :id_persona AND id_acto = :id_acto";
+        $params = [':id_persona' => $data['id_persona'], ':id_acto' => $data['id_acto']];
         try {
             $query = $this->conexion->prepare($sql);
             $query->execute($params);
@@ -50,7 +50,7 @@ class Acto extends Model
     }
     #Devuelve las inscripciones de los actos.
     public function obtenerAsistenciaActo() {
-        $sql = "SELECT * FROM Inscritos";
+        $sql = "SELECT * FROM inscritos";
         try {
             $query = $this->conexion->prepare($sql);
             $query->execute();
@@ -63,7 +63,7 @@ class Acto extends Model
     }
     #Devuelve los tipos de actos disponibles.
     public function getTipoActo() {
-        $sql = "SELECT * FROM Tipo_acto";
+        $sql = "SELECT * FROM tipo_acto";
         $query = $this->conexion->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -71,9 +71,9 @@ class Acto extends Model
     }
     #Añadimos un nuevo tipo de acto.
     public function addTipoActo($data) {
-        $sql = "INSERT  INTO Tipo_acto (Descripcion) VALUES (:descripcion)";
+        $sql = "INSERT  INTO tipo_acto (descripcion) VALUES (:descripcion)";
         $query = $this->conexion->prepare($sql);
-        $query->bindParam(':descripcion',$data['Descripcion'],PDO::PARAM_STR, 100);
+        $query->bindParam(':descripcion',$data['descripcion'],PDO::PARAM_STR, 100);
         $query->execute();
         $userId = $query->rowCount();
         if ($userId>0) {

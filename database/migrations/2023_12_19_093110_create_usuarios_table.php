@@ -9,16 +9,16 @@ class CreateUsuariosTable extends Migration
     public function up()
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->id('Id_usuario');
-            $table->string('Username', 100);
-            $table->string('Password', 100);
-            $table->unsignedBigInteger('Id_Persona');
-            $table->unsignedBigInteger('Id_tipo_usuario');
+            $table->id('id_usuario');
+            $table->string('username', 100);
+            $table->string('password', 100);
+            $table->unsignedBigInteger('id_Persona');
+            $table->unsignedBigInteger('id_tipo_usuario');
             $table->string('mail', 40);
             $table->timestamps();
-
-            $table->foreign('Id_Persona')->references('Id_persona')->on('personas');
-            $table->foreign('Id_tipo_usuario')->references('Id_tipo_usuario')->on('tipos_usuarios');
+            
+            $table->foreign('id_Persona')->references('id_persona')->on('personas');
+            $table->foreign('id_tipo_usuario')->references('id_tipo_usuario')->on('tipos_usuarios');
         });
     }
 

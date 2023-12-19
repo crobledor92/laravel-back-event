@@ -10,13 +10,13 @@ class CreateListaPonentesTable extends Migration
     {
         Schema::create('lista_ponentes', function (Blueprint $table) {
             $table->id('id_ponente');
-            $table->unsignedBigInteger('Id_persona');
-            $table->unsignedBigInteger('Id_acto');
+            $table->unsignedBigInteger('id_persona');
+            $table->unsignedBigInteger('id_acto');
             $table->integer('Orden');
             $table->timestamps();
 
-            $table->foreign('Id_persona')->references('Id_persona')->on('personas');
-            $table->foreign('Id_acto')->references('Id_acto')->on('actos');
+            $table->foreign('id_persona')->references('id_persona')->on('personas');
+            $table->foreign('id_acto')->references('id_acto')->on('actos');
         });
     }
 

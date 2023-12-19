@@ -9,8 +9,8 @@ class CreateTipoActoTable extends Migration
     public function up()
     {
         Schema::create('tipo_acto', function (Blueprint $table) {
-            $table->id('Id_tipo_acto');
-            $table->string('Descripcion', 100);
+            $table->id('id_tipo_acto');
+            $table->string('descripcion', 100);
             $table->timestamps();
         });
     }

@@ -10,9 +10,9 @@ class PersonasSeeder extends Seeder
     public function run()
     {
         DB::table('personas')->insert([
-            ['Id_persona' => 1, 'Nombre' => 'Ismael', 'Apellido1' => 'Flores', 'Apellido2' => 'Rubio'],
-            ['Id_persona' => 2, 'Nombre' => 'Cristian', 'Apellido1' => 'Robledo', 'Apellido2' => 'Ramos'],
-            ['Id_persona' => 3, 'Nombre' => 'Hector', 'Apellido1' => 'Rubio', 'Apellido2' => 'Gil'],
+            ['id_persona' => 1, 'nombre' => 'Ismael', 'apellido1' => 'Flores', 'apellido2' => 'Rubio'],
+            ['id_persona' => 2, 'nombre' => 'Cristian', 'apellido1' => 'Robledo', 'apellido2' => 'Ramos'],
+            ['id_persona' => 3, 'nombre' => 'Hector', 'apellido1' => 'Rubio', 'apellido2' => 'Gil'],
         ]);
     }
 }
