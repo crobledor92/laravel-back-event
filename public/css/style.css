@@ -223,3 +223,37 @@ a.secondary_a {
     border: 2px solid #0a2512;
     border-radius: 7px;
 }
+
+.alert-container{
+    position: fixed;
+    top: 80px;
+    right: 25px;
+    max-width: calc(100% - 100px);
+}
+
+.alert{
+    display: flex;
+    gap: 83px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0px;
+    padding: 10px;
+    font-size: .9rem;
+    font-weight: 300;
+}
+.alert:hover{
+    cursor: pointer;
+}
+.alert:before{
+    padding-right: 12px;
+}
+.alert-error{
+    color: #D8000C;
+    background-color: #ffdada;
+    border-left: 3px solid #ff3737;
+}
+.alert-success{
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    border: 1px solid #DFF2BF;
+}

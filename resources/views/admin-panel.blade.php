@@ -1,6 +1,6 @@
 @include('common/session')
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +9,8 @@
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    @include('common/navegation')
-    <main class="admin_panel">
+@include('common/navegation')
+<main class="admin_panel">
     <h1>Panel de administrador</h1>
     <h2>Ajustes de actos:</h2>
     <table>
@@ -212,5 +212,4 @@ if(count($listaTiposActos) > 0){
     });
     </script>
 </main>
-</body>
-</html>
+@include('common/footer')

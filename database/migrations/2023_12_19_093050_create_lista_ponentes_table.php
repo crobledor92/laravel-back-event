@@ -12,7 +12,7 @@ class CreateListaPonentesTable extends Migration
             $table->id('id_ponente');
             $table->unsignedBigInteger('id_persona');
             $table->unsignedBigInteger('id_acto');
-            $table->integer('Orden');
+            $table->integer('orden');
             $table->timestamps();
 
             $table->foreign('id_persona')->references('id_persona')->on('personas');

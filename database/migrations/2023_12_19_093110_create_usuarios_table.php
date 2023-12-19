@@ -12,12 +12,12 @@ class CreateUsuariosTable extends Migration
             $table->id('id_usuario');
             $table->string('username', 100);
             $table->string('password', 100);
-            $table->unsignedBigInteger('id_Persona');
+            $table->unsignedBigInteger('id_persona');
             $table->unsignedBigInteger('id_tipo_usuario');
             $table->string('mail', 40);
             $table->timestamps();
             
-            $table->foreign('id_Persona')->references('id_persona')->on('personas');
+            $table->foreign('id_persona')->references('id_persona')->on('personas');
             $table->foreign('id_tipo_usuario')->references('id_tipo_usuario')->on('tipos_usuarios');
         });
     }

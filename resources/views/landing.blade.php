@@ -1,12 +1,16 @@
 @include('common/session')
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Back Event</title>
+    <title>Bienvenidos a Back Event</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+@include('common/navegation')
+<main>
     <style>
     @keyframes moveInTop {
         0% {
@@ -110,38 +114,34 @@
     transform: skewY(7deg);
     }
     </style>
-</head>
-    @include('common/navegation')
-    <main>
-        <section class="section-intro">
-            <h1 class="title">Back Event</h1>
-            <h2 class='heading'>El portal en el que conectar con la tecnología</h2>
-        </section>
-        <section class="section-features">
-            <div class='row'>
-                <div class='col'>
-                    <div class="feature-box">   
-                        <p class="feature-text">
-                            Explora todos los eventos, conoce sus horarios y descubre a los ponentes destacados
-                        </p> 
-                    </div>
-                </div>
-                <div class='col'>
-                    <div class="feature-box">
-                        <p class="feature-text">
-                            Regístrate para participar en los eventos que te interesen
-                        </p> 
-                    </div>
-                </div>
-                <div class='col'>
-                    <div class="feature-box">
-                        <p class="feature-text">
-                            Mantén un seguimiento de los eventos a los que te has inscrito
-                        </p>
-                    </div>
+    <section class="section-intro">
+        <h1 class="title">Back Event</h1>
+        <h2 class='heading'>El portal en el que conectar con la tecnología</h2>
+    </section>
+    <section class="section-features">
+        <div class='row'>
+            <div class='col'>
+                <div class="feature-box">   
+                    <p class="feature-text">
+                        Explora todos los eventos, conoce sus horarios y descubre a los ponentes destacados
+                    </p> 
                 </div>
             </div>
-        </section>
-    </main>
-</body>
-</html>
+            <div class='col'>
+                <div class="feature-box">
+                    <p class="feature-text">
+                        Regístrate para participar en los eventos que te interesen
+                    </p> 
+                </div>
+            </div>
+            <div class='col'>
+                <div class="feature-box">
+                    <p class="feature-text">
+                        Mantén un seguimiento de los eventos a los que te has inscrito
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+@include('common/footer')
