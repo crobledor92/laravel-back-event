@@ -1,10 +1,8 @@
-@php
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-    $userInfo = session('userInfo', '');
-    $actos = session('actos', '');
-    $listaInscripcionesActos = session('listaInscripcionesActos', '');
-    $listaTiposActos = session('listaTiposActos', '');
-    $personas = session('personas', '');
-@endphp
+<?php
+use Illuminate\Support\Facades\Session;
+
+$userInfo = Session::get('userInfo', null);
+$actos = Session::get('actos', null);
+$listaInscripcionesActos = Session::get('listaInscripcionesActos', null);
+$listaTiposActos = Session::get('listaTiposActos', null);
+$personas = Session::get('personas', null);

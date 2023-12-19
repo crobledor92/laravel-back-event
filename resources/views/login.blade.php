@@ -18,7 +18,7 @@
             <p>Crear funcion para cerrar serion</p>
         @endif
         <div class="login-container">
-            <form class="form-box" action="controller/login2_controller.php" method="post">
+            <form class="form-box" action="{{ route('login.post') }}" method="post">
                 <fieldset>
                     <legend>Inicia Sesion:</legend>
                     <label for="username">Usuario</label>

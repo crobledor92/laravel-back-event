@@ -7,9 +7,6 @@
     <title>Inicio - Back Event</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-</head>
-    @include('common/navegation')
-    <main>
     <style>
     @keyframes moveInTop {
         0% {
@@ -113,6 +110,9 @@
     transform: skewY(7deg);
     }
     </style>
+</head>
+    @include('common/navegation')
+    <main>
         <section class="section-intro">
             <h1 class="title">Back Event</h1>
             <h2 class='heading'>El portal en el que conectar con la tecnología</h2>

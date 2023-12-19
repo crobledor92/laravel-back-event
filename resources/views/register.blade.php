@@ -11,7 +11,7 @@
 <body>
     @include('common/navegation')
         <main>
-            <form method="post" class="form-box">
+            <form method="post" action="{{ route('register.post') }}" class="form-box">
                 @csrf
                 @if(isset($errors) && count($errors) > 0)
                     @foreach($errors as $error)

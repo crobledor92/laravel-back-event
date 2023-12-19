@@ -4,16 +4,21 @@ body{
 }
 header{
     position: fixed;
-    display: flex;
-    justify-content: space-between;
+    text-align: -webkit-center;
     background-color: #ffffff;
     color: #03477d;
-    padding: 9px;
-    border-bottom: 5px solid #cfcfcf;
+    padding: 5px;
+    border-bottom: 2px solid #00e5ff;
     top: 0px;
     left: 0px;
     right: 0px;
     z-index: 10;
+}
+header .container{
+    display: flex;
+    justify-content: space-between;
+    max-width: 1700px;
+    width: calc(100% - 100px);
 }
 nav.right{
     display:flex;
@@ -26,7 +31,7 @@ header a{
     font-size: 18px;
     text-decoration: none;
     transition: color 0.3s;
-    border-bottom: 2px solid #017598;
+    border-bottom: 2px solid #ffffff;
 }
 
 header a:hover{
@@ -37,7 +42,10 @@ header a:hover{
     border-bottom: 0px;
 }
 main{
-    margin: 90px 30px;
+    min-height: 100vh;
+    padding: 90px 0px;
+    background: rgb(223 241 255);
+    background: linear-gradient(0deg, rgb(209 235 255) 28%, rgb(202 246 255) 100%);
 }
 input,select{
     font-size: 16px;
