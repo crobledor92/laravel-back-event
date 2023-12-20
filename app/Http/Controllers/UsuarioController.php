@@ -46,7 +46,7 @@ class UsuarioController extends Controller{
         $userCreated = $userModel->registerModel($userData);
 
         if ($userCreated) {
-            return redirect()->route('login')->with('success', '¡Registro exitoso! Ahora puedes iniciar sesión.');
+            return redirect()->route('iniciar-sesion')->with('success', '¡Registro exitoso! Ahora puedes iniciar sesión.');
         } else {
             return redirect()->back()->withErrors(['Ha habido un error inesperado, vuelva a intentar el registro']);
         }

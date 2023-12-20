@@ -13,6 +13,9 @@
 <main>
     <div class="container">
         <h1>Calendario de eventos:</h1>
+        @foreach($eventos as $evento)
+            <p>{{ $evento->nombre }}</p>
+        @endforeach
         @include('layout/calendar')
     </div>
 </main>

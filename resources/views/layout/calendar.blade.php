@@ -66,7 +66,7 @@
         anioActual = new Date().getFullYear();
         generarCalendarioConActos(mesActual, anioActual);
     });
-    function generarCalendarioConActos(mes, anio) {
+    function generarCalendarioConActos(mes, anio, eventos) {
         var primerDia = new Date(anio, mes - 1, 1);
         var ultimoDia = new Date(anio, mes, 0);
         var diaActual = new Date(primerDia);
