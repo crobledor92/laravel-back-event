@@ -11,16 +11,21 @@
 <body>
 @include('common/navegation')
 <main>
-    <form class="update" action="controller/updateUser_controller.php"  method="post">
-        <fieldset>
+    <form class="form-box" action="{{ route('update.post') }}" method="post">
+        @csrf
+        <fieldset> 
             <legend>Actualiza tus datos:</legend>
             <label for="username">Nombre de usuario:</label>
-            <input type="text" name="username" value="<?=$userInfo->Username?>" required><br>
-            <label for="mail">Correo electronico:</label>
-            <input type="text" name="email" value="<?=$userInfo->mail?>" required><br>
-            <label for="mail">Contraseña:</label>
-            <input type="password" name="password" value=""><br>
-            <input type="submit" name="updateUser" value="submit">
+            <input type="text" name="username" value="{{ $userInfo->username }}"><br>
+            <label for="email">Correo electronico:</label>
+            <input type="text" name="email" value="{{ $userInfo->email }}"><br>
+            <label for="password">Contraseña actual:</label>
+            <input type="password" name="old_password"><br>           
+            <label for="password">Nueva contraseña:</label>
+            <input type="password" name="new_password"><br>
+            <label for="passwordRepeat">Repite la nueva contraseña:</label>
+            <input type="password" name="new_passwordRepeat"><br>
+            <input type="submit" value="Actualizar perfil">
         </fieldset>        
     </form>
 </main>

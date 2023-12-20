@@ -2,43 +2,43 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SessionController;
-use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {
     (new SessionController())->shareData();
     return view('landing');
 })->name('landing');
 
-Route::get('/register', function () {
+Route::get('/registrarse', function () {
     (new SessionController())->shareData();
     return view('register');
-})->name('register');
+})->name('registrarse');
+Route::post('/registrarse', [UsuarioController::class, 'registerController'])->name('register.post');
 
-Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
-
-Route::get('/login', function () {
+Route::get('/iniciar-sesion', function () {
     (new SessionController())->shareData();
     return view('login');
-})->name('login');
+})->name('iniciar-sesion');
+Route::post('/iniciar-sesion', [UsuarioController::class, 'loginController'])->name('login.post');
 
-Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::get('/cerrar-sesion', function () {
+    (new SessionController())->clearSessionData();
+    session()->flash('success', 'Cerraste sesión.');
+    return redirect()->route('iniciar-sesion');
+})->name('cerrar-sesion');
 
-Route::get('/logout', function () {
-    (new SessionController())->shareData();
-    return view('login', ['logout' => true]);
-})->name('logout');
-
-Route::get('/personal-panel', function () {
+Route::get('/panel-personal', function () {
     (new SessionController())->shareData();
     return view('personal-panel');
-})->name('personal-panel');
+})->name('panel-personal');
 
-Route::get('/edit-profile', function () {
+Route::get('/editar-perfil', function () {
     (new SessionController())->shareData();
     return view('edit-profile');
-})->name('edit-profile');
+})->name('editar-perfil');
+Route::post('/editar-perfil', [UsuarioController::class, 'updateController'])->name('update.post');
 
-Route::get('/admin-panel', function () {
+Route::get('/panel-administracion', function () {
     (new SessionController())->shareData();
     return view('admin-panel');
-})->name('admin-panel');
+})->name('panel-administracion');

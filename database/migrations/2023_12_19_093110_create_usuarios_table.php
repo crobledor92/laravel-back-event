@@ -14,7 +14,7 @@ class CreateUsuariosTable extends Migration
             $table->string('password', 100);
             $table->unsignedBigInteger('id_persona');
             $table->unsignedBigInteger('id_tipo_usuario');
-            $table->string('mail', 40);
+            $table->string('email', 40);
             $table->timestamps();
             
             $table->foreign('id_persona')->references('id_persona')->on('personas');

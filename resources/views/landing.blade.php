@@ -11,13 +11,12 @@
 <body>
 @include('common/navegation')
 <main>
-    <style>
+<style>
     @keyframes moveInTop {
         0% {
             opacity: 0;
             transform: translateY(-500px);
         }
-
         80% { 
             transform: translateY(10px);
         }
@@ -115,30 +114,34 @@
     }
     </style>
     <section class="section-intro">
-        <h1 class="title">Back Event</h1>
-        <h2 class='heading'>El portal en el que conectar con la tecnología</h2>
+        <div class="container">
+            <h1 class="title">Back Event</h1>
+            <h2 class='heading'>El portal en el que conectar con la tecnología</h2>
+        </div>
     </section>
     <section class="section-features">
-        <div class='row'>
-            <div class='col'>
-                <div class="feature-box">   
-                    <p class="feature-text">
-                        Explora todos los eventos, conoce sus horarios y descubre a los ponentes destacados
-                    </p> 
+        <div class="container">
+            <div class='row'>
+                <div class='col'>
+                    <div class="feature-box">   
+                        <p class="feature-text">
+                            Explora todos los eventos, conoce sus horarios y descubre a los ponentes destacados
+                        </p> 
+                    </div>
                 </div>
-            </div>
-            <div class='col'>
-                <div class="feature-box">
-                    <p class="feature-text">
-                        Regístrate para participar en los eventos que te interesen
-                    </p> 
+                <div class='col'>
+                    <div class="feature-box">
+                        <p class="feature-text">
+                            Regístrate para participar en los eventos que te interesen
+                        </p> 
+                    </div>
                 </div>
-            </div>
-            <div class='col'>
-                <div class="feature-box">
-                    <p class="feature-text">
-                        Mantén un seguimiento de los eventos a los que te has inscrito
-                    </p>
+                <div class='col'>
+                    <div class="feature-box">
+                        <p class="feature-text">
+                            Mantén un seguimiento de los eventos a los que te has inscrito
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,16 +3,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class Usuario extends Model{
-    public function addUser($data){
+    #Este metodo retorna todos los valores del registro que coindica con username.
+    public function getuserInfoByUSERNAMEModel($username){
+        return DB::table('usuarios')->where('username', $username)->first();
+    }
+    #Este metodo registra a un nuevo usuario, añadiendo primero el registro como persona.
+    public function registerModel($data){
         $id_persona = DB::table('personas')->insertGetId([
             'nombre' => $data['nombre'],
             'apellido1' => $data['apellido1'],
             'apellido2' => $data['apellido2'],
         ]);
         $id_user = DB::table('usuarios')->insertGetId([
-            'mail' => $data['email'],
+            'email' => $data['email'],
             'username' => $data['username'],
             'password' => $data['password'],
             'id_persona' => $id_persona,
@@ -20,30 +26,28 @@ class Usuario extends Model{
         ]);
         return $id_user > 0;
     }
+    #Este metodo logea a un usuario.
+    public function loginModel($data){
+        $user = $this->getuserInfoByUSERNAMEModel($data['username']);
+        if ($user && Hash::check($data['password'], $user->password)) {
+            return $this->getuserInfoByUSERNAMEModel($data['username']);
+        }
+        return null;
+    }
+    #Este metodo actualiza dos datos de usuario.
+    public function updateModel($data){
+        $user = $this->getuserInfoByUSERNAMEModel($data['username']);
+        if ($user && Hash::check($data['old_password'], $user->password)){
+            $updateData = [
+                'username' => $data['username'],
+                'email' => $data['email'],
+            ];
+            if ($data['new_password'] !== null) {
+                $updateData['password'] = Hash::make($data['new_password']);
+            }
+            DB::table('usuarios')->where('id_usuario', $data['id_usuario'])->update($updateData);
+            return $this->getuserInfoByUSERNAMEModel($data['username']);
+        }
+        return null;
+    }
 }
-//     public function setPasswordAttribute($value){
-//         $this->attributes['password'] = bcrypt($value);
-//     }
-//     public function getUser($username){
-//         return $this->where('username', $username)->get();
-//     }
-
-//     public function userExists($username){
-//         return $this->where('username', $username)->exists();
-//     }
-
-//     public function updateUser($data){
-//         $updateData = [
-//             'mail' => $data['email'],
-//             'username' => $data['username'],
-//         ];
-//         if ($data['password'] !== null) {
-//             $updateData['password'] = bcrypt($data['password']);
-//         }
-//         return $this->where('id_usuario', $data['id_usuario'])->update($updateData);
-//     }
-
-//     public function getPersonas(){
-//         return DB::table('personas')->get();
-//     }
-// }

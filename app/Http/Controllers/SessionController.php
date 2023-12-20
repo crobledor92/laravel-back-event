@@ -18,4 +18,8 @@ class SessionController extends Controller{
         View::share('listaTiposActos', $listaTiposActos);
         View::share('personas', $personas);
     }
+    public function clearSessionData() {
+        Session::flush();
+        $this->shareData();
+    }
 }

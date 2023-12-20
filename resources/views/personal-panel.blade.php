@@ -11,21 +11,9 @@
 <body>
 @include('common/navegation')
 <main>
-    <h1>Panel de usuario</h1>
-    <?php
-    if($userInfo == ""){
-        header("Location: ../controller/login_controller.php");
-    }else{
-        include('../controller/actos_controller.php');
-        require_once("../view/calendar_view.php");
-    }
-    ?>
-    <p id="timedMessage">Te has conectado correctamente</p>
-    <script>
-        function timedMsg(){
-            var t=setTimeout("document.getElementById('timedMessage').style.display='none';",4000);
-        }
-        timedMsg()
-    </script>
+    <div class="container">
+        <h1>Calendario de eventos:</h1>
+        @include('layout/calendar')
+    </div>
 </main>
 @include('common/footer')

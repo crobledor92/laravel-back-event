@@ -11,22 +11,18 @@
 <body>
 @include('common/navegation')
 <main>
-    <div class="login-container">
+    <div class="container">
         <form class="form-box" action="{{ route('login.post') }}" method="post">
+            @csrf
             <fieldset>
                 <legend>Inicia Sesion:</legend>
                 <label for="username">Usuario</label>
-                <input type="text" name="username" required><br>
+                <input type="text" name="username"><br>
                 <label for="password">Contraseña</label>
-                <input type="password" name="password" required><br>
+                <input type="password" name="password"><br>
                 <input type="submit" name="login" value="Iniciar Sesión"><br>
             </fieldset>
-        </form>
+        </form>       
     </div>
-    @if(isset($logout) && $logout)
-        <div class="alert">
-            <p>Cerraste sesión.</p>
-        </div>
-    @endif
 </main>
 @include('common/footer')
