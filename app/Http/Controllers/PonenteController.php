@@ -12,4 +12,10 @@ class PonenteController extends Controller {
         $ponente = $ponenteModel->getPonentes();
         return $ponente;
     }
+
+    public function getPonenciaPersonalController($id_persona) {
+        $ponenteModel = new Ponente();
+        $ponencias = $ponenteModel->getPonenciaPersonalModel($id_persona);
+        return $ponencias;
+    }
 }
