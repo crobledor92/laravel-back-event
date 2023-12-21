@@ -7,6 +7,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ActoController;
 use App\Http\Controllers\TiposActoController;
 use App\Http\Controllers\PonenteController;
+use App\Http\Controllers\PersonasController;
 
 Route::get('/', function () {
     (new SessionController())->shareData();
@@ -50,6 +51,8 @@ Route::get('/panel-administracion', function () {
     $tiposActo = $tiposActoController->getTiposActo();
     $ponenteController = new PonenteController();
     $ponentes = $ponenteController->getPonentes();
+    $personasController = new PersonasController();
+    $personas = $personasController->getPersonas();    
     
-    return view('admin-panel', ['actos' => $actos, 'tiposActo' => $tiposActo, 'ponentes' => $ponentes]);
+    return view('admin-panel', ['actos' => $actos, 'tiposActo' => $tiposActo, 'ponentes' => $ponentes, 'personas' => $personas]);
 })->name('panel-administracion');
