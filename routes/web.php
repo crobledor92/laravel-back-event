@@ -57,4 +57,4 @@ Route::get('/panel-administracion', function () {
     return view('admin-panel', ['actos' => $actos, 'tiposActo' => $tiposActo, 'ponentes' => $ponentes, 'personas' => $personas]);
 })->name('panel-administracion');
 
-Route::match(['put', 'delete'], '/tipo-acto/{id}', [TiposActoController::class, 'handleTipoActo'])->name('handle-tipo-acto.route');
+Route::put('/update-tipo-acto', [TiposActoController::class, 'updateTipoActo'])->name('update-tipo-acto.post');

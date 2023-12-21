@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Panel de administración - Back Event</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
@@ -57,22 +58,26 @@
                 @if(count($tiposActo) > 0)
                     @foreach($tiposActo as $tipoActo)
                         <tr class="data">
+<<<<<<< HEAD
                             <form method="post" action="{{ route('handle-tipo-acto.route', ['id' => $tipoActo->id_tipo_acto]) }}">
                                 @csrf
                             <input type="hidden" name="_method" id="form_method" value="PUT">    
+=======
+>>>>>>> 892f14c7e22b493defb88a8d767c69a357c3df39
                             <td>{{$tipoActo->id_tipo_acto}}</td>
-                                <td style="text-wrap:nowrap">
-                                    <label for="{{$tipoActo->id_tipo_acto}}" name="Editar">Editar esta descripcion (Clic Aquí):</label>
-                                    <input name="descripcion" class="inputDesc" id="input{{$tipoActo->id_tipo_acto}}" value="{{$tipoActo->descripcion}}"></td>
-                                <td>
-                                    <div class="actions">
-                                        <button type="submit" onclick="document.getElementById('form_method').value='PUT'">Modificar Descripcion</button>
-                                        <button type="submit" onclick="document.getElementById('form_method').value='DELETE'">Eliminar</button>
-                                    </div>
-                                </td>
-                            </form>
+                            <td style="text-wrap:nowrap">
+                                <label for="input{{$tipoActo->id_tipo_acto}}" name="Editar">Editar esta descripcion (Clic Aquí):</label>
+                                <input name="desc" class="inputDesc" id="input{{$tipoActo->id_tipo_acto}}" value="{{$tipoActo->descripcion}}">
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <button data-id-type="{{ $tipoActo->id_tipo_acto }}" class="uploadDescriptionType">Modificar Descripcion</button>
+                                    <button data-id-type="{{ $tipoActo->id_tipo_acto }}" class="deleteType">Eliminar</button>
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
+                    </form>
                 @endif
                 <tr>
                     <td>Añade un nuevo tipo de acto:</td>
@@ -174,18 +179,21 @@
                 var dataIdType = button.getAttribute('data-id-type');
                 var inputId = 'input' + dataIdType;
                 var actual_description = document.getElementById(inputId).value;
-                fetch('controller/tipoActo_controller.php', {
-                    method: 'POST',
+                fetch('/update-tipo-acto', {
+                    method: 'PUT',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                     },
-                    body: 'Id_tipo_acto=' + encodeURIComponent(dataIdType) + '&updateDescTipoActo=1&Descripcion=' + encodeURIComponent(actual_description),
+                    body: JSON.stringify({
+                        Id_tipo_acto: dataIdType,
+                        Descripcion: actual_description,
+                    }),
                 })
-                .then(response => response.text())
+                .then(res => console.log(res))
                 .catch(error => {
                     console.error('Error:', error);
                 });
-                setTimeout(function(){ location.reload(); }, 200);
             });
         });
     });
