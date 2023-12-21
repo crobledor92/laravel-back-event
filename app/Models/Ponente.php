@@ -39,4 +39,7 @@ class Ponente extends Model {
     public function deletePonente($idPonente) {
         DB::table('lista_ponentes')->where('id_ponente', $idPonente)->delete();
     }
+    public function getPonenciaPersonalModel($id_persona) {
+        return DB::table('lista_ponentes')->where('id_persona', $id_persona)->get();
+    }
 }

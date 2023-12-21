@@ -16,10 +16,12 @@ class ActoController extends Controller {
     }
     public function showPersonalPanel(): View {
         (new SessionController())->shareData();
-        $inscritos_controller = new InscritoController();
-        $actos = $this->getActos();
         $id_personal = optional(session('userInfo'))->id_persona;
-        $inscritos = $inscritos_controller->getAsistenciaPersonalController($id_personal);
-        return view('personal-panel',['actos' => $actos,'inscritos' => $inscritos]);
+        $actos = $this->getActos();
+        $inscritos_controller = new InscritoController();
+        $inscripciones = $inscritos_controller->getAsistenciaPersonalController($id_personal);
+        $ponencias_controller = new PonenteController();
+        $ponencias = $ponencias_controller->getPonenciaPersonalController($id_personal);
+        return view('personal-panel',['actos' => $actos,'inscripciones' => $inscripciones,'ponencias' => $ponencias]);
     }
 }

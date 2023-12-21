@@ -5,11 +5,12 @@ var mesActual, anioActual, actos, div_info;
 document.addEventListener('DOMContentLoaded', function () {
     mesActual = new Date().getMonth() + 1;
     anioActual = new Date().getFullYear();
-    actos = {!! $actos !!};
-    incritos = {!! $inscritos !!};
     generarCalendarioConActos(mesActual, anioActual);
 });
 function generarCalendarioConActos(mes, anio) {
+    var actos = {!! $actos !!};
+    var inscripciones = {!! $inscripciones !!};
+    var ponencias = {!! $ponencias !!};
     var primerDia = new Date(anio, mes - 1, 1);
     var ultimoDia = new Date(anio, mes, 0);
     var diaActual = new Date(primerDia);
@@ -32,8 +33,18 @@ function generarCalendarioConActos(mes, anio) {
         if (eventosDelDia.length > 0) {
             calendarHtml += '<ul>';
             eventosDelDia.forEach(function(evento) {
-                calendarHtml += '<li class="ins"><span class="titulo">' + evento.titulo + '</span><button onclick="openPopup(\'' + evento.id_acto + '\')" class="more">+</button></li>';
-                eventos += '<div id="info_' + evento.id_acto + '" class="popup"><div class="back"></div><div class="info"><p>Titulo del evento: '+ evento.titulo +'</p><p>Descripcion corta: '+ evento.descripcion_corta +'</p><p>Descripcion larga: '+ evento.descripcion_larga +'</p><p>Numero de asistentes: '+ evento.num_asistentes +'</p><p>Fecha del evento: '+ evento.fecha +'</p><p>Hora del evento: '+ evento.hora +'</p></div><span class="close" onclick="closePopup(\'info_' + evento.id_acto + '\')">x</span></div>';
+                var isAlistada = inscripciones.some(function(inscripcion) {
+                return inscripcion.id_acto === evento.id_acto;
+            });
+            var isPonente = ponencias.some(function(ponencia) {
+                return ponencia.id_acto === evento.id_acto;
+            });
+            var liClass = isAlistada ? (isPonente ? 'speaker' : 'ins') : (isPonente ? 'speaker' : 'noins');
+            var buttonHandle = isPonente ? 'ERES PONENTE' : (isAlistada ? 'NO VOY A ASISTIR' : 'ASISTIR');
+            var blockingbutton = isPonente ? 'disabled': '';
+            buttonHandle = '<button onclick="handleEvent(\'' + evento.id_acto + '\')" ' + blockingbutton + '>' + buttonHandle + '</button>';
+            calendarHtml += '<li class="' + liClass + '"><span class="titulo">' + evento.titulo + '</span><button onclick="openPopup(\'' + evento.id_acto + '\')" class="more">+</button></li>';
+            eventos += '<div id="info_' + evento.id_acto + '" class="popup"><div class="back"></div><div class="info_popup"><div class="info"><p>Titulo del evento: '+ evento.titulo +'</p><p>Descripcion corta: '+ evento.descripcion_corta +'</p><p>Descripcion larga: '+ evento.descripcion_larga +'</p><p>Numero de asistentes: '+ evento.num_asistentes +'</p><p>Fecha del evento: '+ evento.fecha +'</p><p>Hora del evento: '+ evento.hora +'</p></div><div>' + buttonHandle + '</div></div><span class="close" onclick="closePopup(\'info_' + evento.id_acto + '\')">x</span></div>';
             });
             calendarHtml += '</ul>';
         }
@@ -53,6 +64,7 @@ function generarCalendarioConActos(mes, anio) {
     document.getElementById('calendar').innerHTML = calendarHtml;
     document.getElementById('eventos').innerHTML = eventos;
 }
+
 function mesAnterior() {
     mesActual--;
     if (mesActual < 1) {
