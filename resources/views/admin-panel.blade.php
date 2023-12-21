@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Panel de administración - Back Event</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
@@ -178,11 +177,11 @@
                 var dataIdType = button.getAttribute('data-id-type');
                 var inputId = 'input' + dataIdType;
                 var actual_description = document.getElementById(inputId).value;
-                fetch('/update-tipo-acto', {
+                fetch("{!! route('update-tipo-acto.post') !!}", {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'X-CSRF-TOKEN': '{!! csrf_token() !!}',
                     },
                     body: JSON.stringify({
                         Id_tipo_acto: dataIdType,

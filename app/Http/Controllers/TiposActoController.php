@@ -15,14 +15,13 @@ class TiposActoController extends Controller {
     }
 
     public function updateTipoActo(Request $request) {
-
         try {
             $id_tipo_acto = $request->input('Id_tipo_acto');
             $descripcion = $request->input('Descripcion');
     
             // Your update logic here
             //TODO: No consigo logear las variables para ver si llegan correctamente
-            dd('fcbedfwesg');
+            
     
             return response()->json(['message' => 'Update successful']);
         } catch (\Exception $e) {

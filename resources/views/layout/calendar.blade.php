@@ -39,12 +39,12 @@ function generarCalendarioConActos(mes, anio) {
             var isPonente = ponencias.some(function(ponencia) {
                 return ponencia.id_acto === evento.id_acto;
             });
-            var liClass = isAlistada ? (isPonente ? 'speaker' : 'ins') : (isPonente ? 'speaker' : 'noins');
+            var color = isAlistada ? (isPonente ? 'speaker' : 'ins') : (isPonente ? 'speaker' : 'noins');
             var buttonHandle = isPonente ? 'ERES PONENTE' : (isAlistada ? 'NO VOY A ASISTIR' : 'ASISTIR');
             var blockingbutton = isPonente ? 'disabled': '';
-            buttonHandle = '<button onclick="handleEvent(\'' + evento.id_acto + '\')" ' + blockingbutton + '>' + buttonHandle + '</button>';
-            calendarHtml += '<li class="' + liClass + '"><span class="titulo">' + evento.titulo + '</span><button onclick="openPopup(\'' + evento.id_acto + '\')" class="more">+</button></li>';
-            eventos += '<div id="info_' + evento.id_acto + '" class="popup"><div class="back"></div><div class="info_popup"><div class="info"><p>Titulo del evento: '+ evento.titulo +'</p><p>Descripcion corta: '+ evento.descripcion_corta +'</p><p>Descripcion larga: '+ evento.descripcion_larga +'</p><p>Numero de asistentes: '+ evento.num_asistentes +'</p><p>Fecha del evento: '+ evento.fecha +'</p><p>Hora del evento: '+ evento.hora +'</p></div><div>' + buttonHandle + '</div></div><span class="close" onclick="closePopup(\'info_' + evento.id_acto + '\')">x</span></div>';
+            buttonHandle = '<button class="' + color + '" onclick="handleEvent(\'' + evento.id_acto + '\')" ' + blockingbutton + '>' + buttonHandle + '</button>';
+            calendarHtml += '<li class="' + color + '"><span class="titulo">' + evento.titulo + '</span><button onclick="openPopup(\'' + evento.id_acto + '\')" class="more">+</button></li>';
+            eventos += '<div id="info_' + evento.id_acto + '" class="popup"><div class="back"></div><div class="info_popup"><div class="info"><p><b>Titulo del evento:</b> '+ evento.titulo +'</p><p><b>Descripcion corta:</b> '+ evento.descripcion_corta +'</p><p><b>Descripcion larga:</b> '+ evento.descripcion_larga +'</p><p><b>Numero de asistentes:</b> '+ evento.num_asistentes +'</p><p><b>Fecha del evento:</b> '+ evento.fecha +'</p><p><b>Hora del evento:</b> '+ evento.hora +'</p></div><div>' + buttonHandle + '</div></div><span class="close" onclick="closePopup(\'info_' + evento.id_acto + '\')">x</span></div>';
             });
             calendarHtml += '</ul>';
         }
