@@ -15,12 +15,14 @@ Route::get('/registrarse', function () {
     (new SessionController())->shareData();
     return view('register');
 })->name('registrarse');
+
 Route::post('/registrarse', [UsuarioController::class, 'registerController'])->name('register.post');
 
 Route::get('/iniciar-sesion', function () {
     (new SessionController())->shareData();
     return view('login');
 })->name('iniciar-sesion');
+
 Route::post('/iniciar-sesion', [UsuarioController::class, 'loginController'])->name('login.post');
 
 Route::get('/cerrar-sesion', function () {
@@ -29,12 +31,13 @@ Route::get('/cerrar-sesion', function () {
     return redirect()->route('iniciar-sesion');
 })->name('cerrar-sesion');
 
-Route::get('/panel-personal', [ActoController::class, 'showPersonalPanel'])->name('panel-personal');
+Route::get('/panel-personal' , [ActoController::class, 'showPersonalPanel'])->name('panel-personal');
 
 Route::get('/editar-perfil', function () {
     (new SessionController())->shareData();
     return view('edit-profile');
 })->name('editar-perfil');
+
 Route::post('/editar-perfil', [UsuarioController::class, 'updateController'])->name('update.post');
 
 Route::get('/panel-administracion', function () {
