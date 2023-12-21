@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TipoActo;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 class TiposActoController extends Controller {
 
@@ -13,13 +14,24 @@ class TiposActoController extends Controller {
         return $tiposActo;
     }
 
-    public function handleTipoActo($tipoActoId) {
-        $discripcion = request('descripcion');
-        dd($descripcion);
+    public function updateTipoActo(Request $request) {
 
-        dd('llegaaaaa');
-
-        return route('panel-administracion');
+        try {
+            $id_tipo_acto = $request->input('Id_tipo_acto');
+            $descripcion = $request->input('Descripcion');
+    
+            // Your update logic here
+            //TODO: No consigo logear las variables para ver si llegan correctamente
+            dd('fcbedfwesg');
+    
+            return response()->json(['message' => 'Update successful']);
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            \Log::error($e);
+    
+            // Return an error response
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 
     public function deleteTipoActo() {

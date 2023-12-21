@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     mesActual = new Date().getMonth() + 1;
     anioActual = new Date().getFullYear();
     actos = {!! $actos !!};
+    incritos = {!! $inscritos !!};
     generarCalendarioConActos(mesActual, anioActual);
 });
 function generarCalendarioConActos(mes, anio) {
