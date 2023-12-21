@@ -56,3 +56,10 @@ Route::get('/panel-administracion', function () {
     
     return view('admin-panel', ['actos' => $actos, 'tiposActo' => $tiposActo, 'ponentes' => $ponentes, 'personas' => $personas]);
 })->name('panel-administracion');
+
+Route::get('/añadir-acto', function () {
+    (new SessionController())->shareData();
+    return view('edit-profile');
+})->name('editar-perfil');
+
+Route::get('/nuevo-acto', 'ActoController')->name('nuevo-acto');

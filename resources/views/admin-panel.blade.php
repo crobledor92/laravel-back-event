@@ -43,7 +43,10 @@
         </tbody>
     @endif
     </table>
-    <div class="full_content"><a href='controller/add_acto_controller.php' class="add_acto">Añadir un nuevo acto</a></div>  
+    <div class="full_content">
+    <a href="{{ route('nuevo-acto') }}" class="AddActo">Añadir un nuevo acto</a>
+    </div>
+
         <h2>Ajustes de tipo de actos:</h2>
         <table>
             <thead>
