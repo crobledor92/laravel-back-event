@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use App\Http\Controllers\PonenteController;
 use App\Http\Controllers\InscritoController;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 
 class ActoController extends Controller {
     public function getActos() {
@@ -22,4 +23,8 @@ class ActoController extends Controller {
         $inscritos = $inscritos_controller->getAsistenciaPersonalController($id_personal);
         return view('personal-panel',['actos' => $actos,'inscritos' => $inscritos]);
     }
+    public function addActo(Request $request) {
+        return true;
+    }
 }
+

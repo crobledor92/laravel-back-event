@@ -61,3 +61,13 @@ Route::match(['put', 'delete'], '/tipo-acto/{id}', [TiposActoController::class, 
 
 Route::put('/update-tipo-acto', [TiposActoController::class, 'updateTipoActo'])->name('update-tipo-acto.post');
 
+Route::get('/incluir-nuevo-acto', function () {
+    (new SessionController())->shareData();
+    $tiposActoController = new TiposActoController();
+    $tiposActo = $tiposActoController->getTiposActo();
+    $personasController = new PersonasController();
+    $personas = $personasController->getPersonas();
+    return view('add-acto', ['listaTiposActos' => $tiposActo,'personas' => $personas]);
+})->name('add-acto');
+
+Route::post('/incluir-nuevo-acto', [ActoController::class, 'addActo'])->name('add-acto.post');

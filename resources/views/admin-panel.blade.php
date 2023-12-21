@@ -45,7 +45,9 @@
     @endif
     </table>
     <div class="full_content">
-    <a href='controller/update_acto_controller.php?acto_id={{ $acto->id_acto }}' class="AddActo"><button>Añadir un nuevo acto</button></a>
+    <a href="{{ route('add-acto') }}" class="AddActo">
+        <button type="button">Añadir un nuevo acto</button>
+    </a>
     </div>
 
         <h2>Ajustes de tipo de actos:</h2>
@@ -119,7 +121,7 @@
                         <span>Lista de personas: </span>
                         <select name="id_persona">
                         @foreach($personas as $persona)   
-                            <option value="{{ $persona->id_persona }}">{{ $persona->nombre }} {{ $persona->apellido1 }} {{ $persona->apellido2 }}</option>
+                            <option value="{{ $persona->id_persona }}">{{ $persona->nombre . ' ' . $persona->apellido1 . ' ' . $persona->apellido2 }}</option>
                         @endforeach
                         </select>
                     </td>
@@ -127,7 +129,7 @@
                     <span>Lista de actos: </span>
                     <select name="id_acto">
                         @foreach($actos as $acto)
-                            <option value="{{ $acto->id_acto }}">{{ $acto->fecha }} {{ $acto->titulo }} {{ $acto->descripcion_corta }}</option>
+                            <option value="{{ $acto->id_acto }}">{{ $acto->fecha . ' ' . $acto->titulo . ' ' . $acto->descripcion_corta }}</option>
                         @endforeach
                     </select>
                     </td>
