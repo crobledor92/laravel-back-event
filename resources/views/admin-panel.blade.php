@@ -118,12 +118,12 @@
                         </select>
                     </td>
                     <td>
-                        <span>Lista de actos: </span>
-                        <select name="id_acto">        
-                        PHP foreach($listaActos as $acto): END_PHP
-                            <option value="{{$acto->id_acto}}">{{$acto->fecha}} {{$acto->titulo}} {{$acto->descripcion_corta}}</option>
-                        PHP endforeach; END_PHP                    
-                        </select>
+                    <span>Lista de actos: </span>
+                    <select name="id_acto">
+                        @foreach($actos as $acto)
+                            <option value="{{ $acto->id_acto }}">{{ $acto->fecha }} {{ $acto->titulo }} {{ $acto->descripcion_corta }}</option>
+                        @endforeach
+                    </select>
                     </td>
                     <td>- - - - -</td>
                     <td>- - - - -</td>
