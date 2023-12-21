@@ -19,7 +19,7 @@ class TipoActo extends Model {
         ]);
     }
 
-    public function updateActo($idTipoActo, $descripcion) {
+    public function updateTipoActo($idTipoActo, $descripcion) {
         DB::table('tipo_acto')
             ->where('id_tipo_acto', $idTipoActo)
             ->update([
@@ -28,7 +28,7 @@ class TipoActo extends Model {
         ]);
     }
 
-    public function deleteActo($idTipoActo) {
+    public function deleteTipoActo($idTipoActo) {
         DB::table('tipo_acto')->where('id_tipo_acto', $idTipoActo)->delete();
     }
 }

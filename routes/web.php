@@ -57,9 +57,9 @@ Route::get('/panel-administracion', function () {
     return view('admin-panel', ['actos' => $actos, 'tiposActo' => $tiposActo, 'ponentes' => $ponentes, 'personas' => $personas]);
 })->name('panel-administracion');
 
-Route::match(['put', 'delete'], '/tipo-acto/{id}', [TiposActoController::class, 'handleTipoActo'])->name('handle-tipo-acto.route');
+Route::put('/panel-administracion', [TiposActoController::class, 'updateTipoActo'])->name('update-tipo-acto.put');
 
-Route::put('/panel-administracion', [TiposActoController::class, 'updateTipoActo'])->name('update-tipo-acto.post');
+Route::delete('/panel-administracion', [TiposActoController::class, 'deleteTipoActo'])->name('delete-tipo-acto.delete');
 
 Route::get('/incluir-nuevo-acto', function () {
     (new SessionController())->shareData();

@@ -177,7 +177,7 @@
                 var dataIdType = button.getAttribute('data-id-type');
                 var inputId = 'input' + dataIdType;
                 var actual_description = document.getElementById(inputId).value;
-                fetch("{!! route('update-tipo-acto.post') !!}", {
+                fetch("{!! route('update-tipo-acto.put') !!}", {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -192,6 +192,7 @@
                 .catch(error => {
                     console.error('Error:', error);
                 });
+                setTimeout(function(){ location.reload(); }, 200);
             });
         });
     });
@@ -200,12 +201,15 @@
         buttons.forEach(function (button) {
             button.addEventListener('click', function () {
                 var dataIdType = button.getAttribute('data-id-type');
-                fetch('controller/tipoActo_controller.php', {
-                    method: 'POST',
+                fetch("{!! route('delete-tipo-acto.delete') !!}", {
+                    method: 'DELETE',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{!! csrf_token() !!}',
                     },
-                    body: 'Id_tipo_acto=' + encodeURIComponent(dataIdType) + '&deleteTipoActo=1',
+                    body: JSON.stringify({
+                        Id_tipo_acto: dataIdType,
+                    }),
                 })
                 .then(response => response.json())
                 .then(data => {

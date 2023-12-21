@@ -19,20 +19,27 @@ class TiposActoController extends Controller {
             $id_tipo_acto = $request->input('Id_tipo_acto');
             $descripcion = $request->input('Descripcion');
     
-            // Your update logic here
-            //TODO: No consigo logear las variables para ver si llegan correctamente
-            
+            $actoModel = new TipoActo();
+            $actoModel->updateTipoActo($id_tipo_acto, $descripcion);
     
             return response()->json(['message' => 'Update successful']);
         } catch (\Exception $e) {
-            // Log the exception for debugging
             \Log::error($e);
-    
-            // Return an error response
-            return response()->json(['error' => 'Internal Server Error'], 500);
+            return response()->json(['error' => $e], 500);
         }
     }
 
-    public function deleteTipoActo() {
+    public function deleteTipoActo(Request $request) {
+        try {
+            $id_tipo_acto = $request->input('Id_tipo_acto');
+    
+            $actoModel = new TipoActo();
+            $actoModel->deleteTipoActo($id_tipo_acto);
+    
+            return response()->json(['message' => 'Delete successful']);
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 }
