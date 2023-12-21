@@ -29,12 +29,7 @@ Route::get('/cerrar-sesion', function () {
     return redirect()->route('iniciar-sesion');
 })->name('cerrar-sesion');
 
-Route::get('/panel-personal', function () {
-    (new SessionController())->shareData();
-    $actoController = new ActoController();
-    $actos = $actoController->getActos();
-    return view('personal-panel', ['actos' => $actos]);
-})->name('panel-personal');
+Route::get('/panel-personal', [ActoController::class, 'showPersonalPanel'])->name('panel-personal');
 
 Route::get('/editar-perfil', function () {
     (new SessionController())->shareData();
