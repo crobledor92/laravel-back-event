@@ -58,6 +58,7 @@
                     @foreach($tiposActo as $tipoActo)
                         <tr class="data">
                             <form method="post" action="{{ route('handle-tipo-acto.route', ['id' => $tipoActo->id_tipo_acto]) }}">
+                                @csrf
                             <input type="hidden" name="_method" id="form_method" value="PUT">    
                             <td>{{$tipoActo->id_tipo_acto}}</td>
                                 <td style="text-wrap:nowrap">

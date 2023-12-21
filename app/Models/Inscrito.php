@@ -27,4 +27,7 @@ class Inscrito extends Model {
             ->where('id_persona', $id_persona)
             ->delete();
     }
+    public function getAsistenciaPersonalModel($id_persona) {
+        return DB::table('inscritos')->where('id_persona', $id_persona)->get();
+    }
 }
