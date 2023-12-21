@@ -12,4 +12,16 @@ class TiposActoController extends Controller {
         $tiposActo = $tiposActoModel->getTiposActo();
         return $tiposActo;
     }
+
+    public function handleTipoActo($tipoActoId) {
+        $discripcion = request('descripcion');
+        dd($descripcion);
+
+        dd('llegaaaaa');
+
+        return route('panel-administracion');
+    }
+
+    public function deleteTipoActo() {
+    }
 }

@@ -52,7 +52,9 @@ Route::get('/panel-administracion', function () {
     $ponenteController = new PonenteController();
     $ponentes = $ponenteController->getPonentes();
     $personasController = new PersonasController();
-    $personas = $personasController->getPersonas();    
+    $personas = $personasController->getPersonas();
     
     return view('admin-panel', ['actos' => $actos, 'tiposActo' => $tiposActo, 'ponentes' => $ponentes, 'personas' => $personas]);
 })->name('panel-administracion');
+
+Route::match(['put', 'delete'], '/tipo-acto/{id}', [TiposActoController::class, 'handleTipoActo'])->name('handle-tipo-acto.route');
