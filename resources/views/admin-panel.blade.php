@@ -57,16 +57,19 @@
                 @if(count($tiposActo) > 0)
                     @foreach($tiposActo as $tipoActo)
                         <tr class="data">
+                            <form method="post" action="{{ route('handle-tipo-acto.route', ['id' => $tipoActo->id_tipo_acto]) }}">
+                            <input type="hidden" name="_method" id="form_method" value="PUT">    
                             <td>{{$tipoActo->id_tipo_acto}}</td>
-                            <td style="text-wrap:nowrap">
-                                <label for="{{$tipoActo->id_tipo_acto}}" name="Editar">Editar esta descripcion (Clic Aquí):</label>
-                                <input name="desc" class="inputDesc" id="input{{$tipoActo->id_tipo_acto}}" value="{{$tipoActo->descripcion}}"></td>
-                            <td>
-                                <div class="actions">
-                                    <button data-id-type="{{$tipoActo->id_tipo_acto}}" class="uploadDescriptionType">Modificar Descripcion</button>
-                                    <button data-id-type="{{$tipoActo->id_tipo_acto}}" class="deleteType">Eliminar</button>
-                                </div>
-                            </td>
+                                <td style="text-wrap:nowrap">
+                                    <label for="{{$tipoActo->id_tipo_acto}}" name="Editar">Editar esta descripcion (Clic Aquí):</label>
+                                    <input name="descripcion" class="inputDesc" id="input{{$tipoActo->id_tipo_acto}}" value="{{$tipoActo->descripcion}}"></td>
+                                <td>
+                                    <div class="actions">
+                                        <button type="submit" onclick="document.getElementById('form_method').value='PUT'">Modificar Descripcion</button>
+                                        <button type="submit" onclick="document.getElementById('form_method').value='DELETE'">Eliminar</button>
+                                    </div>
+                                </td>
+                            </form>
                         </tr>
                     @endforeach
                 @endif
