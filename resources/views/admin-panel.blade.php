@@ -23,24 +23,24 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-    <?php
-    if(count($listaActos) > 0) {?>    
+    @if(count($actos) > 0)    
         <tbody>
-        <?php foreach($listaActos as $acto): ?>
+        @foreach($actos as $acto)
             <tr class="data">
-                <td><?=$acto->Fecha?></td>
-                <td><?=$acto->Hora?></td>
-                <td><?=$acto->Titulo?></td>
-                <td><?=$acto->Descripcion_corta?></td>
+                <td>{{ $acto->fecha }}</td>
+                <td>{{ $acto->hora }}</td>
+                <td>{{ $acto->titulo }}</td>
+                <td>{{ $acto->descripcion_corta }}</td>
                 <td >
                     <div class="acciones">
-                        <a href='controller/update_acto_controller.php?acto_id=<?=$acto->Id_acto?>' class='secondary_a'>Modificar acto</a>
-                        <a href='controller/update_inscritos_controller.php?acto_id=<?=$acto->Id_acto?>' class='secondary_a'>Modificar inscritos</a>
+                        <a href='controller/update_acto_controller.php?acto_id={{ $acto->id_acto }}' class='secondary_a'>Modificar acto</a>
+                        <a href='controller/update_inscritos_controller.php?acto_id={{ $acto->id_acto }}' class='secondary_a'>Modificar inscritos</a>
                     </div>
                 </td>
             </tr>
-        <?php endforeach;}?>
+        @endforeach
         </tbody>
+    @endif
     </table>
     <div class="full_content"><a href='controller/add_acto_controller.php' class="add_acto">Añadir un nuevo acto</a></div>  
         <h2>Ajustes de tipo de actos:</h2>
@@ -53,66 +53,67 @@
                 </tr>
             </thead>
             <tbody> 
-<?php 
-if(count($listaTiposActos) > 0){
-     foreach($listaTiposActos as $TipoActo): ?>
-        <tr class="data">
-            <td><?=$TipoActo->Id_tipo_acto?></td>
-            <td style="text-wrap:nowrap">
-                <label for="input<?=$TipoActo->Id_tipo_acto?>" name="Editar">Editar esta descripcion (Clic Aquí):</label>
-                <input name="desc" class="inputDesc" id="input<?=$TipoActo->Id_tipo_acto?>" value="<?=$TipoActo->Descripcion?>"></td>
-            <td>
-                <div class="actions">
-                    <button data-id-type="<?=$TipoActo->Id_tipo_acto?>" class="uploadDescriptionType">Modificar Descripcion</button>
-                    <button data-id-type="<?=$TipoActo->Id_tipo_acto?>" class="deleteType">Eliminar</button>
-                </div>
-            </td>
-        </tr>
-    <?php endforeach;}?>
-        <tr>
-            <td>Añade un nuevo tipo de acto:</td>
-            <td colspan="2"><form action="controller/tipoActo_controller.php" method="post" ><input type="text" name="descripcion" required><button tpye="submit" name="newTipoActo">Añadir Tipo de Acto</button></form></td>
-        </tr>
-    </tbody>
-</table>            
-    <h2>Ajustes de ponentes:</h2>
-    <table>
-        <thead>
-            <tr class="data">
-                <th>Nombre Completo</th>
-                <th>Acto</th>
-                <th>Descripcion</th>
-                <th>Fecha</th>
-                <th>Accion</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php if (!is_null($listaInscripcionesPonentes) && (is_array($listaInscripcionesPonentes) || is_object($listaInscripcionesPonentes))) {
-            foreach($listaInscripcionesPonentes as $Ponente): ?>
-            <tr class="data">
-                <td><?=$Ponente->NombreCompleto?></td>
-                <td><?=$Ponente->Titulo_Acto?></td>
-                <td><?=$Ponente->Description_Acto?></td>
-                <td><?=$Ponente->Fecha_Acto?></td>
-                <td>
-                    <div class="actions">
-                        <button data-id-persona="<?=$Ponente->ID_Persona?>" data-id-acto="<?=$Ponente->ID_Acto?>" class="deletePonente">Eliminar</button>
-                    </div>
-                </td>
-            </tr>
-        <?php endforeach;} else{?>
-            <tr>
-                <td colspan="5">NO EXISTEN PONENTES</td>
-            </tr>
-            <?php } ?>
-            <?php if(count($listaActos) > 0) { ?>
-            <form action="controller/ponente_controller.php" method="post">           
+                @if(count($tiposActo) > 0)
+                    @foreach($tiposActo as $tipoActo)
+                        <tr class="data">
+                            <td><?=$tipoActo->id_tipo_acto?></td>
+                            <td style="text-wrap:nowrap">
+                                <label for="input<?=$tipoActo->id_tipo_acto?>" name="Editar">Editar esta descripcion (Clic Aquí):</label>
+                                <input name="desc" class="inputDesc" id="input<?=$tipoActo->id_tipo_acto?>" value="<?=$tipoActo->descripcion?>"></td>
+                            <td>
+                                <div class="actions">
+                                    <button data-id-type="<?=$tipoActo->id_tipo_acto?>" class="uploadDescriptionType">Modificar Descripcion</button>
+                                    <button data-id-type="<?=$tipoActo->id_tipo_acto?>" class="deleteType">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+                <tr>
+                    <td>Añade un nuevo tipo de acto:</td>
+                    <td colspan="2"><form action="controller/tipoActo_controller.php" method="post" ><input type="text" name="descripcion" required><button tpye="submit" name="newTipoActo">Añadir Tipo de Acto</button></form></td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Ajustes de ponentes:</h2>
+        <table>
+            <thead>
+                <tr class="data">
+                    <th>Nombre Completo</th>
+                    <th>Acto</th>
+                    <th>Descripcion</th>
+                    <th>Fecha</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if(!is_null($ponentes) && (is_array($ponentes) || is_object($ponentes)))
+                @foreach($ponentes as $ponente)
+                <tr class="data">
+                    <td><?=$ponente->nombre?></td>
+                    <td><?=$ponente->titulo?></td>
+                    <td><?=$ponente->descripcion_corta?></td>
+                    <td><?=$ponente->fecha?></td>
+                    <td>
+                        <div class="actions">
+                            <button data-id-persona="<?=$ponente->id_persona?>" data-id-acto="<?=$ponente->id_acto?>" class="deletePonente">Eliminar</button>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach 
+            @else
+                <tr>
+                    <td colspan="5">NO EXISTEN PONENTES</td>
+                </tr>
+            @endif    
+            @if(count($actos) > 0)
+                <form action="controller/ponente_controller.php" method="post">           
                     <td>
                         <span>Lista de personas: </span>
                         <select name="id_persona">
-                        <?php foreach($personas as $persona):?>   
-                                <option value="<?=$persona->Id_persona?>"><?=$persona->Nombre.' '.$persona->Apellido1.' '.$persona->Apellido2?></option>
-                        <?php endforeach;?>
+                        @foreach($personas as $persona)   
+                                <option value="<?=$persona->id_persona?>"><?=$persona->Nombre.' '.$persona->Apellido1.' '.$persona->Apellido2?></option>
+                        @endforeach
                         </select>
                     </td>
                     <td>
@@ -130,10 +131,10 @@ if(count($listaTiposActos) > 0){
                         <button name="newPonente">Añadir Ponente</button>
                     </td>
                 </form>
-            <?php } ?>    
+            @endif   
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         var buttons = document.querySelectorAll('.deletePonente');

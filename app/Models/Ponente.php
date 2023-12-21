@@ -11,7 +11,6 @@ class Ponente extends Model {
             ->join('personas', 'lista_ponentes.id_ponente', '=', 'personas.id_persona')
             ->join('actos', 'lista_ponentes.id_acto', '=', 'actos.id_acto')
             ->select('lista_ponentes.*', 'personas.*', 'actos.*')
-            ->groupBy('actos.id_acto')
             ->get();
         return $ponentes;
     }

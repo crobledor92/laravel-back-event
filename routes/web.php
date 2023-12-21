@@ -5,6 +5,8 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ActoController;
+use App\Http\Controllers\TiposActoController;
+use App\Http\Controllers\PonenteController;
 
 Route::get('/', function () {
     (new SessionController())->shareData();
@@ -42,5 +44,12 @@ Route::post('/editar-perfil', [UsuarioController::class, 'updateController'])->n
 
 Route::get('/panel-administracion', function () {
     (new SessionController())->shareData();
-    return view('admin-panel');
+    $actoController = new ActoController();
+    $actos = $actoController->getActos();
+    $tiposActoController = new TiposActoController();
+    $tiposActo = $tiposActoController->getTiposActo();
+    $ponenteController = new PonenteController();
+    $ponentes = $ponenteController->getPonentes();
+    
+    return view('admin-panel', ['actos' => $actos, 'tiposActo' => $tiposActo, 'ponentes' => $ponentes]);
 })->name('panel-administracion');
