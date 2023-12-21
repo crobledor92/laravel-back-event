@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\ActoController;
 
 Route::get('/', function () {
     (new SessionController())->shareData();
@@ -30,9 +31,9 @@ Route::get('/cerrar-sesion', function () {
 
 Route::get('/panel-personal', function () {
     (new SessionController())->shareData();
-    $calendarController = new CalendarController();
-    $eventos = $calendarController->obtenerEventos();
-    return view('personal-panel', ['eventos' => $eventos]);
+    $actoController = new ActoController();
+    $actos = $actoController->getActos();
+    return view('personal-panel', ['actos' => $actos]);
 })->name('panel-personal');
 
 Route::get('/editar-perfil', function () {

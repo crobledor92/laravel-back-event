@@ -16,6 +16,8 @@ class Usuario extends Model{
             'nombre' => $data['nombre'],
             'apellido1' => $data['apellido1'],
             'apellido2' => $data['apellido2'],
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         $id_user = DB::table('usuarios')->insertGetId([
             'email' => $data['email'],
@@ -23,6 +25,8 @@ class Usuario extends Model{
             'password' => $data['password'],
             'id_persona' => $id_persona,
             'id_tipo_usuario' => $data['user_type'],
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         return $id_user > 0;
     }
@@ -41,6 +45,7 @@ class Usuario extends Model{
             $updateData = [
                 'username' => $data['username'],
                 'email' => $data['email'],
+                'updated_at' => now(),
             ];
             if ($data['new_password'] !== null) {
                 $updateData['password'] = Hash::make($data['new_password']);
