@@ -13,10 +13,7 @@
 <main>
     <div class="container">
         <h1>Calendario de eventos:</h1>
-        @foreach($actos as $acto)
-            <p>{{ $acto->titulo }}</p>
-        @endforeach
-        @include('layout/calendar')
+@include('layout/calendar')
     </div>
 </main>
 @include('common/footer')

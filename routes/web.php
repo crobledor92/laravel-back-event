@@ -52,14 +52,18 @@ Route::get('/panel-administracion', function () {
     $ponenteController = new PonenteController();
     $ponentes = $ponenteController->getPonentes();
     $personasController = new PersonasController();
-    $personas = $personasController->getPersonas();    
+    $personas = $personasController->getPersonas();
     
     return view('admin-panel', ['actos' => $actos, 'tiposActo' => $tiposActo, 'ponentes' => $ponentes, 'personas' => $personas]);
 })->name('panel-administracion');
 
+<<<<<<< HEAD
 Route::get('/añadir-acto', function () {
     (new SessionController())->shareData();
     return view('edit-profile');
 })->name('editar-perfil');
 
 Route::get('/nuevo-acto', 'ActoController')->name('nuevo-acto');
+=======
+Route::match(['put', 'delete'], '/tipo-acto/{id}', [TiposActoController::class, 'handleTipoActo'])->name('handle-tipo-acto.route');
+>>>>>>> 07ad43abf844a518d38d8f1fc700b206217e49ec
