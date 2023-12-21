@@ -20,8 +20,8 @@ table thead{background:#d5d5d5}thead th{padding:5px}
 tr.data th,tr.data td{border-right:1px solid #cfcfcf}
 tr.data th:last-child,tr.data td:last-child{border-right:0}
 table input{margin-bottom:0}
-.admin_panel table{width:calc(100% - 150px);margin:40px auto;border:1px solid;text-align:center;border-collapse:collapse}
-.admin_panel table td{padding:5px;border-top:2px solid;border-bottom:2px solid}
+table{width:calc(100% - 150px);margin:40px auto;border:1px solid;text-align:center;border-collapse:collapse}
+table td{padding:5px;border-top:2px solid;border-bottom:2px solid}
 .full_content{width:calc(100% - 150px);margin:auto;text-align:right}
 a.add_acto{padding:10px 30px;background:#326e44;color:#fff;text-decoration:none;font-weight:700;border:2px solid #0a2512;border-radius:7px}
 a.add_acto:hover{border:4px solid}

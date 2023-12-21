@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Personas extends Model {
 
     public function getPersonas() {
-        $personas = DB::table('personas')
-            ->select('personas.*')
-            ->get();
+        $personas = DB::table('personas')->get();
         return $personas;
     }
 }

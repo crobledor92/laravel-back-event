@@ -10,8 +10,7 @@
 </head>
 <body>
 @include('common/navegation')
-<main>
-    <div class="container">
+<main class="admin_panel">
     <h1>Panel de administrador</h1>
     <h2>Ajustes de actos:</h2>
     <table>
@@ -57,14 +56,14 @@
                 @if(count($tiposActo) > 0)
                     @foreach($tiposActo as $tipoActo)
                         <tr class="data">
-                            <td>PHP_ECHO=$tipoActo->id_tipo_actoEND_PHP</td>
+                            <td><?=$tipoActo->id_tipo_acto?></td>
                             <td style="text-wrap:nowrap">
-                                <label for="inputPHP_ECHO=$tipoActo->id_tipo_actoEND_PHP" name="Editar">Editar esta descripcion (Clic Aquí):</label>
-                                <input name="desc" class="inputDesc" id="inputPHP_ECHO=$tipoActo->id_tipo_actoEND_PHP" value="PHP_ECHO=$tipoActo->descripcionEND_PHP"></td>
+                                <label for="input<?=$tipoActo->id_tipo_acto?>" name="Editar">Editar esta descripcion (Clic Aquí):</label>
+                                <input name="desc" class="inputDesc" id="input<?=$tipoActo->id_tipo_acto?>" value="<?=$tipoActo->descripcion?>"></td>
                             <td>
                                 <div class="actions">
-                                    <button data-id-type="PHP_ECHO=$tipoActo->id_tipo_actoEND_PHP" class="uploadDescriptionType">Modificar Descripcion</button>
-                                    <button data-id-type="PHP_ECHO=$tipoActo->id_tipo_actoEND_PHP" class="deleteType">Eliminar</button>
+                                    <button data-id-type="<?=$tipoActo->id_tipo_acto?>" class="uploadDescriptionType">Modificar Descripcion</button>
+                                    <button data-id-type="<?=$tipoActo->id_tipo_acto?>" class="deleteType">Eliminar</button>
                                 </div>
                             </td>
                         </tr>
@@ -91,13 +90,13 @@
             @if(!is_null($ponentes) && (is_array($ponentes) || is_object($ponentes)))
                 @foreach($ponentes as $ponente)
                 <tr class="data">
-                    <td>PHP_ECHO=$ponente->nombreEND_PHP</td>
-                    <td>PHP_ECHO=$ponente->tituloEND_PHP</td>
-                    <td>PHP_ECHO=$ponente->descripcion_cortaEND_PHP</td>
-                    <td>PHP_ECHO=$ponente->fechaEND_PHP</td>
+                    <td><?=$ponente->nombre?></td>
+                    <td><?=$ponente->titulo?></td>
+                    <td><?=$ponente->descripcion_corta?></td>
+                    <td><?=$ponente->fecha?></td>
                     <td>
                         <div class="actions">
-                            <button data-id-persona="PHP_ECHO=$ponente->id_personaEND_PHP" data-id-acto="PHP_ECHO=$ponente->id_actoEND_PHP" class="deletePonente">Eliminar</button>
+                            <button data-id-persona="<?=$ponente->id_persona?>" data-id-acto="<?=$ponente->id_acto?>" class="deletePonente">Eliminar</button>
                         </div>
                     </td>
                 </tr>
@@ -120,9 +119,9 @@
                     <td>
                         <span>Lista de actos: </span>
                         <select name="id_acto">        
-                        PHP foreach($listaActos as $acto): END_PHP
-                            <option value="{{$acto->id_acto}}">{{$acto->fecha}} {{$acto->titulo}} {{$acto->descripcion_corta}}</option>
-                        PHP endforeach; END_PHP                    
+                        <?php foreach($listaActos as $acto): ?>
+                            <option value="<?=$acto->Id_acto?>"><?=$acto->Fecha." - ".$acto->Titulo." - ".$acto->Descripcion_corta?></option>
+                        <?php endforeach; ?>                    
                         </select>
                     </td>
                     <td>- - - - -</td>
@@ -212,6 +211,5 @@
         });
     });
     </script>
-    </div>
 </main>
 @include('common/footer')

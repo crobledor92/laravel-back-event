@@ -12,5 +12,4 @@ class PersonasController extends Controller {
         $personas = $personasModel->getPersonas();
         return $personas;
     }
-
 }
