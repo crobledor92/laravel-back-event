@@ -45,7 +45,7 @@
     @endif
     </table>
     <div class="full_content">
-    <a href="{{ route('nuevo-acto') }}" class="AddActo">Añadir un nuevo acto</a>
+    <a href='controller/update_acto_controller.php?acto_id={{ $acto->id_acto }}' class="AddActo"><button>Añadir un nuevo acto</button></a>
     </div>
 
         <h2>Ajustes de tipo de actos:</h2>
@@ -61,12 +61,6 @@
                 @if(count($tiposActo) > 0)
                     @foreach($tiposActo as $tipoActo)
                         <tr class="data">
-<<<<<<< HEAD
-                            <form method="post" action="{{ route('handle-tipo-acto.route', ['id' => $tipoActo->id_tipo_acto]) }}">
-                                @csrf
-                            <input type="hidden" name="_method" id="form_method" value="PUT">    
-=======
->>>>>>> 892f14c7e22b493defb88a8d767c69a357c3df39
                             <td>{{$tipoActo->id_tipo_acto}}</td>
                             <td style="text-wrap:nowrap">
                                 <label for="input{{$tipoActo->id_tipo_acto}}" name="Editar">Editar esta descripcion (Clic Aquí):</label>
