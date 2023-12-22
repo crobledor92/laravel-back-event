@@ -73,6 +73,8 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 .popup .info_popup{background-color:#e4e4e4;padding:20px;margin:auto;max-width:400px;z-index:2;}
 .popup .info{background:white;padding:20px;margin:auto;max-width:400px;z-index:2;}
 .popup button{width:100%;color:white;padding:10px;border:1px solid;margin-top:15px;}
-.popup button.ins{background-color:#b00000;}
+.popup button.ins{background-color:#b00000;cursor:pointer;}
+.popup button.noins{background-color:#006200;cursor:pointer;}
 .popup button.speaker{background-color:#959595;cursor:no-drop;}
-.popup button.noins{background-color:#006200;}
+.popup button.ins:hover{background-color:#7d0000;}
+.popup button.noins:hover{background-color:#023902;}

@@ -42,8 +42,7 @@ class UsuarioController extends Controller{
             'password' => Hash::make($request->input('password')),
         ];
 
-        $userModel = new Usuario();
-        $userCreated = $userModel->registerModel($userData);
+        $userCreated = (new Usuario())->registerModel($userData);
 
         if ($userCreated) {
             return redirect()->route('iniciar-sesion')->with('success', '¡Registro exitoso! Ahora puedes iniciar sesión.');
@@ -66,9 +65,7 @@ class UsuarioController extends Controller{
             'username' => $request->input('username'),
             'password' => $request->input('password'),
         ];
-
-        $userModel = new Usuario();
-        $userLogin = $userModel->loginModel($userData);
+        $userLogin = (new Usuario())->loginModel($userData);
 
         if ($userLogin) {
             session(['userInfo' => $userLogin]);
@@ -102,9 +99,8 @@ class UsuarioController extends Controller{
             'old_password' => $request->input('old_password'),
             'new_password' => $request->input('new_password'),
         ];
-
-        $userModel = new Usuario();
-        $userUpdate = $userModel->updateModel($userData);
+        
+        $userUpdate = (new Usuario())->updateModel($userData);
 
         if ($userUpdate) {
             session(['userInfo' => $userUpdate]);
