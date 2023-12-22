@@ -7,27 +7,26 @@ use Illuminate\Support\Facades\DB;
 class Inscrito extends Model {
 
     public function getInscritos() {
-        $inscritos = DB::table('inscritos')->get();
-        return $inscritos;
+        return DB::table('inscritos')->get();
     }
-
-    public function addInscrito($inscritoData) {
-        DB::table('inscritos')->insert([
-            'id_persona' => $inscritoData['id_persona'],
-            'id_acto' => $inscritoData['id_acto'],
-            'fecha_inscripcion' => $inscritoData['fecha_inscripcion'],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+    public function addInscrito($data) {
+        DB::table('inscritos')->insert(['id_persona' => $data['id_persona'],'id_acto' => $data['id_acto'],'fecha_inscripcion' => $data['fecha_inscripcion'],'created_at' => now(),'updated_at' => now(),]);
     }
-
     public function deleteInscrito($id_inscripcion, $id_persona) {
-        DB::table('inscritos')
-            ->where('id_inscripcion', $id_inscripcion)
-            ->where('id_persona', $id_persona)
-            ->delete();
+        DB::table('inscritos')->where('id_inscripcion', $id_inscripcion)->where('id_persona', $id_persona)->delete();
     }
     public function getAsistenciaPersonalModel($id_persona) {
         return DB::table('inscritos')->where('id_persona', $id_persona)->get();
+    }
+    public function HandleGoAssistanceModel($data) {
+        $exist = DB::table('inscritos')->where('id_persona', $data['id_persona'])->where('id_acto', $data['id_acto'])->get();
+        if ($exist->count() > 0) {
+            DB::table('inscritos')->where('id_persona', $data['id_persona'])->where('id_acto', $data['id_acto'])->delete();
+            return 'Inscripcion eliminada con éxito.';
+        } else {
+            DB::table('inscritos')->insert(['id_persona' => $data['id_persona'], 'id_acto' => $data['id_acto'],'fecha_inscripcion' => now(),'created_at' => now(),'updated_at' => now(),]);
+            return 'Inscripcion creada con éxito.';
+        }
+        return false;
     }
 }

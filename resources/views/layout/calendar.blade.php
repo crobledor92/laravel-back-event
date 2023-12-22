@@ -40,9 +40,9 @@ function generarCalendarioConActos(mes, anio) {
                 return ponencia.id_acto === evento.id_acto;
             });
             var color = isAlistada ? (isPonente ? 'speaker' : 'ins') : (isPonente ? 'speaker' : 'noins');
-            var buttonHandle = isPonente ? 'ERES PONENTE' : (isAlistada ? 'NO VOY A ASISTIR' : 'ASISTIR');
+            var buttonHandle = isPonente ? 'ERES PONENTE' : (isAlistada ? 'NO ASISTIR' : 'ASISTIR');
             var blockingbutton = isPonente ? 'disabled': '';
-            buttonHandle = '<button class="' + color + '" onclick="handleEvent(\'' + evento.id_acto + '\')" ' + blockingbutton + '>' + buttonHandle + '</button>';
+            buttonHandle = '<button class="' + color + '" data-id_acto="'+ evento.id_acto +'" id="HandleGoAssistance" ' + blockingbutton + '>' + buttonHandle + '</button>';
             calendarHtml += '<li class="' + color + '"><span class="titulo">' + evento.titulo + '</span><button onclick="openPopup(\'' + evento.id_acto + '\')" class="more">+</button></li>';
             eventos += '<div id="info_' + evento.id_acto + '" class="popup"><div class="back"></div><div class="info_popup"><div class="info"><p><b>Titulo del evento:</b> '+ evento.titulo +'</p><p><b>Descripcion corta:</b> '+ evento.descripcion_corta +'</p><p><b>Descripcion larga:</b> '+ evento.descripcion_larga +'</p><p><b>Numero de asistentes:</b> '+ evento.num_asistentes +'</p><p><b>Fecha del evento:</b> '+ evento.fecha +'</p><p><b>Hora del evento:</b> '+ evento.hora +'</p></div><div>' + buttonHandle + '</div></div><span class="close" onclick="closePopup(\'info_' + evento.id_acto + '\')">x</span></div>';
             });
@@ -64,7 +64,6 @@ function generarCalendarioConActos(mes, anio) {
     document.getElementById('calendar').innerHTML = calendarHtml;
     document.getElementById('eventos').innerHTML = eventos;
 }
-
 function mesAnterior() {
     mesActual--;
     if (mesActual < 1) {
@@ -89,4 +88,32 @@ function closePopup(id) {
     var popup = document.getElementById(id);
     popup.style.display = 'none';
 }
+document.addEventListener('DOMContentLoaded', function () {
+    var buttons = document.querySelectorAll('#HandleGoAssistance');
+    buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            fetch("{!! route('HandleGoAssistance.post') !!}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{!! csrf_token() !!}',
+                },
+                body: JSON.stringify({
+                    id_acto: parseInt(button.getAttribute('data-id_acto')),
+                    id_persona: {!! $userInfo->id_persona !!},
+                }),
+            })
+            .then(response => {
+                if (response.success) {
+                    console.log(mensaje);
+                } else {
+                    console.error('Error:', response.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            }); 
+        });
+    });
+});
 </script>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\InscritoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ActoController;
@@ -34,7 +35,8 @@ Route::get('/cerrar-sesion', function () {
     return redirect()->route('iniciar-sesion');
 })->name('cerrar-sesion');
 
-Route::get('/panel-personal' , [ActoController::class, 'showPersonalPanel'])->name('panel-personal');
+Route::get('/panel-personal', [ActoController::class, 'showPersonalPanel'])->name('panel-personal');
+Route::post('/panel-personal', [InscritoController::class, 'HandleGoAssistanceController'])->name('HandleGoAssistance.post');
 
 Route::get('/editar-perfil', function () {
     (new SessionController())->shareData();
