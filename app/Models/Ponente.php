@@ -8,7 +8,7 @@ class Ponente extends Model {
 
     public function getPonentes() {
         $ponentes = DB::table('lista_ponentes')
-            ->join('personas', 'lista_ponentes.id_ponente', '=', 'personas.id_persona')
+            ->join('personas', 'lista_ponentes.id_persona', '=', 'personas.id_persona')
             ->join('actos', 'lista_ponentes.id_acto', '=', 'actos.id_acto')
             ->select('lista_ponentes.*', 'personas.*', 'actos.*')
             ->get();

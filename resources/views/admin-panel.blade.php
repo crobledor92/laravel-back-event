@@ -101,7 +101,7 @@
                 </tr>
             </thead>
             <tbody>
-            @if(!is_null($ponentes) && (is_array($ponentes) || is_object($ponentes)))
+            @if(count($ponentes) > 0)
                 @foreach($ponentes as $ponente)
                 <tr class="data">
                     <td>{{$ponente->nombre}}</td>
@@ -110,7 +110,7 @@
                     <td>{{$ponente->fecha}}</td>
                     <td>
                         <div class="actions">
-                            <button data-id-persona="{{$ponente->id_persona}}" data-id-acto="{{$ponente->id_acto}}" class="deletePonente">Eliminar</button>
+                            <button data-id-persona="{{ $ponente->id_persona }}" data-id-acto="{{ $ponente->id_acto }}" class="deletePonente">Eliminar</button>
                         </div>
                     </td>
                 </tr>
@@ -121,7 +121,7 @@
                 </tr>
             @endif    
             @if(count($actos) > 0)
-                <form action="controller/ponente_controller.php" method="post">   
+                <form action="{{ route('add-ponente.post') }}" method="post">   
                     @csrf        
                     <td>
                         <span>Lista de personas: </span>
@@ -142,7 +142,7 @@
                     <td>- - - - -</td>
                     <td>- - - - -</td>
                     <td>
-                        <button name="newPonente">Añadir Ponente</button>
+                        <button type="submit" name="newPonente">Añadir Ponente</button>
                     </td>
                 </form>
             @endif   
@@ -159,7 +159,7 @@
                 fetch("{!! route('delete-ponente.delete') !!}", {
                     method: 'DELETE',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{!! csrf_token() !!}',
                     },
                     body: JSON.stringify({
