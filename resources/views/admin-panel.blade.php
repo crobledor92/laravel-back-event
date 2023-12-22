@@ -79,7 +79,13 @@
                 @endif
                 <tr>
                     <td>Añade un nuevo tipo de acto:</td>
-                    <td colspan="2"><form action="controller/tipoActo_controller.php" method="post" ><input type="text" name="descripcion" required><button tpye="submit" name="newTipoActo">Añadir Tipo de Acto</button></form></td>
+                    <td colspan="2">
+                        <form action="{{ route('add-tipo-acto.post') }}" method="post" >
+                            @csrf
+                            <input type="text" name="descripcion" required>
+                            <button tpye="submit" name="newTipoActo">Añadir Tipo de Acto</button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -115,7 +121,8 @@
                 </tr>
             @endif    
             @if(count($actos) > 0)
-                <form action="controller/ponente_controller.php" method="post">           
+                <form action="controller/ponente_controller.php" method="post">   
+                    @csrf        
                     <td>
                         <span>Lista de personas: </span>
                         <select name="id_persona">
@@ -149,12 +156,16 @@
             button.addEventListener('click', function () {
                 var dataIDPersona = button.getAttribute('data-id-persona');
                 var dataIDActo = button.getAttribute('data-id-acto');
-                fetch('controller/ponente_controller.php', {
-                    method: 'POST',
+                fetch("{!! route('delete-ponente.delete') !!}", {
+                    method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRF-TOKEN': '{!! csrf_token() !!}',
                     },
-                    body: 'ID_Persona=' + encodeURIComponent(dataIDPersona) + '&ID_Acto=' + encodeURIComponent(dataIDActo) + '&deletePonente=1',
+                    body: JSON.stringify({
+                        id_persona: dataIDPersona,
+                        id_acto: dataIDActo,
+                    }),
                 })
                 .then(response => response.text())
                 .then(data => {

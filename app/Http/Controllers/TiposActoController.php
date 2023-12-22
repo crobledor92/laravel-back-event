@@ -14,6 +14,20 @@ class TiposActoController extends Controller {
         return $tiposActo;
     }
 
+    public function addTipoActo(Request $request) {
+        try {
+            $descripcion = $request->input('descripcion');
+
+            $actoModel = new TipoActo();
+            $actoModel->addTipoActo($descripcion);
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return response()->json(['error' => $e], 500);
+        }
+    }
+
     public function updateTipoActo(Request $request) {
         try {
             $id_tipo_acto = $request->input('Id_tipo_acto');

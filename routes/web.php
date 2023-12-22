@@ -58,11 +58,8 @@ Route::get('/panel-administracion', function () {
 })->name('panel-administracion');
 
 Route::post('/panel-administracion', [ActoController::class, 'getActoByID'])->name('update-acto.post');
+
 Route::post('/modificar-acto', [ActoController::class, 'updateActo'])->name('update-acto.post');
-
-Route::put('/panel-administracion', [TiposActoController::class, 'updateTipoActo'])->name('update-tipo-acto.put');
-
-Route::delete('/panel-administracion', [TiposActoController::class, 'deleteTipoActo'])->name('delete-tipo-acto.delete');
 
 Route::get('/incluir-nuevo-acto', function () {
     (new SessionController())->shareData();
@@ -83,3 +80,11 @@ Route::get('/modificar-acto', function () {
     $personas = $personasController->getPersonas();
     return view('update-acto', ['listaTiposActos' => $tiposActo]);
 })->name('update-acto');
+
+Route::put('/panel-administracion', [TiposActoController::class, 'updateTipoActo'])->name('update-tipo-acto.put');
+
+Route::delete('/panel-administracion', [TiposActoController::class, 'deleteTipoActo'])->name('delete-tipo-acto.delete');
+
+Route::post('/panel-administracion', [TiposActoController::class, 'addTipoActo'])->name('add-tipo-acto.post');
+
+Route::delete('/panel-administracion', [PonenteController::class, 'deletePonente'])->name('delete-ponente.delete');
