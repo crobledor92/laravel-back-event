@@ -11,7 +11,7 @@ class TipoActo extends Model {
         return $tiposActo;
     }
 
-    public function addTiposActo($descripcionTipoActo) {
+    public function addTipoActo($descripcionTipoActo) {
         DB::table('tipo_acto')->insert([
             'descripcion' => $descripcionTipoActo,
             'created_at' => now(),

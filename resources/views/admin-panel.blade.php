@@ -34,7 +34,7 @@
                 <td>{{ $acto->descripcion_corta }}</td>
                 <td >
                     <div class="acciones">
-                        <a href='controller/update_acto_controller.php?acto_id={{ $acto->id_acto }}' class='secondary_a'>Modificar acto</a>
+                        <button data-id_acto="{{ $acto->id_acto }}" class='updateActo'>Modificar acto</button>
                         <a href='controller/update_inscritos_controller.php?acto_id={{ $acto->id_acto }}' class='secondary_a'>Modificar inscritos</a>
                     </div>
                 </td>
@@ -79,7 +79,13 @@
                 @endif
                 <tr>
                     <td>Añade un nuevo tipo de acto:</td>
-                    <td colspan="2"><form action="controller/tipoActo_controller.php" method="post" ><input type="text" name="descripcion" required><button tpye="submit" name="newTipoActo">Añadir Tipo de Acto</button></form></td>
+                    <td colspan="2">
+                        <form action="{{ route('add-tipo-acto.post') }}" method="post" >
+                            @csrf
+                            <input type="text" name="descripcion" required>
+                            <button tpye="submit" name="newTipoActo">Añadir Tipo de Acto</button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -115,7 +121,8 @@
                 </tr>
             @endif    
             @if(count($actos) > 0)
-                <form action="controller/ponente_controller.php" method="post">           
+                <form action="controller/ponente_controller.php" method="post">   
+                    @csrf        
                     <td>
                         <span>Lista de personas: </span>
                         <select name="id_persona">
@@ -149,12 +156,16 @@
             button.addEventListener('click', function () {
                 var dataIDPersona = button.getAttribute('data-id-persona');
                 var dataIDActo = button.getAttribute('data-id-acto');
-                fetch('controller/ponente_controller.php', {
-                    method: 'POST',
+                fetch("{!! route('delete-ponente.delete') !!}", {
+                    method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRF-TOKEN': '{!! csrf_token() !!}',
                     },
-                    body: 'ID_Persona=' + encodeURIComponent(dataIDPersona) + '&ID_Acto=' + encodeURIComponent(dataIDActo) + '&deletePonente=1',
+                    body: JSON.stringify({
+                        id_persona: dataIDPersona,
+                        id_acto: dataIDActo,
+                    }),
                 })
                 .then(response => response.text())
                 .then(data => {
@@ -220,6 +231,33 @@
                 )
                 .catch(error => {
                     alert("Hubo un problema intentando eliminar el tipo de acto");
+                });
+                setTimeout(function(){ location.reload(); }, 200);
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.updateActo');
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var dataIDActo = button.getAttribute('data-id_acto');
+                fetch('{!! route('update-acto.post') !!}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRF-TOKEN': '{!! csrf_token() !!}',
+                    },
+                    body: 'id_acto=' + encodeURIComponent(dataIDActo),
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    }
+                }
+                )
+                .catch(error => {
+                    console.error('Error:', error);
                 });
                 setTimeout(function(){ location.reload(); }, 200);
             });

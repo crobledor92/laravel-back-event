@@ -25,8 +25,20 @@ class ActoController extends Controller {
         $ponencias = $ponencias_controller->getPonenciaPersonalController($id_personal);
         return view('personal-panel',['actos' => $actos,'inscripciones' => $inscripciones,'ponencias' => $ponencias]);
     }
+    
     public function addActo(Request $request) {
         return true;
+    }
+
+    public function updateActo(Request $request) {
+        return true;
+    }
+
+    public function getActoByID(Request $request){
+        $id_acto = $request->input('id_acto');
+        $actoModel = new Acto();
+        $actoData = $actoModel->getActoByIDModel($id_acto);
+        return view('update-acto',['actoData' ->  $actoData]);
     }
 }
 
