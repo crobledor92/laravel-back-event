@@ -43,4 +43,8 @@ class Acto extends Model {
     public function deleteActo($idActo) {
         DB::table('actos')->where('id_acto', $idActo)->delete();
     }
+    public function getActoByIDModel($id) {
+        return DB::table('actos')->where('id_acto', $id)->first();
+    }
 }
+//->input('username')
