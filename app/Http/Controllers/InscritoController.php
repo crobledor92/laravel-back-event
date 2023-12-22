@@ -17,10 +17,11 @@ class InscritoController extends Controller {
         ];
         $inscripciones = (new Inscrito())->HandleGoAssistanceModel($data);
         if ($inscripciones) {
-            return ['success' => true, 'mensaje' => $data];
-            return redirect()->route('personal-panel')->with('success', 'Inscripción: ' . $inscripciones);
+            $message = 'Inscripción: ' . $inscripciones;
+            return response()->json(['success' => true, 'message' => $message]);
         } else {
-            return redirect()->back()->withErrors(['Ha habido un error inesperado, vuelva a intentarlo']);
+            $message = 'Ha habido un error inesperado, vuelva a intentarlo';
+            return response()->json(['success' => true, 'message' => $message]);
         }
     }
 }

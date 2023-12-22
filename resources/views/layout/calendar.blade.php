@@ -103,16 +103,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     id_persona: {!! $userInfo->id_persona !!},
                 }),
             })
+            .then(response => response.json())
             .then(response => {
                 if (response.success) {
-                    console.log(mensaje);
+                    window.location.href = "{!! route('panel-personal')->with('success', urlencode(data.message)) !!}";
                 } else {
                     console.error('Error:', response.message);
-                }
+                } 
             })
             .catch(error => {
-                console.error('Error:', error);
-            }); 
+                console.error('Fetch error:', error);
+            });
         });
     });
 });
