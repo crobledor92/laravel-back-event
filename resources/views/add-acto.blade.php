@@ -40,7 +40,7 @@
                     <option value="{{ $persona->id_persona }}">{{ $persona->nombre . ' ' . $persona->apellido1 . ' ' . $persona->apellido2 }}</option>
                 @endforeach
                 </select>
-                <a href="{{ route('add-acto') }}" class="AddActo"><button type="button">Añadir un nuevo acto</button></a><br>
+                <button type="submit">Añadir un nuevo acto</button>
             </form>            
         </div>
     </main>

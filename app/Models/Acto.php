@@ -23,6 +23,7 @@ class Acto extends Model {
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
     }
 
     public function updateActo($actoData) {
@@ -47,4 +48,3 @@ class Acto extends Model {
         return DB::table('actos')->where('id_acto', $id)->first();
     }
 }
-//->input('username')

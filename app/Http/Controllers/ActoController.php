@@ -27,7 +27,37 @@ class ActoController extends Controller {
     }
     
     public function addActo(Request $request) {
-        return true;
+        
+            $request->validate([
+                'fecha' => 'required',
+                'hora' => 'required',
+                'titulo' => 'required',
+                'resumen' => 'required',
+                'descripcion' => 'required',
+                'asistentes' => 'required',
+                'tipoActo' => 'required', 
+            ], [
+                'fecha.required' => 'El campo Fecha es obligatorio.',
+                'hora.required' => 'El campo Hora es obligatorio.',
+                'titulo.required' => 'El campo Título es obligatorio.',
+                'resumen.required' => 'El campo Resumen es obligatorio.',
+                'descripcion.required' => 'El campo CDescripción es obligatorio.',
+                'asistentes.required' => 'El campo Asistenetes es obligatorio.',
+                'tipoActo.required' => 'El campo Tipo de Acto es obligatorio.',
+            ]);
+            $actoData = [
+                'fecha' => $request->input('fecha'),
+                'hora' => $request->input('hora'),
+                'titulo' => $request->input('titulo'),
+                'descripcion_corta' => $request->input('resumen'),
+                'descripcion_larga' => $request->input('descripcion'),
+                'num_asistentes' => $request->input('asistentes'),
+                'id_tipo_acto' =>  $request->input('tipoActo'), 
+            ];
+            $actoCreated = (new Acto())->addActo($actoData);
+
+            return redirect()->route('panel-administracion')->with('success', 'Acto creado');       
+
     }
 
     public function updateActo(Request $request) {
@@ -41,4 +71,3 @@ class ActoController extends Controller {
         return view('update-acto',['actoData' ->  $actoData]);
     }
 }
-
