@@ -1,6 +1,6 @@
 <header>
     <div class="container">
-        <a href="{{ route('landing') }}" class="logo"><img src="img/logo.svg" alt="BackEvent" title="Pagina Principal - Back Event"style="width:auto;height:50px;"></a>
+        <a href="{{ route('landing') }}" class="logo"><img src="http://localhost:8000/img/logo.svg" alt="BackEvent" title="Pagina Principal - Back Event"style="width:auto;height:50px;"></a>
         <nav class="right">
         @if ($userInfo !== null)
             @if($userInfo->id_tipo_usuario == 3)

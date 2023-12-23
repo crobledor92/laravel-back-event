@@ -1,5 +1,4 @@
 @include('common/session')
-
 <!DOCTYPE html>
 <html lang="es">
 <head>

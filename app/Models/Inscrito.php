@@ -9,15 +9,31 @@ class Inscrito extends Model {
     public function getInscritos() {
         return DB::table('inscritos')->get();
     }
+
+    public function getInscritosActo($idActo) {
+        return DB::table('inscritos')
+            ->join('personas', 'inscritos.id_persona', '=', 'personas.id_persona')
+            ->select('personas.*', 'inscritos.*')
+            ->where('id_acto', $idActo)
+            ->get();
+    }
+
     public function addInscrito($data) {
         DB::table('inscritos')->insert(['id_persona' => $data['id_persona'],'id_acto' => $data['id_acto'],'fecha_inscripcion' => $data['fecha_inscripcion'],'created_at' => now(),'updated_at' => now(),]);
     }
+
     public function deleteInscrito($id_inscripcion, $id_persona) {
         DB::table('inscritos')->where('id_inscripcion', $id_inscripcion)->where('id_persona', $id_persona)->delete();
     }
+
+    public function deleteActoInscrito($id_inscripcion) {
+        DB::table('inscritos')->where('id_inscripcion', $id_inscripcion)->delete();
+    }
+
     public function getAsistenciaPersonalModel($id_persona) {
         return DB::table('inscritos')->where('id_persona', $id_persona)->get();
     }
+
     public function HandleGoAssistanceModel($data) {
         $exist = DB::table('inscritos')->where('id_persona', $data['id_persona'])->where('id_acto', $data['id_acto'])->get();
         if ($exist->count() > 0) {

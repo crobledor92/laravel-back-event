@@ -35,8 +35,12 @@
                     <td>{{ $acto->descripcion_corta }}</td>
                     <td>
                         <div class="acciones">
-                            <button data-id_acto="{{ $acto->id_acto }}" class='updateActo'>Modificar acto</button>
-                            <a href='controller/update_inscritos_controller.php?acto_id={{ $acto->id_acto }}' class='secondary_a'>Modificar inscritos</a>
+                            <a href="{{ route('get-acto-data.get', ['id' => $acto->id_acto]) }}" class="AddActo">
+                                <button class="primary-button" type="button">Modificar acto</button>                            
+                            </a>
+                            <a href="{{ route('get-acto-inscritos.get', ['id' => $acto->id_acto]) }}" class="AddActo">
+                                <button class="primary-button" type="button">Modificar inscritos</button>                            
+                            </a>
                         </div>
                     </td>
                 </tr>
@@ -46,7 +50,7 @@
         </table>
         <div class="full_content">
             <a href="{{ route('add-acto') }}" class="AddActo">
-                <button type="button">Añadir un nuevo acto</button>
+                <button class="primary-button" type="button">Añadir un nuevo acto</button>
             </a>
         </div>
         </div>
@@ -71,8 +75,8 @@
                                 </td>
                                 <td>
                                     <div class="actions">
-                                        <button data-id-type="{{ $tipoActo->id_tipo_acto }}" class="uploadDescriptionType">Modificar Descripcion</button>
-                                        <button data-id-type="{{ $tipoActo->id_tipo_acto }}" class="deleteType">Eliminar</button>
+                                        <button data-id-type="{{ $tipoActo->id_tipo_acto }}" class="uploadDescriptionType primary-button">Modificar Descripcion</button>
+                                        <button data-id-type="{{ $tipoActo->id_tipo_acto }}" class="deleteType primary-button">Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
@@ -81,13 +85,15 @@
                     @endif
                     <tr>
                         <td>Añade un nuevo tipo de acto:</td>
-                        <td colspan="2">
-                            <form action="{{ route('add-tipo-acto.post') }}" method="post" >
-                                @csrf
+                        <form action="{{ route('add-tipo-acto.post') }}" method="post" >
+                            @csrf
+                            <td>
                                 <input type="text" name="descripcion" required>
-                                <button tpye="submit" name="newTipoActo">Añadir Tipo de Acto</button>
-                            </form>
-                        </td>
+                            </td>
+                            <td>
+                                <button class="primary-button" tpye="submit" name="newTipoActo">Añadir Tipo de Acto</button>
+                            </td>
+                        </form>
                     </tr>
                 </tbody>
             </table>
@@ -114,7 +120,7 @@
                         <td>{{$ponente->fecha}}</td>
                         <td>
                             <div class="actions">
-                                <button data-id-persona="{{ $ponente->id_persona }}" data-id-acto="{{ $ponente->id_acto }}" class="deletePonente">Eliminar</button>
+                                <button data-id-persona="{{ $ponente->id_persona }}" data-id-acto="{{ $ponente->id_acto }}" class="deletePonente primary-button">Eliminar</button>
                             </div>
                         </td>
                     </tr>
@@ -143,10 +149,10 @@
                             @endforeach
                         </select>
                         </td>
-                        <td>- - - - -</td>
-                        <td>- - - - -</td>
+                        <td></td>
+                        <td></td>
                         <td>
-                            <button type="submit" name="newPonente">Añadir Ponente</button>
+                            <button class="primary-button" type="submit" name="newPonente">Añadir Ponente</button>
                         </td>
                     </form>
                 @endif   
@@ -238,33 +244,6 @@
                     alert("Hubo un problema intentando eliminar el tipo de acto");
                 });
                 setTimeout(function(){ location.reload(); }, 200);
-            });
-        });
-    });
-    document.addEventListener('DOMContentLoaded', function () {
-        var buttons = document.querySelectorAll('.updateActo');
-        buttons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                var dataIDActo = button.getAttribute('data-id_acto');
-                fetch("{!! route('update-acto.post') !!}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{!! csrf_token() !!}',
-                    },
-                    body: JSON.stringify({
-                        id_acto: dataIDActo,
-                    }),
-                })
-                .then(response => response.json())
-                .then(response => {
-                    if(response.actoData){
-                        console.log(response.actoData);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
             });
         });
     });

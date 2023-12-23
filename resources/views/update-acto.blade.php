@@ -1,5 +1,4 @@
 @include('common/session')
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,7 +15,8 @@
         <h1>Modificar acto</h1>
             <form class="" action="{{ route('update-acto.post') }}" method="post">
              @csrf
-             <label>Fecha</label>
+            <input type="number" name="id_acto" value="{{ $actoData->id_acto }}" style="display: none;" required><br>
+            <label>Fecha</label>
             <input type="date" name="fecha" value="{{ $actoData->fecha }}" required><br>
 
             <label>Hora</label>
@@ -36,7 +36,7 @@
 
             <label>Tipo de acto</label>
             <select name="tipoActo" required>
-                @foreach($listaTiposActos as $tipo)
+                @foreach($tiposActo as $tipo)
                     <option value="{{ $tipo->id_tipo_acto }}" {{ $actoData->id_tipo_acto == $tipo->id_tipo_acto ? 'selected' : '' }}>
                         {{ $tipo->descripcion }}
                     </option>
