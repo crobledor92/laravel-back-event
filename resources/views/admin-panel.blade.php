@@ -257,7 +257,11 @@
                     }),
                 })
                 .then(response => response.json())
-                .then(data => console.log(data))
+                .then(response => {
+                    if(response.actoData){
+                        console.log(response.actoData);
+                    }
+                })
                 .catch(error => {
                     console.error('Error:', error);
                 });
