@@ -17,11 +17,9 @@ class InscritoController extends Controller {
         ];
         $inscripciones = (new Inscrito())->HandleGoAssistanceModel($data);
         if ($inscripciones) {
-            $message = 'Inscripción: ' . $inscripciones;
-            return response()->json(['success' => true, 'message' => $message]);
+            return response()->json(['success' => true]);
         } else {
-            $message = 'Ha habido un error inesperado, vuelva a intentarlo';
-            return response()->json(['success' => true, 'message' => $message]);
+            return response()->json(['success' => true]);
         }
     }
 }

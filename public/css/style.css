@@ -59,7 +59,7 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 .table .caption{font-size:1.5em;background:#bacad4;padding:10px;font-weight:bold;display:flex;justify-content:space-between;}
 .table th, .calendar td{border:1px solid #ddd;text-align:center;padding:10px;}
 .table th{background-color:#f2f2f2;}
-.table td{width:100px;height:100px;vertical-align:top;}
+.table.calendar td{width:100px;height:100px;vertical-align:top;}
 .table .dia{padding:4px;background:#c9e4ee;border-radius:5px;}
 .table li.ins{background:#8eff8e;padding:2px;display:flex;justify-content:space-between;}
 .table li.noins{background:#ff7474;padding:2px;display:flex;justify-content:space-between;}

@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 function generarCalendarioConActos(mes, anio) {
     var actos = {!! $actos !!};
-    var inscripciones = {!! $inscripciones !!};
-    var ponencias = {!! $ponencias !!};
+    var inscripciones_propias = {!! $inscripciones !!};
+    var ponencias_propias = {!! $ponencias !!};
     var primerDia = new Date(anio, mes - 1, 1);
     var ultimoDia = new Date(anio, mes, 0);
     var diaActual = new Date(primerDia);
@@ -18,7 +18,7 @@ function generarCalendarioConActos(mes, anio) {
     var diasEnMes = ultimoDia.getDate();
     var primerDiaSemana = (primerDia.getDay() + 6) % 7;
     var eventos = "";
-    var calendarHtml = '<div class="table"><div class="caption"><button onclick="mesAnterior()">Mes Anterior</button><span>' + new Intl.DateTimeFormat('es', { month: 'long', year: 'numeric' }).format(diaActual).toLocaleUpperCase() + '</span><button onclick="mesSiguiente()">Mes Siguiente</button></div>';
+    var calendarHtml = '<div class="table calendar"><div class="caption"><button onclick="mesAnterior()">Mes Anterior</button><span>' + new Intl.DateTimeFormat('es', { month: 'long', year: 'numeric' }).format(diaActual).toLocaleUpperCase() + '</span><button onclick="mesSiguiente()">Mes Siguiente</button></div>';
     calendarHtml += '<table border="1"><tr><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th><th>Sábado</th><th>Domingo</th></tr><tr>'; 
     for (var i = 0; i < primerDiaSemana; i++) {
         calendarHtml += '<td></td>';
@@ -33,10 +33,10 @@ function generarCalendarioConActos(mes, anio) {
         if (eventosDelDia.length > 0) {
             calendarHtml += '<ul>';
             eventosDelDia.forEach(function(evento) {
-                var isAlistada = inscripciones.some(function(inscripcion) {
+                var isAlistada = inscripciones_propias.some(function(inscripcion) {
                 return inscripcion.id_acto === evento.id_acto;
             });
-            var isPonente = ponencias.some(function(ponencia) {
+            var isPonente = ponencias_propias.some(function(ponencia) {
                 return ponencia.id_acto === evento.id_acto;
             });
             var color = isAlistada ? (isPonente ? 'speaker' : 'ins') : (isPonente ? 'speaker' : 'noins');
@@ -107,9 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if (response.success) {
                     location.reload();
-                } else {
-                    console.error('Error:', response.message);
-                } 
+                }
             })
             .catch(error => {
                 console.error('Fetch error:', error);

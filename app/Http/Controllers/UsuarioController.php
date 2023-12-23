@@ -90,7 +90,6 @@ class UsuarioController extends Controller{
             'new_password.min' => 'La nueva contraseña debe tener al menos 8 caracteres.',
             'new_passwordRepeat.same' => 'La confirmación de la nueva contraseña no coincide.',
         ]);
-
         $userInfo = $request->session()->get('userInfo');
         $userData = [
             'id_usuario' => $userInfo->id_usuario,
@@ -99,9 +98,7 @@ class UsuarioController extends Controller{
             'old_password' => $request->input('old_password'),
             'new_password' => $request->input('new_password'),
         ];
-        
         $userUpdate = (new Usuario())->updateModel($userData);
-
         if ($userUpdate) {
             session(['userInfo' => $userUpdate]);
             $update = 'Se han actualizado tus datos ' . $userUpdate->username . '!';
