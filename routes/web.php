@@ -59,7 +59,7 @@ Route::get('/panel-administracion', function () {
     return view('admin-panel', ['actos' => $actos, 'tiposActo' => $tiposActo, 'ponentes' => $ponentes, 'personas' => $personas]);
 })->name('panel-administracion');
 
-Route::post('/panel-administracion', [ActoController::class, 'getActoByID'])->name('update-acto.post');
+Route::post('/panel-administracion/updateActo', [ActoController::class, 'getActoByID'])->name('update-acto.post');
 
 Route::post('/modificar-acto', [ActoController::class, 'updateActo'])->name('update-acto.post');
 

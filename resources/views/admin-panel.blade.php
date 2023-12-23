@@ -95,180 +95,179 @@
         <h2>Ajustes de ponentes:</h2>
         <div class="table">
         <table>
-                <thead>
-                    <tr class="data">
-                        <th>Nombre Completo</th>
-                        <th>Acto</th>
-                        <th>Descripcion</th>
-                        <th>Fecha</th>
-                        <th>Accion</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @if(count($ponentes) > 0)
-                    @foreach($ponentes as $ponente)
-                    <tr class="data">
-                        <td>{{$ponente->nombre}}</td>
-                        <td>{{$ponente->titulo}}</td>
-                        <td>{{$ponente->descripcion_corta}}</td>
-                        <td>{{$ponente->fecha}}</td>
-                        <td>
-                            <div class="actions">
-                                <button data-id-persona="{{ $ponente->id_persona }}" data-id-acto="{{ $ponente->id_acto }}" class="deletePonente">Eliminar</button>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach 
-                @else
-                    <tr>
-                        <td colspan="5">NO EXISTEN PONENTES</td>
-                    </tr>
-                @endif    
-                @if(count($actos) > 0)
-                    <form action="{{ route('add-ponente.post') }}" method="post">   
-                        @csrf        
-                        <td>
-                            <span>Lista de personas: </span>
-                            <select name="id_persona">
-                            @foreach($personas as $persona)   
-                                <option value="{{ $persona->id_persona }}">{{ $persona->nombre . ' ' . $persona->apellido1 . ' ' . $persona->apellido2 }}</option>
-                            @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        <span>Lista de actos: </span>
-                        <select name="id_acto">
-                            @foreach($actos as $acto)
-                                <option value="{{ $acto->id_acto }}">{{ $acto->fecha . ' ' . $acto->titulo . ' ' . $acto->descripcion_corta }}</option>
-                            @endforeach
-                        </select>
-                        </td>
-                        <td>- - - - -</td>
-                        <td>- - - - -</td>
-                        <td>
-                            <button type="submit" name="newPonente">Añadir Ponente</button>
-                        </td>
-                    </form>
-                @endif   
+            <thead>
+                <tr class="data">
+                    <th>Nombre Completo</th>
+                    <th>Acto</th>
+                    <th>Descripcion</th>
+                    <th>Fecha</th>
+                    <th>Accion</th>
                 </tr>
-                </tbody>
-            </table>
-        </div>
-        <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var buttons = document.querySelectorAll('.deletePonente');
-            buttons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    var dataIDPersona = button.getAttribute('data-id-persona');
-                    var dataIDActo = button.getAttribute('data-id-acto');
-                    fetch("{!! route('delete-ponente.delete') !!}", {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{!! csrf_token() !!}',
-                        },
-                        body: JSON.stringify({
-                            id_persona: dataIDPersona,
-                            id_acto: dataIDActo,
-                        }),
-                    })
-                    .then(response => response.text())
-                    .then(data => {
-                        if (data.error) {
-                            alert(data.error);
-                        }
+            </thead>
+            <tbody>
+            @if(count($ponentes) > 0)
+                @foreach($ponentes as $ponente)
+                <tr class="data">
+                    <td>{{$ponente->nombre}}</td>
+                    <td>{{$ponente->titulo}}</td>
+                    <td>{{$ponente->descripcion_corta}}</td>
+                    <td>{{$ponente->fecha}}</td>
+                    <td>
+                        <div class="actions">
+                            <button data-id-persona="{{ $ponente->id_persona }}" data-id-acto="{{ $ponente->id_acto }}" class="deletePonente">Eliminar</button>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach 
+            @else
+                <tr>
+                    <td colspan="5">NO EXISTEN PONENTES</td>
+                </tr>
+            @endif    
+            @if(count($actos) > 0)
+                <form action="{{ route('add-ponente.post') }}" method="post">   
+                    @csrf        
+                    <td>
+                        <span>Lista de personas: </span>
+                        <select name="id_persona">
+                        @foreach($personas as $persona)   
+                            <option value="{{ $persona->id_persona }}">{{ $persona->nombre . ' ' . $persona->apellido1 . ' ' . $persona->apellido2 }}</option>
+                        @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    <span>Lista de actos: </span>
+                    <select name="id_acto">
+                        @foreach($actos as $acto)
+                            <option value="{{ $acto->id_acto }}">{{ $acto->fecha . ' ' . $acto->titulo . ' ' . $acto->descripcion_corta }}</option>
+                        @endforeach
+                    </select>
+                    </td>
+                    <td>- - - - -</td>
+                    <td>- - - - -</td>
+                    <td>
+                        <button type="submit" name="newPonente">Añadir Ponente</button>
+                    </td>
+                </form>
+            @endif   
+            </tr>
+            </tbody>
+        </table>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.deletePonente');
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var dataIDPersona = button.getAttribute('data-id-persona');
+                var dataIDActo = button.getAttribute('data-id-acto');
+                fetch("{!! route('delete-ponente.delete') !!}", {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{!! csrf_token() !!}',
+                    },
+                    body: JSON.stringify({
+                        id_persona: dataIDPersona,
+                        id_acto: dataIDActo,
+                    }),
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
                     }
-                    )
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                    setTimeout(function(){ location.reload(); }, 200);
+                }
+                )
+                .catch(error => {
+                    console.error('Error:', error);
                 });
+                setTimeout(function(){ location.reload(); }, 200);
             });
         });
-        document.addEventListener('DOMContentLoaded', function () {
-            var buttons = document.querySelectorAll('.uploadDescriptionType');
-            buttons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    var dataIdType = button.getAttribute('data-id-type');
-                    var inputId = 'input' + dataIdType;
-                    var actual_description = document.getElementById(inputId).value;
-                    fetch("{!! route('update-tipo-acto.put') !!}", {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{!! csrf_token() !!}',
-                        },
-                        body: JSON.stringify({
-                            Id_tipo_acto: dataIdType,
-                            Descripcion: actual_description,
-                        }),
-                    })
-                    .then(res => console.log(res))
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                    setTimeout(function(){ location.reload(); }, 200);
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.uploadDescriptionType');
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var dataIdType = button.getAttribute('data-id-type');
+                var inputId = 'input' + dataIdType;
+                var actual_description = document.getElementById(inputId).value;
+                fetch("{!! route('update-tipo-acto.put') !!}", {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{!! csrf_token() !!}',
+                    },
+                    body: JSON.stringify({
+                        Id_tipo_acto: dataIdType,
+                        Descripcion: actual_description,
+                    }),
+                })
+                .then(res => console.log(res))
+                .catch(error => {
+                    console.error('Error:', error);
                 });
+                setTimeout(function(){ location.reload(); }, 200);
             });
         });
-        document.addEventListener('DOMContentLoaded', function () {
-            var buttons = document.querySelectorAll('.deleteType');
-            buttons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    var dataIdType = button.getAttribute('data-id-type');
-                    fetch("{!! route('delete-tipo-acto.delete') !!}", {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{!! csrf_token() !!}',
-                        },
-                        body: JSON.stringify({
-                            Id_tipo_acto: dataIdType,
-                        }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert(data.error);
-                        }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.deleteType');
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var dataIdType = button.getAttribute('data-id-type');
+                fetch("{!! route('delete-tipo-acto.delete') !!}", {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{!! csrf_token() !!}',
+                    },
+                    body: JSON.stringify({
+                        Id_tipo_acto: dataIdType,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
                     }
-                    )
-                    .catch(error => {
-                        alert("Hubo un problema intentando eliminar el tipo de acto");
-                    });
-                    setTimeout(function(){ location.reload(); }, 200);
+                }
+                )
+                .catch(error => {
+                    alert("Hubo un problema intentando eliminar el tipo de acto");
                 });
+                setTimeout(function(){ location.reload(); }, 200);
             });
         });
-        document.addEventListener('DOMContentLoaded', function () {
-            var buttons = document.querySelectorAll('.updateActo');
-            buttons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    var dataIDActo = button.getAttribute('data-id_acto');
-                    fetch('{!! route('update-acto.post') !!}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                            'X-CSRF-TOKEN': '{!! csrf_token() !!}',
-                        },
-                        body: 'id_acto=' + encodeURIComponent(dataIDActo),
-                    })
-                    .then(response => response.text())
-                    .then(data => {
-                        if (data.error) {
-                            alert(data.error);
-                        }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.updateActo');
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var dataIDActo = button.getAttribute('data-id_acto');
+                fetch('{!! route('update-acto.post') !!}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRF-TOKEN': '{!! csrf_token() !!}',
+                    },
+                    body: 'id_acto=' + encodeURIComponent(dataIDActo),
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
                     }
-                    )
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                    setTimeout(function(){ location.reload(); }, 200);
+                }
+                )
+                .catch(error => {
+                    console.error('Error:', error);
                 });
+                setTimeout(function(){ location.reload(); }, 200);
             });
         });
-        </script>
+    });
+    </script>
     </div>
 </main>
 @include('common/footer')

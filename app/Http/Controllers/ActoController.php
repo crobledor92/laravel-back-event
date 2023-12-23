@@ -68,7 +68,7 @@ class ActoController extends Controller {
         $id_acto = $request->input('id_acto');
         $actoModel = new Acto();
         $actoData = $actoModel->getActoByIDModel($id_acto);
-        info($actoData);
-        return view('update-acto',['actoData' ->  $actoData]);
+        $titulo = $actoData[title];
+        return response()->json(['success' => true, 'actoData' => $titulo]);
     }
 }
