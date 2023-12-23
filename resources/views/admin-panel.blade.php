@@ -246,21 +246,18 @@
         buttons.forEach(function (button) {
             button.addEventListener('click', function () {
                 var dataIDActo = button.getAttribute('data-id_acto');
-                fetch('{!! route('update-acto.post') !!}', {
+                fetch("{!! route('update-acto.post') !!}", {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{!! csrf_token() !!}',
                     },
-                    body: 'id_acto=' + encodeURIComponent(dataIDActo),
+                    body: JSON.stringify({
+                        id_acto: dataIDActo,
+                    }),
                 })
-                .then(response => response.text())
-                .then(data => {
-                    if (data.error) {
-                        alert(data.error);
-                    }
-                }
-                )
+                .then(response => response.json())
+                .then(data => console.log(data))
                 .catch(error => {
                     console.error('Error:', error);
                 });
