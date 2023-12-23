@@ -94,65 +94,66 @@
         </div>
         <h2>Ajustes de ponentes:</h2>
         <div class="table">
-        <table>
-            <thead>
-                <tr class="data">
-                    <th>Nombre Completo</th>
-                    <th>Acto</th>
-                    <th>Descripcion</th>
-                    <th>Fecha</th>
-                    <th>Accion</th>
-                </tr>
-            </thead>
-            <tbody>
-            @if(count($ponentes) > 0)
-                @foreach($ponentes as $ponente)
-                <tr class="data">
-                    <td>{{$ponente->nombre}}</td>
-                    <td>{{$ponente->titulo}}</td>
-                    <td>{{$ponente->descripcion_corta}}</td>
-                    <td>{{$ponente->fecha}}</td>
-                    <td>
-                        <div class="actions">
-                            <button data-id-persona="{{ $ponente->id_persona }}" data-id-acto="{{ $ponente->id_acto }}" class="deletePonente">Eliminar</button>
-                        </div>
-                    </td>
-                </tr>
-                @endforeach 
-            @else
-                <tr>
-                    <td colspan="5">NO EXISTEN PONENTES</td>
-                </tr>
-            @endif    
-            @if(count($actos) > 0)
-                <form action="{{ route('add-ponente.post') }}" method="post">   
-                    @csrf        
-                    <td>
-                        <span>Lista de personas: </span>
-                        <select name="id_persona">
-                        @foreach($personas as $persona)   
-                            <option value="{{ $persona->id_persona }}">{{ $persona->nombre . ' ' . $persona->apellido1 . ' ' . $persona->apellido2 }}</option>
-                        @endforeach
+            <table>
+                <thead>
+                    <tr class="data">
+                        <th>Nombre Completo</th>
+                        <th>Acto</th>
+                        <th>Descripcion</th>
+                        <th>Fecha</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if(count($ponentes) > 0)
+                    @foreach($ponentes as $ponente)
+                    <tr class="data">
+                        <td>{{$ponente->nombre}}</td>
+                        <td>{{$ponente->titulo}}</td>
+                        <td>{{$ponente->descripcion_corta}}</td>
+                        <td>{{$ponente->fecha}}</td>
+                        <td>
+                            <div class="actions">
+                                <button data-id-persona="{{ $ponente->id_persona }}" data-id-acto="{{ $ponente->id_acto }}" class="deletePonente">Eliminar</button>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach 
+                @else
+                    <tr>
+                        <td colspan="5">NO EXISTEN PONENTES</td>
+                    </tr>
+                @endif    
+                @if(count($actos) > 0)
+                    <form action="{{ route('add-ponente.post') }}" method="post">   
+                        @csrf        
+                        <td>
+                            <span>Lista de personas: </span>
+                            <select name="id_persona">
+                            @foreach($personas as $persona)   
+                                <option value="{{ $persona->id_persona }}">{{ $persona->nombre . ' ' . $persona->apellido1 . ' ' . $persona->apellido2 }}</option>
+                            @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        <span>Lista de actos: </span>
+                        <select name="id_acto">
+                            @foreach($actos as $acto)
+                                <option value="{{ $acto->id_acto }}">{{ $acto->fecha . ' ' . $acto->titulo . ' ' . $acto->descripcion_corta }}</option>
+                            @endforeach
                         </select>
-                    </td>
-                    <td>
-                    <span>Lista de actos: </span>
-                    <select name="id_acto">
-                        @foreach($actos as $acto)
-                            <option value="{{ $acto->id_acto }}">{{ $acto->fecha . ' ' . $acto->titulo . ' ' . $acto->descripcion_corta }}</option>
-                        @endforeach
-                    </select>
-                    </td>
-                    <td>- - - - -</td>
-                    <td>- - - - -</td>
-                    <td>
-                        <button type="submit" name="newPonente">Añadir Ponente</button>
-                    </td>
-                </form>
-            @endif   
-            </tr>
-            </tbody>
-        </table>
+                        </td>
+                        <td>- - - - -</td>
+                        <td>- - - - -</td>
+                        <td>
+                            <button type="submit" name="newPonente">Añadir Ponente</button>
+                        </td>
+                    </form>
+                @endif   
+                </tr>
+                </tbody>
+            </table>
+        </div>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         var buttons = document.querySelectorAll('.deletePonente');
@@ -263,7 +264,6 @@
                 .catch(error => {
                     console.error('Error:', error);
                 });
-                setTimeout(function(){ location.reload(); }, 200);
             });
         });
     });
