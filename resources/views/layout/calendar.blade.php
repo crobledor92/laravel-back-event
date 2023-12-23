@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(response => {
                 if (response.success) {
-                    window.location.href = "{!! route('panel-personal')->with('success', urlencode(data.message)) !!}";
+                    location.reload();
                 } else {
                     console.error('Error:', response.message);
                 } 
