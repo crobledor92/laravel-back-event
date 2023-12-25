@@ -26,7 +26,6 @@ class ActoController extends Controller {
         $ponencias = $ponencias_controller->getPonenciaPersonalController($id_personal);
         return view('personal-panel',['actos' => $actos,'inscripciones' => $inscripciones,'ponencias' => $ponencias]);
     }
-    
     public function addActo(Request $request) {
         
             $request->validate([
@@ -103,5 +102,15 @@ class ActoController extends Controller {
         $actoModel->updateActo($actoData);
 
         return redirect()->route('panel-administracion')->with('success', 'Acto modificado');  
+    }
+    public function EventsView(): View {
+        (new SessionController())->shareData();
+        $id_personal = optional(session('userInfo'))->id_persona;
+        $actos = $this->getActos();
+        $inscritos_controller = new InscritoController();
+        $inscripciones = $inscritos_controller->getAsistenciaPersonalController($id_personal);
+        $ponencias_controller = new PonenteController();
+        $ponencias = $ponencias_controller->getPonenciaPersonalController($id_personal);
+        return view('events',['actos' => $actos,'inscripciones' => $inscripciones,'ponencias' => $ponencias]);
     }
 }

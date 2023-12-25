@@ -97,3 +97,6 @@ Route::post('/panel-administracion/addPonente', [PonenteController::class, 'addP
 
 Route::delete('/panel-administracion/deletePonente', [PonenteController::class, 'deletePonente'])->name('delete-ponente.delete');
 
+//Evestos 
+
+Route::get('/eventos', [ActoController::class, 'EventsView'])->name('events');
