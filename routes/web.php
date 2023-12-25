@@ -15,6 +15,47 @@ Route::get('/', function () {
     return view('landing');
 })->name('landing');
 
+// NAVBAR
+
+Route::get('/listado-actos', function () {
+    (new SessionController())->shareData();
+    $idPersona = optional(session('userInfo'))->id_persona ?? null;
+
+    $actoController = new ActoController();
+    $listadoActos = $actoController->getActos()->toArray();
+    $ponenteController = new PonenteController();
+    $actosPonente = $idPersona ? $ponenteController->getPonenciaPersonalController($idPersona)->toArray() : null;
+    $inscritosController = new InscritoController();
+    $actosInscrito = $idPersona ? $inscritosController->getAsistenciaPersonalController($idPersona)->toArray() : null;
+
+    foreach($listadoActos as $acto) {
+        if ($actosPonente !== null) {
+            $isPonente = array_filter($actosPonente, function ($ponente) use ($acto) {
+                return $ponente->id_acto === $acto->id_acto;
+            });
+            
+            if ($isPonente) {
+                $acto->status = 'ponente';
+                continue;
+            }
+        }
+
+        if ($actosInscrito !== null) {
+            $isInscrito = array_filter($actosInscrito, function ($inscrito) use ($acto) {
+                return $inscrito->id_acto === $acto->id_acto;
+            });
+
+            if ($isInscrito) {
+                $acto->status = 'inscrito';
+                continue;
+            }
+        }
+
+        $acto->status = 'noInscrito';
+    }
+    return view('actos-list',['actos' => $listadoActos, 'idPersona' => $idPersona]);
+})->name('listado-actos.get');
+
 Route::get('/registrarse', function () {
     (new SessionController())->shareData();
     return view('register');

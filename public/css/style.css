@@ -90,3 +90,66 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 .popup button.speaker{background-color:#959595;cursor:no-drop;}
 .popup button.ins:hover{background-color:#7d0000;}
 .popup button.noins:hover{background-color:#023902;}
+/* Lista actos*/
+.acto-list > :not(:last-child) {
+    margin-bottom: 5px;
+}
+.acto {
+    padding: 15px 15px;
+    border: solid 1px #1d487b;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    background-color: white;
+}
+.acto p {
+    margin: 0 auto;
+}
+.acto-summary {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.acto-date {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.acto-title {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.acto-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.acto-status--ponente {
+    padding: 0 5px;
+    border: solid 1px orange;
+    border-radius: 5px;
+    background-color: rgba(255, 166, 0, 0.40);
+    color: orange;
+}
+.acto-status--inscrito {
+    padding: 0 5px;
+    border: solid 1px rgba(0, 0, 255, 0.614);
+    border-radius: 5px;
+    background-color: rgba(0, 0, 255, 0.292);
+    color: rgba(0, 0, 255, 0.614);
+}
+.acto-status--noInscrito {
+    padding: 0 5px;
+    border: solid 1px grey;
+    border-radius: 5px;
+    background-color: rgba(128, 128, 128, 0.4);
+    color: grey;
+}
+.grid-item {
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+}
+.acto-description {
+    padding: 10px 0;
+}

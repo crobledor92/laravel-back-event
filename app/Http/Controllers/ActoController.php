@@ -16,6 +16,7 @@ class ActoController extends Controller {
         $actos = $actoModel->getActos();
         return $actos;
     }
+
     public function showPersonalPanel(): View {
         (new SessionController())->shareData();
         $id_personal = optional(session('userInfo'))->id_persona;

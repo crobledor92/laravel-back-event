@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 class Acto extends Model {
 
     public function getActos() {
-        $actos = DB::table('actos')->get();
+        $actos = DB::table('actos')
+            ->join('tipo_acto', 'tipo_acto.id_tipo_acto', '=', 'actos.id_tipo_acto')
+            ->select('tipo_acto.*', 'actos.*')
+            ->get();
         return $actos;
     }
 
