@@ -26,9 +26,8 @@
                         <div class="acto-details">
                             <x-acto-status :status="$acto->status"/>
                             <p class="grid-item">{{ $acto->descripcion}} </p>
-                            <p class="grid-item">{{ $acto->num_asistentes}}</p>
+                            <p class="grid-item">{{ $acto->totalInscritos}} / {{ $acto->num_asistentes}}</p>
                         </div>
-
                     </div>
                     <div class="acto-description">
                         <p>{{ $acto->descripcion_corta}}</p>

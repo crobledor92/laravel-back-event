@@ -9,6 +9,7 @@ use App\Http\Controllers\ActoController;
 use App\Http\Controllers\TiposActoController;
 use App\Http\Controllers\PonenteController;
 use App\Http\Controllers\PersonasController;
+use Carbon\Carbon;
 
 Route::get('/', function () {
     (new SessionController())->shareData();
@@ -26,7 +27,10 @@ Route::get('/listado-actos', function () {
     $ponenteController = new PonenteController();
     $actosPonente = $idPersona ? $ponenteController->getPonenciaPersonalController($idPersona)->toArray() : null;
     $inscritosController = new InscritoController();
+    //Total de inscripciones del usuario conectado
     $actosInscrito = $idPersona ? $inscritosController->getAsistenciaPersonalController($idPersona)->toArray() : null;
+    //Total de inscripciones
+    $inscritos = $inscritosController->getAllInscritos();
 
     foreach($listadoActos as $acto) {
         if ($actosPonente !== null) {
@@ -52,7 +56,25 @@ Route::get('/listado-actos', function () {
         }
 
         $acto->status = 'noInscrito';
+    
     }
+
+    foreach($listadoActos as $acto) {
+        $combinedDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $acto->fecha . ' ' . $acto->hora);
+
+        if ($combinedDateTime->isBefore(Carbon::now())) {
+            $acto->isFinished = true;
+        } else {
+            $acto->isFinished = false;
+        }
+
+        $totalInscritos = array_filter($inscritos, function ($inscrito) use ($acto) {
+            return $inscrito->id_acto === $acto->id_acto;
+        });
+
+        $acto->totalInscritos = count($totalInscritos);
+    }
+
     return view('actos-list',['actos' => $listadoActos, 'idPersona' => $idPersona]);
 })->name('listado-actos.get');
 

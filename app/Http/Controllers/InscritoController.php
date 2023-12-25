@@ -25,6 +25,13 @@ class InscritoController extends Controller {
             return response()->json(['success' => true]);
         }
     }
+    
+    public function getAllInscritos() {
+        $InscritoModel = new Inscrito();
+        $actoInscritos = $InscritoModel->getInscritos()->toArray();
+
+        return $actoInscritos;
+    }
 
     public function getActoInscritos($id) {
         (new SessionController())->shareData();
