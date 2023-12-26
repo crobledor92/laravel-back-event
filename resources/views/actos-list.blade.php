@@ -94,4 +94,3 @@
     });
 </script>
 @include('common/footer')
-@dd($actos)
