@@ -9,6 +9,7 @@ use App\Http\Controllers\ActoController;
 use App\Http\Controllers\TiposActoController;
 use App\Http\Controllers\PonenteController;
 use App\Http\Controllers\PersonasController;
+use App\Http\Controllers\FileController;
 use Carbon\Carbon;
 
 Route::get('/', function () {
@@ -77,6 +78,8 @@ Route::get('/listado-actos', function () {
 
     return view('actos-list',['actos' => $listadoActos, 'idPersona' => $idPersona]);
 })->name('listado-actos.get');
+
+Route::post('/listado-actos/addFile', [FileController::class, 'addFile'])->name('addFile.post');
 
 Route::get('/registrarse', function () {
     (new SessionController())->shareData();

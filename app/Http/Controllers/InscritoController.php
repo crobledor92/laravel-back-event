@@ -60,7 +60,6 @@ class InscritoController extends Controller {
         $id_acto = $request->input('id_acto');
         $InscritoModel = new Inscrito();
         $actoInscritos = $InscritoModel->deleteActoInscrito($id_inscripcion);
-
         return $this->getActoInscritos($id_acto);
     }
 
