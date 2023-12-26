@@ -99,6 +99,7 @@ Route::get('/cerrar-sesion', function () {
 })->name('cerrar-sesion');
 
 Route::get('/panel-personal', [ActoController::class, 'showPersonalPanel'])->name('panel-personal');
+
 Route::post('/panel-personal', [InscritoController::class, 'HandleGoAssistanceController'])->name('HandleGoAssistance.post');
 
 Route::get('/editar-perfil', function () {
@@ -107,6 +108,11 @@ Route::get('/editar-perfil', function () {
 })->name('editar-perfil');
 
 Route::post('/editar-perfil', [UsuarioController::class, 'updateController'])->name('update.post');
+
+//LISTADO ACTOS VIEW
+
+Route::get('/actos-filtrados', [ActoController::class, 'filterActos'])->name('actos-filtrados.get');
+
 
 //ADMIN PANEL ROUTES
 Route::get('/panel-administracion', function () {

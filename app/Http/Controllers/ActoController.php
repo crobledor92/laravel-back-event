@@ -17,6 +17,17 @@ class ActoController extends Controller {
         return $actos;
     }
 
+    public function filterActos(Request $request) {
+        $selectedStatus = $request->input('selectedStatus');
+        $actos = $request->input('actos');
+
+        $filteredActos = $actos->filter(function ($acto) {
+            return $acto->status === $selectedStatus;
+        });
+    
+        return response()->json(['filteredActos' => $filteredActos]);
+    }
+
     public function showPersonalPanel(): View {
         (new SessionController())->shareData();
         $id_personal = optional(session('userInfo'))->id_persona;

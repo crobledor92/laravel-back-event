@@ -12,6 +12,17 @@
 @include('common/navegation')
 <main>
     <div class="container">
+        <section>
+            <form id="filter-actos">
+                <label for="acto-status">Estado del acto</label>
+                <select id="acto-status" name="acto-status">
+                    <option value="inscrito">Inscrito</option>
+                    <option value="ponente">Ponente</option>
+                    <option value="noInscrito">No inscrito</option>
+                </select>
+                <button type="submit">Apply Filters</button>
+            </form>
+        </section>
         <section class="actos-list">
             @foreach($actos as $acto)
                 <div class="acto">
@@ -38,4 +49,35 @@
         <h1>{{ $idPersona }}</h1>     
     </div>
 </main>
+<script>
+    $('#filter-actos').submit(function (e) {
+        e.preventDefault();
+
+        var filters = {
+            selectedStatus: $('#acto-status').val(),
+            actos: {!! json_encode($actos)!!}
+        };
+
+        $.ajax({
+            url: route('actos-filtrados.get'),
+            type: 'GET',
+            data: filters,
+            success: function(response) {
+                updateActos(response.events);
+            }
+        });
+    });
+
+    function updateActos(filteredActos) {
+        var actosContainer = $('.actos-list');
+
+        actosContainer.empty();
+
+        filteredActos.forEach(function (event) {
+            // Create and append HTML elements for each event
+            var eventHtml = '<div>' + event.name + '</div>'; // Adjust this based on your event structure
+            actosContainer.append(eventHtml);
+        });
+    }
+</script>
 @include('common/footer')
