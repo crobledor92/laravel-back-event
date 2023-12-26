@@ -40,13 +40,26 @@
                             <p class="grid-item">{{ $acto->totalInscritos}} / {{ $acto->num_asistentes}}</p>
                         </div>
                     </div>
+                    <input type="file" name="archivo" required>
                     <div class="acto-description">
                         <p>{{ $acto->descripcion_corta}}</p>
                     </div>
                 </div>
             @endforeach
-        </section>
-        <h1>{{ $idPersona }}</h1>     
+        </section>   
+        <form method="post" action="{{ route('addFile.post') }}" enctype="multipart/form-data">
+            @csrf
+            <fieldset>
+                <legend>Nuevo Registro:</legend>
+                <label for="archivo">Archivo:</label>
+                <input type="file" name="archivo"><br>
+                <label for="id_acto">id_acto</label>
+                <input type="text" name="id_acto"><br>
+                <label for="id_persona">id_persona</label>
+                <input type="text" name="id_persona"><br>
+                <input type="submit" value="Registrarse"><br>
+            </fieldset>
+        </form>        
     </div>
 </main>
 <script>
