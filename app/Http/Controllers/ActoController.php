@@ -8,6 +8,7 @@ use App\Http\Controllers\PonenteController;
 use App\Http\Controllers\InscritoController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ActoController extends Controller {
 
@@ -21,8 +22,12 @@ class ActoController extends Controller {
         $selectedStatus = $request->input('selectedStatus');
         $actos = $request->input('actos');
 
-        $filteredActos = $actos->filter(function ($acto) {
-            return $acto->status === $selectedStatus;
+        if ($selectedStatus === "todos") {
+            return response()->json(['filteredActos' => $actos]);
+        }
+
+        $filteredActos = array_filter($actos, function ($acto) use ($selectedStatus) {
+            return $acto["status"] === $selectedStatus;
         });
     
         return response()->json(['filteredActos' => $filteredActos]);
