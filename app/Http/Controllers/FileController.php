@@ -10,8 +10,8 @@ class FileController extends Controller {
         return (new Files())->getFilesModel();
     }
     //Obtiene los archivos mediante id_persona
-    public function getFilesPersona(Request $request) {
-        return (new Files())->getFilesPersonaModel($request->input('id_persona'));
+    public function getFilesPersona($id_persona,$id_acto) {
+        return (new Files())->getFilesPersonaModel($id_persona,$id_acto);
     }
     //Obtiene los archivos mediante id_presentacion
     public function getNameFilesByID(Request $request) {
@@ -33,7 +33,10 @@ class FileController extends Controller {
             'id_persona' => $request->input('id_persona'),
             'titulo_documento' => $nombreOriginal,
         ];
-        return (new Files())->addFileModel($data);
+        $status = (new Files())->addFileModel($data);
+        if($status){
+            return redirect()->route('listado-actos2.get')->with(['success', 'Archivo subido correctamente.']);
+        }
     }
     //Permite eliminar el archivo del sitio web y su registro en la BD.
     public function deleteFile(Request $request) {

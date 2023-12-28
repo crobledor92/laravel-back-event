@@ -45,37 +45,34 @@ class ActoController extends Controller {
     }
     
     public function addActo(Request $request) {
-        
-            $request->validate([
-                'fecha' => 'required',
-                'hora' => 'required',
-                'titulo' => 'required',
-                'resumen' => 'required',
-                'descripcion' => 'required',
-                'asistentes' => 'required',
-                'tipoActo' => 'required', 
-            ], [
-                'fecha.required' => 'El campo Fecha es obligatorio.',
-                'hora.required' => 'El campo Hora es obligatorio.',
-                'titulo.required' => 'El campo Título es obligatorio.',
-                'resumen.required' => 'El campo Resumen es obligatorio.',
-                'descripcion.required' => 'El campo CDescripción es obligatorio.',
-                'asistentes.required' => 'El campo Asistenetes es obligatorio.',
-                'tipoActo.required' => 'El campo Tipo de Acto es obligatorio.',
-            ]);
-            $actoData = [
-                'fecha' => $request->input('fecha'),
-                'hora' => $request->input('hora'),
-                'titulo' => $request->input('titulo'),
-                'descripcion_corta' => $request->input('resumen'),
-                'descripcion_larga' => $request->input('descripcion'),
-                'num_asistentes' => $request->input('asistentes'),
-                'id_tipo_acto' =>  $request->input('tipoActo'), 
-            ];
-            $actoCreated = (new Acto())->addActo($actoData);
-
-            return redirect()->route('panel-administracion')->with('success', 'Acto creado');       
-
+        $request->validate([
+            'fecha' => 'required',
+            'hora' => 'required',
+            'titulo' => 'required',
+            'resumen' => 'required',
+            'descripcion' => 'required',
+            'asistentes' => 'required',
+            'tipoActo' => 'required', 
+        ], [
+            'fecha.required' => 'El campo Fecha es obligatorio.',
+            'hora.required' => 'El campo Hora es obligatorio.',
+            'titulo.required' => 'El campo Título es obligatorio.',
+            'resumen.required' => 'El campo Resumen es obligatorio.',
+            'descripcion.required' => 'El campo CDescripción es obligatorio.',
+            'asistentes.required' => 'El campo Asistenetes es obligatorio.',
+            'tipoActo.required' => 'El campo Tipo de Acto es obligatorio.',
+        ]);
+        $actoData = [
+            'fecha' => $request->input('fecha'),
+            'hora' => $request->input('hora'),
+            'titulo' => $request->input('titulo'),
+            'descripcion_corta' => $request->input('resumen'),
+            'descripcion_larga' => $request->input('descripcion'),
+            'num_asistentes' => $request->input('asistentes'),
+            'id_tipo_acto' =>  $request->input('tipoActo'), 
+        ];
+        $actoCreated = (new Acto())->addActo($actoData);
+        return redirect()->route('panel-administracion')->with('success', 'Acto creado');       
     }
 
     public function getActoData($id) {
@@ -120,5 +117,48 @@ class ActoController extends Controller {
         $actoModel->updateActo($actoData);
 
         return redirect()->route('panel-administracion')->with('success', 'Acto modificado');  
+    }
+    public function listadoActosHTMLController() {
+        $id_persona = optional(session('userInfo'))->id_persona ?? null;
+        $actos = $this->getActos();
+        $getAllInscritos = (new InscritoController())->getAllInscritos();
+        $getPonenciaPersonal = (new PonenteController())->getPonenciaPersonalController($id_persona);
+        $getAsistenciaPersonal = (new InscritoController())->getAsistenciaPersonalController($id_persona);
+        $inscritosPorActo = [];
+        $ponentesPorActo = [];
+        $listadoActosHTML = '';
+        $certificado = csrf_field();
+
+        function obtenerEstadoActo($id_acto, $inscritosPorActo, $ponentesPorActo) {
+            if (isset($inscritosPorActo[$id_acto])) {
+                return 'inscrito';
+            } elseif (isset($ponentesPorActo[$id_acto])) {
+                return 'ponente';
+            } else {
+                return 'noinscrito';
+            }
+        }
+
+        foreach ($getAsistenciaPersonal as $inscripcion) {$inscritosPorActo[$inscripcion->id_acto] = 'inscrito';}
+        foreach ($getPonenciaPersonal as $ponencia) {$ponentesPorActo[$ponencia->id_acto] = 'ponente';}
+        foreach ($actos as $acto) {
+            $estado = obtenerEstadoActo($acto->id_acto, $inscritosPorActo, $ponentesPorActo);
+            $totalInscritos = array_filter($getAllInscritos, function ($inscrito) use ($acto) {
+                return $inscrito->id_acto === $acto->id_acto;
+            });
+            $listadoActosHTML .= '<div class="acto '.$estado.'"><div class="acto-summary"><div class="acto-date"><p><b>Fecha:</b> '.$acto->fecha.'</p><p><b>Hora:</b> '.$acto->hora.'</p></div><div class="acto-title"><p>'.$acto->titulo.'</p></div><div class="acto-details"><p class="grid-item"><b>Tipo de acto:</b> '.$acto->descripcion.'</p><p class="grid-item"><b>Asistencia:</b> '.count($totalInscritos).'/'.$acto->num_asistentes.'</p></div></div>';
+            $listadoActosHTML .= '<div class="acto-description"><p>'.$acto->descripcion_corta.'</p></div>'.($estado === 'ponente' ? '<div class="acto-status--ponente"><p class="grid-item">Ponente</p></div>' : ($estado === 'inscrito' ? '<div class="acto-status--inscrito"><p class="grid-item">Inscrito</p></div>' : '<div class="acto-status--noInscrito"><p class="grid-item">No inscrito</p></div>'));
+            $listadoActosHTML .= $estado === 'ponente' ? '<form class="file_upload" method="post" action="' . route("addFile.post") . '" enctype="multipart/form-data"><div class="content_form">'.$certificado.'<label for="archivo">Subir archivo:</label><input type="file" name="archivo"><input type="hidden" name="id_acto" value="'.$acto->id_acto.'"><input type="hidden" name="id_persona" value="'.$id_persona.'"></div><input class="submit" type="submit" value="Subir archivo"></form>' : '';
+            if($estado === 'ponente'){
+                $archivos = (new FileController())->getFilesPersona($id_persona, $acto->id_acto);
+                $listadoActosHTML .= '<details><summary>Archivos disponibles:</summary><ul>';
+                foreach($archivos as $archivo){
+                    $listadoActosHTML .= '<li><strong>'.$archivo->titulo_documento.'</strong></li>';
+                }
+                $listadoActosHTML .= '</ul></details>';
+            }
+            $listadoActosHTML .= '</div>';
+        }
+        return $listadoActosHTML;
     }
 }

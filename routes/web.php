@@ -169,3 +169,12 @@ Route::post('/panel-administracion/addPonente', [PonenteController::class, 'addP
 
 Route::delete('/panel-administracion/deletePonente', [PonenteController::class, 'deletePonente'])->name('delete-ponente.delete');
 
+// PRUEBAS:
+
+Route::get('/listado-actos2', function () {
+    (new SessionController())->shareData();
+    $listadoActosHTML = (new ActoController())->listadoActosHTMLController();
+    return view('actos-lista',['listadoActosHTML' => $listadoActosHTML]);
+})->name('listado-actos2.get');
+
+Route::post('/listado-actos2/addFile', [FileController::class, 'addFile'])->name('addFile.post');
