@@ -128,7 +128,6 @@ class ActoController extends Controller {
         $ponentesPorActo = [];
         $listadoActosHTML = '';
         $certificado = csrf_field();
-
         function obtenerEstadoActo($id_acto, $inscritosPorActo, $ponentesPorActo) {
             if (isset($inscritosPorActo[$id_acto])) {
                 return 'inscrito';
@@ -138,7 +137,6 @@ class ActoController extends Controller {
                 return 'noinscrito';
             }
         }
-
         foreach ($getAsistenciaPersonal as $inscripcion) {$inscritosPorActo[$inscripcion->id_acto] = 'inscrito';}
         foreach ($getPonenciaPersonal as $ponencia) {$ponentesPorActo[$ponencia->id_acto] = 'ponente';}
         foreach ($actos as $acto) {
