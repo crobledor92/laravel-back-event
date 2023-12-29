@@ -58,13 +58,21 @@ class InscritoController extends Controller {
         (new SessionController())->shareData();
         $id_inscripcion = $request->input('id_inscripcion');
         $id_acto = $request->input('id_acto');
+
         $InscritoModel = new Inscrito();
         $actoInscritos = $InscritoModel->deleteActoInscrito($id_inscripcion);
-        return $this->getActoInscritos($id_acto);
+
+        if ($request->has('userSubscription')) {
+            return redirect()->route('listado-actos.get');
+        } else {
+            return $this->getActoInscritos($id_acto);
+        }
+        
     }
 
-    public function addInscripcion(Request $request) {
+    public function addInscripcion(Request $request, $idActo = null, $idPersona = null) {
         (new SessionController())->shareData();
+
         $data = [
             'id_acto' => $request->input('id_acto'),
             'id_persona' => $request->input('id_persona'),
@@ -74,6 +82,10 @@ class InscritoController extends Controller {
         $InscritoModel = new Inscrito();
         $actoInscritos = $InscritoModel->addInscrito($data);
 
-        return $this->getActoInscritos($request->input('id_acto'));
+        if ($request->has('userSubscription')) {
+            return redirect()->route('listado-actos.get');
+        } else {
+            return $this->getActoInscritos($request->input('id_acto'));
+        }
     }
 }

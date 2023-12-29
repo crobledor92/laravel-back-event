@@ -4,7 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Files extends Model {
+class Documentacion extends Model {
     public function getFilesModel() {
         return DB::table('documentacion')->get();
     }

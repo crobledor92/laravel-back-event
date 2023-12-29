@@ -9,7 +9,7 @@ use App\Http\Controllers\ActoController;
 use App\Http\Controllers\TiposActoController;
 use App\Http\Controllers\PonenteController;
 use App\Http\Controllers\PersonasController;
-use App\Http\Controllers\FileController;
+use App\Http\Controllers\DocumentacionController;
 use Carbon\Carbon;
 
 Route::get('/', function () {
@@ -32,6 +32,10 @@ Route::get('/listado-actos', function () {
     $actosInscrito = $idPersona ? $inscritosController->getAsistenciaPersonalController($idPersona)->toArray() : null;
     //Total de inscripciones
     $inscritos = $inscritosController->getAllInscritos();
+    $documentacionController = new DocumentacionController();
+    $documentos = $documentacionController->getFiles()->toArray();
+
+    // dd($actosInscrito);
 
     foreach($listadoActos as $acto) {
         if ($actosPonente !== null) {
@@ -46,12 +50,13 @@ Route::get('/listado-actos', function () {
         }
 
         if ($actosInscrito !== null) {
-            $isInscrito = array_filter($actosInscrito, function ($inscrito) use ($acto) {
+            $isInscrito = Arr::first($actosInscrito, function ($inscrito) use ($acto) {
                 return $inscrito->id_acto === $acto->id_acto;
             });
 
-            if ($isInscrito) {
+            if ($isInscrito !== null) {
                 $acto->status = 'inscrito';
+                $acto->id_inscripcion = $isInscrito->id_inscripcion;
                 continue;
             }
         }
@@ -74,12 +79,17 @@ Route::get('/listado-actos', function () {
         });
 
         $acto->totalInscritos = count($totalInscritos);
+
+        $documentosActo = array_filter($documentos, function ($documento) use ($acto) {
+            return $documento->id_acto === $acto->id_acto;
+        });
+        $acto->documentos = $documentosActo;
     }
 
     return view('actos-list',['actos' => $listadoActos, 'idPersona' => $idPersona]);
 })->name('listado-actos.get');
 
-Route::post('/listado-actos/addFile', [FileController::class, 'addFile'])->name('addFile.post');
+Route::post('/listado-actos/addFile', [DocumentacionController::class, 'addFile'])->name('addFile.post');
 
 Route::get('/registrarse', function () {
     (new SessionController())->shareData();
@@ -152,9 +162,9 @@ Route::post('/update-acto', [ActoController::class, 'updateActo'])->name('update
 // Inscritos routes
 Route::get('/panel-administracion/handleInscritos/{id}', [InscritoController::class, 'getActoInscritos'])->name('get-acto-inscritos.get');
 
-Route::post('/panel-administracion/addInscripcion', [InscritoController::class, 'addInscripcion'])->name('add-inscrito.post');
+Route::post('/addInscripcion', [InscritoController::class, 'addInscripcion'])->name('add-inscrito.post');
 
-Route::delete('/panel-administracion/deleteActoInscrito', [InscritoController::class, 'deleteActoInscrito'])->name('delete-inscrito.delete');
+Route::delete('/deleteActoInscrito', [InscritoController::class, 'deleteActoInscrito'])->name('delete-inscrito.delete');
 
 
 // Tipo acto routes
@@ -176,5 +186,3 @@ Route::get('/listado-actos2', function () {
     $listadoActosHTML = (new ActoController())->listadoActosHTMLController();
     return view('actos-lista',['listadoActosHTML' => $listadoActosHTML]);
 })->name('listado-actos2.get');
-
-Route::post('/listado-actos2/addFile', [FileController::class, 'addFile'])->name('addFile.post');

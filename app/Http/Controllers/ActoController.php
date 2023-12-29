@@ -6,6 +6,7 @@ use App\Models\Acto;
 use Illuminate\View\View;
 use App\Http\Controllers\PonenteController;
 use App\Http\Controllers\InscritoController;
+use App\Http\Controllers\DocumentacionController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -148,7 +149,7 @@ class ActoController extends Controller {
             $listadoActosHTML .= '<div class="acto-description"><p>'.$acto->descripcion_corta.'</p></div>'.($estado === 'ponente' ? '<div class="acto-status--ponente"><p class="grid-item">Ponente</p></div>' : ($estado === 'inscrito' ? '<div class="acto-status--inscrito"><p class="grid-item">Inscrito</p></div>' : '<div class="acto-status--noInscrito"><p class="grid-item">No inscrito</p></div>'));
             $listadoActosHTML .= $estado === 'ponente' ? '<form class="file_upload" method="post" action="' . route("addFile.post") . '" enctype="multipart/form-data"><div class="content_form">'.$certificado.'<label for="archivo">Subir archivo:</label><input type="file" name="archivo"><input type="hidden" name="id_acto" value="'.$acto->id_acto.'"><input type="hidden" name="id_persona" value="'.$id_persona.'"></div><input class="submit" type="submit" value="Subir archivo"></form>' : '';
             if($estado === 'ponente'){
-                $archivos = (new FileController())->getFilesPersona($id_persona, $acto->id_acto);
+                $archivos = (new DocumentacionController())->getFilesPersona($id_persona, $acto->id_acto);
                 $listadoActosHTML .= '<details><summary>Archivos disponibles:</summary><ul>';
                 foreach($archivos as $archivo){
                     $listadoActosHTML .= '<li><strong>'.$archivo->titulo_documento.'</strong></li>';

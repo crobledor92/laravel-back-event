@@ -90,6 +90,7 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 .popup button.speaker{background-color:#959595;cursor:no-drop;}
 .popup button.ins:hover{background-color:#7d0000;}
 .popup button.noins:hover{background-color:#023902;}
+
 /* Lista actos*/
 .acto-list > :not(:last-child) {
     margin-bottom: 5px;
@@ -100,9 +101,8 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
     border-radius: 5px;
     margin-bottom: 5px;
     background-color: white;
-}
-.acto p {
-    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
 }
 .acto-summary {
     display: flex;
@@ -124,6 +124,44 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
     justify-content: center;
     align-items: center;
 }
+.secondary-button {
+    padding: 10px 10px;
+    border: solid 2px transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s;
+}
+.subscribe-button {
+    background-color: rgba(0, 113, 64, 0.4);
+    color: #007140;
+}
+.unsubscribe-button {
+    background-color: rgba(150, 17, 13, 0.4);
+    color: rgb(150, 18, 13);
+}
+.completed-button {
+    background-color: rgba(128, 128, 128, .4);
+    color: grey;
+    padding: 10px 10px;
+    border: solid 2px transparent;
+    border-radius: 5px;
+}
+.subscribe-button:hover {
+    border: solid 2px #007140;
+
+}
+.unsubscribe-button:hover {
+    border: solid 2px rgb(150, 18, 13);
+}
+
+.secondary-button:hover {
+    transform: scale(1.05);
+}
+.acto-status {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+}
 .acto-status--ponente {
     padding: 0 5px;
     border: solid 1px orange;
@@ -132,24 +170,46 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
     color: orange;
 }
 .acto-status--inscrito {
-    padding: 0 5px;
     border: solid 1px rgba(0, 0, 255, 0.614);
     border-radius: 5px;
     background-color: rgba(0, 0, 255, 0.292);
     color: rgba(0, 0, 255, 0.614);
 }
+
 .acto-status--noInscrito {
-    padding: 0 5px;
     border: solid 1px grey;
     border-radius: 5px;
-    background-color: rgba(128, 128, 128, 0.4);
+    background-color: rgba(128, 128, 128, .4);
     color: grey;
 }
+
 .grid-item {
-    padding: 10px;
-    margin: 10px;
+    margin: 0;
+    padding: 5px 10px 2px 12px;
     text-align: center;
 }
 .acto-description {
+    display: flex;
+    justify-content: space-between;
     padding: 10px 0;
+}
+
+/*Lista actos filter*/
+.filter div{display:flex;align-items:center;margin:5px 0px 25px;}
+.filter .filter_text{font-weight:bold;}
+.filter label{display:flex;align-items:center;margin-right:15px;margin-bottom:0px;font-weight:normal;}
+.filter span{margin-right:15px;}
+.filter label::after{content:'';margin-left:15px;border-left:1px solid #000;height:12px;}
+.filter label:last-child::after{content:none;}
+.filter label input{width:auto;margin:0;}
+.file_upload{margin:10px 0px;display:flex;gap:20px;justify-content:space-between;}
+.file_upload .submit{width:200px;margin:0;}
+.file_upload summary{cursor:pointer;}
+.file_upload .content_form{display:flex;width:-webkit-fill-available;align-items:center;}
+.file_upload label{width:-webkit-fill-available;max-width:max-content;margin:0;}
+.file_upload input[type="file"]{margin:0 0 0 10px;}
+
+/*Acto files section*/
+.acto-files {
+    margin:10px 0px;
 }
