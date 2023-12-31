@@ -104,13 +104,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 }),
             })
             .then(response => response.json())
-            .then(response => {
-                if (response.success){
-                    location.reload();
+            .then(data => {
+                if (data.success) {
+                    localStorage.setItem('mensaje_exito', JSON.stringify(data.message));
+                } else {
+                    localStorage.setItem('mensaje_error', JSON.stringify(data.message));
                 }
             })
             .catch(error => {
-                console.error('Fetch error:', error);
+                localStorage.setItem('mensaje_error', JSON.stringify(error));
+            })
+            .finally(() => {
+                positionScroll();
+                setTimeout(function() {
+                    location.reload();
+                }, 200);
             });
         });
     });

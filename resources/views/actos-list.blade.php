@@ -7,7 +7,6 @@
     <title>Iniciar sesión - Back Event</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 @include('common/navegation')

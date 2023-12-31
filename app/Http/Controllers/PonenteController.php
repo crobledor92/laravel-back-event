@@ -28,13 +28,12 @@ class PonenteController extends Controller {
             $ponenteModel = new Ponente();
             $ponenteModel->addPonente($idPersona, $idActo);
 
-            return redirect()->back();
+            return response()->json(['success' => true, 'message' => 'Ponente añadido con éxito']);
         } catch (\Exception $e) {
             \Log::error($e);
-            return response()->json(['error' => $e], 500);
+            return response()->json(['success' => false, 'message' => 'Error al añadir ponente', 'error' => $e->getMessage()], 500);
         }
     }
-
     public function deletePonente(Request $request) {
         try {
             $idPersona = $request->input('id_persona');
@@ -43,10 +42,10 @@ class PonenteController extends Controller {
             $ponenteModel = new Ponente();
             $ponenteModel->deletePonente($idPersona, $idActo);
 
-            return redirect()->back();
+            return response()->json(['success' => true, 'message' => 'Ponente eliminado con éxito']);
         } catch (\Exception $e) {
             \Log::error($e);
-            return response()->json(['error' => $e], 500);
+            return response()->json(['success' => false, 'message' => 'Error al eliminar ponente', 'error' => $e->getMessage()], 500);
         }
     }
 }

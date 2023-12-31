@@ -42,9 +42,8 @@ class DocumentacionController extends Controller {
             $status = (new Documentacion())->addFileModel($data);
             $filesUploaded += $status;
         }
-
         if($filesUploaded === count($newFiles)){
-            return redirect()->route('listado-actos.get')->with(['success', 'Archivo subido correctamente.']);
+            return redirect()->route('listado-actos.get')->with(['success', 'Archivo/s subido/s correctamente.']);
         }
     }
 
@@ -52,19 +51,16 @@ class DocumentacionController extends Controller {
         try {
             $documentos = $request->input('documentos');
             $filesUpdated = 0;
-            
-            
             foreach ($documentos as $documento) {
                 $status = (new Documentacion())->updateOrder($documento['id_presentacion'], $documento['orden']);
                 $filesUpdated += $status;
             }
-            return response()->json(["success" => true]);
+            return response()->json(["success" => true,'message' => 'Archivo subido correctamente.']);
     
             if($filesUploaded === count($documentos)){
                 return redirect()->route('listado-actos.get')->with(['success', 'Archivo subido correctamente.']);
             }
         } catch (\Exception $e) {
-            \Log::error($e);
             return response()->json(['error' => $e], 500);
         }
     }

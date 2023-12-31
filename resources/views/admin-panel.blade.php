@@ -178,17 +178,23 @@
                         id_acto: dataIDActo,
                     }),
                 })
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data => {
-                    if (data.error) {
-                        alert(data.error);
+                    if (data.success) {
+                        localStorage.setItem('mensaje_exito', JSON.stringify(data.message));
+                    } else {
+                        localStorage.setItem('mensaje_error', JSON.stringify(data.message));
                     }
-                }
-                )
+                })
                 .catch(error => {
-                    console.error('Error:', error);
+                    localStorage.setItem('mensaje_error', JSON.stringify(error));
+                })
+                .finally(() => {
+                    positionScroll();
+                    setTimeout(function() {
+                        location.reload();
+                    }, 200);
                 });
-                setTimeout(function(){ location.reload(); }, 200);
             });
         });
     });
@@ -208,13 +214,25 @@
                     body: JSON.stringify({
                         Id_tipo_acto: dataIdType,
                         Descripcion: actual_description,
-                    }),
+                    }), 
                 })
-                .then(res => console.log(res))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.setItem('mensaje_exito', JSON.stringify(data.message));
+                    } else {
+                        localStorage.setItem('mensaje_error', JSON.stringify(data.message));
+                    }
+                })
                 .catch(error => {
-                    console.error('Error:', error);
+                    localStorage.setItem('mensaje_error', JSON.stringify(error));
+                })
+                .finally(() => {
+                    positionScroll();
+                    setTimeout(function() {
+                        location.reload();
+                    }, 200);
                 });
-                setTimeout(function(){ location.reload(); }, 200);
             });
         });
     });
@@ -235,15 +253,21 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.error) {
-                        alert(data.error);
+                    if (data.success) {
+                        localStorage.setItem('mensaje_exito', JSON.stringify(data.message));
+                    } else {
+                        localStorage.setItem('mensaje_error', JSON.stringify(data.message));
                     }
-                }
-                )
+                })
                 .catch(error => {
-                    alert("Hubo un problema intentando eliminar el tipo de acto");
+                    localStorage.setItem('mensaje_error', JSON.stringify(error));
+                })
+                .finally(() => {
+                    positionScroll();
+                    setTimeout(function() {
+                        location.reload();
+                    }, 200);
                 });
-                setTimeout(function(){ location.reload(); }, 200);
             });
         });
     });
