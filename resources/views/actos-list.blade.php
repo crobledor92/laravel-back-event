@@ -31,6 +31,7 @@
             @foreach($actos as $acto)
                 <x-acto-card :data="$acto" :idPersona="$idPersona"/>
             @endforeach
+            <div id="popup-background"></div>
         </section>   
     </div>
 </main>

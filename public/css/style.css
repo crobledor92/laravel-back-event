@@ -94,6 +94,7 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 /* Lista actos*/
 .acto-list > :not(:last-child) {
     margin-bottom: 5px;
+    position: relative;
 }
 .acto {
     padding: 15px 15px;
@@ -102,7 +103,6 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
     margin-bottom: 5px;
     background-color: white;
     position: relative;
-    overflow: hidden;
 }
 .acto-summary {
     display: flex;
@@ -162,6 +162,14 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
     top: -5px;
     left: -5px;
 }
+.acto-status-container {
+    overflow: hidden;
+    width: 100px;
+    height: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 .acto-status--ponente {
     padding: 0 5px;
     border: solid 1px orange;
@@ -212,4 +220,62 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 /*Acto files section*/
 .acto-files {
     margin:10px 0px;
+}
+
+/*Acto list modificar documentación popup*/
+.acto-list-popup{
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    z-index: 2;
+    display:none;
+}
+.acto-list-popup.active{display:flex;}
+.acto-list-popup .close{
+    position:absolute;
+    left: 90%;
+    top: 10%;
+    transform: translate(-50%, -50%);
+    font-size:20px;
+    color:white;
+    z-index:3;
+    cursor:pointer;
+}
+#popup-background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1; 
+    display: none;
+}
+.acto-list-popup .info_acto-list-popup{background-color:#e4e4e4;padding:20px;margin:auto;z-index:2;}
+.acto-list-popup .info{background:white;padding:20px;margin:auto;z-index:2;}
+.acto-list-popup button{width:100%;color:white;padding:10px;border:1px solid;margin-top:15px;}
+.acto-list-popup button.ins{background-color:#b00000;cursor:pointer;}
+.acto-list-popup button.noins{background-color:#006200;cursor:pointer;}
+.acto-list-popup button.speaker{background-color:#959595;cursor:no-drop;}
+.acto-list-popup button.ins:hover{background-color:#7d0000;}
+.acto-list-popup button.noins:hover{background-color:#023902;}  
+
+/*Acto list popup drag and drop*/
+.draggable-container {
+    background-color: #333;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 5px;
+}
+
+.draggable {
+    border: 1px solid black;
+    cursor: move;
+}
+
+.draggable.dragging {
+    opacity: .5;
 }

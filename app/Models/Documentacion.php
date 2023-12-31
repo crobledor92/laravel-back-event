@@ -5,6 +5,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Documentacion extends Model {
+
+    protected $table = 'documentacion';
+
+    protected $primaryKey = 'id_presentacion';
+    
+    protected $fillable = [
+        'orden',
+    ];
+
+
     public function getFilesModel() {
         return DB::table('documentacion')->get();
     }
@@ -19,5 +29,15 @@ class Documentacion extends Model {
     }
     public function deleteFileModel($id_file) {
         return DB::table('documentacion')->where('id_presentacion', $id_file)->delete();
+    }
+    public function updateOrder($idPresentacion, $newOrden) {
+        $record = Documentacion::where('id_presentacion', $idPresentacion)->first();
+
+        \Log::info($record);
+        if ($record) {
+            $record->update(['orden' => $newOrden], ['updated_at' => now()]);
+            return 1;
+        }
+        return 0;
     }
 }

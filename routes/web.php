@@ -83,13 +83,22 @@ Route::get('/listado-actos', function () {
         $documentosActo = array_filter($documentos, function ($documento) use ($acto) {
             return $documento->id_acto === $acto->id_acto;
         });
-        $acto->documentos = $documentosActo;
+
+        // if(count($documentosActo) > 0) {
+        //     dd($documentosActo);
+        // }
+
+        $documentosOrdenados = collect($documentosActo)->sortBy('orden')->values()->all();
+        
+        $acto->documentos = $documentosOrdenados;
     }
 
     return view('actos-list',['actos' => $listadoActos, 'idPersona' => $idPersona]);
 })->name('listado-actos.get');
 
-Route::post('/listado-actos/addFile', [DocumentacionController::class, 'addFile'])->name('addFile.post');
+Route::post('/addFile', [DocumentacionController::class, 'addFile'])->name('addFile.post');
+
+Route::post('/update-files-order', [DocumentacionController::class, 'updateFilesOrder'])->name('updateFilesOrder.post');
 
 Route::get('/registrarse', function () {
     (new SessionController())->shareData();

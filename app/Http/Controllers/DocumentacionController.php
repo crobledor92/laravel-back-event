@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Documentacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class DocumentacionController extends Controller {
     //Obtiene todos los archivos registrados
@@ -20,22 +21,51 @@ class DocumentacionController extends Controller {
     //Permite validad, guardar y registrar en la base de datos un archivo.
     public function addFile(Request $request) {
         $request->validate([
-            'archivo' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'archivo.*' => 'required|file|mimes:pdf,doc,docx|max:2048',
             'id_acto' => 'required|numeric',
             'id_persona' => 'required|numeric',
         ]);
-        $nombreOriginal = $request->file('archivo')->getClientOriginalName();
-        $rutaAlmacenada = $request->file('archivo')->store('files', 'public');
-        $data = [
-            'id_acto' => $request->input('id_acto'),
-            'nombre_documento' => basename($rutaAlmacenada),
-            'fecha_inscripcion' => now(),
-            'id_persona' => $request->input('id_persona'),
-            'titulo_documento' => $nombreOriginal,
-        ];
-        $status = (new Documentacion())->addFileModel($data);
-        if($status){
+
+        $newFiles = $request->file('archivo');
+        $filesUploaded = 0;
+
+        foreach ($newFiles as $file) {
+            $nombreOriginal = $file->getClientOriginalName();
+            $rutaAlmacenada = $file->store('files', 'public');
+            $data = [
+                'id_acto' => $request->input('id_acto'),
+                'nombre_documento' => basename($rutaAlmacenada),
+                'fecha_inscripcion' => now(),
+                'id_persona' => $request->input('id_persona'),
+                'titulo_documento' => $nombreOriginal,
+            ];
+            $status = (new Documentacion())->addFileModel($data);
+            $filesUploaded += $status;
+        }
+
+        if($filesUploaded === count($newFiles)){
             return redirect()->route('listado-actos.get')->with(['success', 'Archivo subido correctamente.']);
+        }
+    }
+
+    public function updateFilesOrder(Request $request) {
+        try {
+            $documentos = $request->input('documentos');
+            $filesUpdated = 0;
+            
+            
+            foreach ($documentos as $documento) {
+                $status = (new Documentacion())->updateOrder($documento['id_presentacion'], $documento['orden']);
+                $filesUpdated += $status;
+            }
+            return response()->json(["success" => true]);
+    
+            if($filesUploaded === count($documentos)){
+                return redirect()->route('listado-actos.get')->with(['success', 'Archivo subido correctamente.']);
+            }
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return response()->json(['error' => $e], 500);
         }
     }
     //Permite eliminar el archivo del sitio web y su registro en la BD.
