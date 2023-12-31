@@ -18,7 +18,7 @@
     <!-- <input type="file" name="archivo" required> -->
     <div class="acto-description">
         <p>{{ $attributes['data']->descripcion_corta}}</p>
-        @if($attributes['data']->status !== "ponente")
+        @if($attributes['idPersona'] !== null && $attributes['data']->status !== "ponente" && $attributes['data']->isFinished === false)
             <x-ActoSubscriptionButton :inscritos="$attributes['data']->totalInscritos" :capacity="$attributes['data']->num_asistentes" :status="$attributes['data']->status" :idActo="$attributes['data']->id_acto" :idPersona="$attributes['idPersona']" :id_inscripcion="$attributes['data']->id_inscripcion ?? null"/>
         @endif
     </div>
