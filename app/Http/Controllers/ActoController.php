@@ -181,6 +181,8 @@ class ActoController extends Controller {
             foreach ($actos as $acto) {
                 $acto->url = env('APP_URL') . 'get-acto/' . strval($acto->id_acto);
 
+                $acto->created_at = strval($acto->created_at);
+                $acto->updated_at = strval($acto->updated_at);
                 $acto->id_tipo_acto = strval($acto->id_tipo_acto);
                 $acto->id_acto = strval($acto->id_acto);
                 $acto->num_asistentes = strval($acto->num_asistentes);
