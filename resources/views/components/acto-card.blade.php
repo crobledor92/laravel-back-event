@@ -1,39 +1,48 @@
-<div class="acto">
+<div class="acto @if($attributes['data']->isFinished) acto-finished @endif">
     <div class="acto-summary">
         <div class="acto-status-container">
-            <x-acto-status :status="$attributes['data']->status" :idActo="$attributes['data']->id_acto" :idPersona="$attributes['idPersona']"/>
-        </div>        
+            <x-acto-status :status="$attributes['data']->status" :idActo="$attributes['data']->id_acto" :idPersona="$attributes['idPersona']" :isFinished="$attributes['data']->isFinished"/>
+        </div>  
         <div class="acto-date">
             <p><strong>Fecha: </strong>{{ $attributes['data']->fecha}}</p>
             <p><strong>Hora: </strong>{{ $attributes['data']->hora}}</p>
         </div>
         <div class="acto-title">
-            <p>{{ $attributes['data']->titulo}}</p>
+            <h1>{{ $attributes['data']->titulo}}</h1>
         </div>
         <div class="acto-details">
             <p class="grid-item">{{ $attributes['data']->descripcion}}</p>
             <p class="grid-item">{{ $attributes['data']->totalInscritos}} / {{ $attributes['data']->num_asistentes}}</p>
         </div>
     </div>
-    <!-- <input type="file" name="archivo" required> -->
     <div class="acto-description">
-        <p>{{ $attributes['data']->descripcion_corta}}</p>
+        <div>
+            <p><strong>{{ $attributes['data']->descripcion_corta}}</strong></p>
+            <p>{{ $attributes['data']->descripcion_larga}}</p>
+        </div>
         @if($attributes['idPersona'] !== null && $attributes['data']->status !== "ponente" && $attributes['data']->isFinished === false)
             <x-ActoSubscriptionButton :inscritos="$attributes['data']->totalInscritos" :capacity="$attributes['data']->num_asistentes" :status="$attributes['data']->status" :idActo="$attributes['data']->id_acto" :idPersona="$attributes['idPersona']" :id_inscripcion="$attributes['data']->id_inscripcion ?? null"/>
         @endif
+        @if($attributes['idPersona'] === null)
+            <a href="{{ route('iniciar-sesion') }}" class="primary-button anchor">
+                Conectarse                            
+            </a>
+        @endif
     </div>
     @if($attributes['data']->status === 'ponente' && $attributes['data']->isFinished)
-        <form class="file_upload" method="post" action="{{ route('addFile.post') }}" enctype="multipart/form-data">
-            @csrf
-            <div class="content_form">
-                <label for="archivo">Subir archivo:</label>
-                <input type="file" name="archivo[]" multiple>
-                <input type="hidden" name="id_acto" value="{{ $attributes['data']->id_acto }}">
-                <input type="hidden" name="id_persona" value="{{ $attributes['idPersona'] }}">
-            </div>
-            <input class="submit" type="submit" value="Subir archivo">
-        </form>
-        <button onclick="openPopup({{ $attributes['data']->id_acto }})" class="more">Modificar documentación</button>
+        <div class='ponente-container'>
+            <form class="file_upload" method="post" action="{{ route('addFile.post') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="content_form">
+                    <!-- <label for="archivo">Subir archivo:</label> -->
+                    <input type="file" name="archivo[]" multiple>
+                    <input type="hidden" name="id_acto" value="{{ $attributes['data']->id_acto }}">
+                    <input type="hidden" name="id_persona" value="{{ $attributes['idPersona'] }}">
+                </div>
+                <button class="primary-button" type="submit" archivo">Subir Archivos</button>
+            </form>
+            <button onclick="openPopup({{ $attributes['data']->id_acto }})" class="primary-button handle-files">Modificar documentación</button>
+        </div>
         <div id="info_{{ strval($attributes['data']->id_acto) }}" class="acto-list-popup">
             <div class="info_acto-list-popup">
                 <div class="info">
@@ -48,12 +57,12 @@
                     </ul>
                     @endif
                 </div>
-                <button onClick="updateActoFiles({{ $attributes['data']->id_acto }}, {{ $attributes['idPersona'] }})" class="primary-button">Actualizar</button>
+                <button onClick="updateActoFiles({{ $attributes['data']->id_acto }})" class="primary-button">Actualizar</button>
             </div>
-            <span class="close" onclick="closePopup({{ $attributes['data']->id_acto }})">x</span>
+            <span class="acto-list-popup-close" onclick="closePopup({{ $attributes['data']->id_acto }})">x</span>
         </div>
     @endif
-    @if(count($attributes['data']->documentos) > 0)
+    @if(count($attributes['data']->documentos) > 0 && $attributes['idPersona'] !== null)
         <details class="acto-files">
             <summary>Archivos disponibles:</summary>
             <ul>
@@ -65,6 +74,9 @@
             </ul>
         </details>
     @endif
+    @if($attributes['idPersona'] === null)
+        <p>Debes estar conectado para poder ver los documentos del acto</p>
+    @endif
 </div>
 <script> //PopUp and drag and drop functionality
     function openPopup(id) {
@@ -75,34 +87,6 @@
 
         var popup = document.getElementById('info_' + id);
         popup.style.display = 'flex';
-
-        // const fileInput = document.querySelector(".fileInput");
-
-        // fileInput.addEventListener('change', (event) => {
-        //     const selectedFiles = Array.from(event.target.files);
-            
-        //     selectedFiles.forEach(file => {
-        //         container.appendChild(document.createElement('li')).className = 'draggable_' + id + ' draggable';
-                
-        //         const newFile = container.lastChild;
-
-        //         newFile.draggable = true;
-                
-        //         const innerText = document.createElement('strong');
-        //         innerText.appendChild(document.createTextNode(file.name));
-                
-        //         newFile.appendChild(innerText);
-            
-
-        //         newFile.addEventListener('dragstart', () => {
-        //             newFile.classList.add('dragging')
-        //         })
-
-        //         newFile.addEventListener('dragend', () => {
-        //             newFile.classList.remove('dragging')
-        //         })
-        //     })
-        // })
     
         draggables.forEach(draggable => {
             draggable.addEventListener('dragstart', () => {
@@ -153,7 +137,7 @@
         }
 </script>
 <script>
-    function updateActoFiles(id, idPersona) {
+    function updateActoFiles(id) {
         const draggableElements = document.querySelectorAll(`.draggable_${id}`)
         const formData = {
             documentos: [...draggableElements].map((element, index) => {
@@ -162,9 +146,7 @@
                         orden: index,
                     }
             })      
-        } 
-
-        console.log(formData)
+        }
 
         fetch("{!! route('updateFilesOrder.post') !!}", {
         method: 'POST',
@@ -177,9 +159,17 @@
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
+
         })
         .catch((error) => {
             console.error('Error:', error);
+        })
+        .finally(() => {
+            positionScroll();
+            setTimeout(function() {
+                location.reload();
+            }, 200);
         });
     }
 </script>
+@include('common/footer')

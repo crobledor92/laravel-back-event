@@ -10,4 +10,13 @@ class Persona extends Model {
         $personas = DB::table('personas')->get();
         return $personas;
     }
+
+    public function getPersonabyId($idPersona) {
+        $persona = DB::table('personas')
+        ->where('id_persona', $idPersona)
+        ->first();
+        return $persona;
+    }
+
+
 }

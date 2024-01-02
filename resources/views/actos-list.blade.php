@@ -12,6 +12,7 @@
 @include('common/navegation')
 <main>
     <div class="container">
+        @if($idPersona)
         <section class="filter">
             <span class="filter_text">Filtro: </span>
             <div>
@@ -26,6 +27,7 @@
                 </label>
             </div>
         </section>
+        @endif
         <section class="actos-list">
             @foreach($actos as $acto)
                 <x-acto-card :data="$acto" :idPersona="$idPersona"/>
@@ -40,15 +42,10 @@
     const checkboxPonente = document.getElementById('checkboxPonente');
     function actualizarVisualizacion() {
         const actos = document.querySelectorAll('.acto');
-        console.log("eventlistener is triggered");
         actos.forEach(acto => {
-            console.log("New acto iteration")
             const esInscrito = acto.querySelector('.acto-status--inscrito') !== null;
             const esPonente = acto.querySelector('.acto-status--ponente') !== null;
             const esNoInscrito = acto.querySelector('.acto-status--noInscrito') !== null;
-            console.log("Inscrito: ", esInscrito);
-            console.log("ponente: ", esPonente);
-            console.log("NO inscrito: ", esNoInscrito);
             
             if ((esInscrito && checkboxInscritos.checked) ||
                 (esNoInscrito && checkboxNoInscritos.checked) ||
@@ -62,6 +59,8 @@
     checkboxInscritos.addEventListener('change', actualizarVisualizacion);
     checkboxNoInscritos.addEventListener('change', actualizarVisualizacion);
     checkboxPonente.addEventListener('change', actualizarVisualizacion);
-    actualizarVisualizacion();
+    if({!! $idPersona!!}) {
+        actualizarVisualizacion();
+    }
 </script>
 @include('common/footer')

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acto;
+use App\Models\Ponente;
+use App\Models\Documentacion;
+use App\Models\Inscrito;
 use Illuminate\View\View;
 use App\Http\Controllers\PonenteController;
 use App\Http\Controllers\InscritoController;
@@ -72,7 +75,16 @@ class ActoController extends Controller {
             'num_asistentes' => $request->input('asistentes'),
             'id_tipo_acto' =>  $request->input('tipoActo'), 
         ];
-        $actoCreated = (new Acto())->addActo($actoData);
+
+        $actoId = (new Acto())->addActo($actoData);
+
+        $newPonentesId = $request->input('personasId');
+
+        forEach($newPonentesId as $newPonenteId) {
+            $ponenteModel = new Ponente();
+            $ponenteModel->addPonente($newPonenteId, $actoId);
+        }
+
         return redirect()->route('panel-administracion')->with('success', 'Acto creado');       
     }
 
@@ -119,6 +131,7 @@ class ActoController extends Controller {
 
         return redirect()->route('panel-administracion')->with('success', 'Acto modificado');  
     }
+
     public function listadoActosHTMLController() {
         $id_persona = optional(session('userInfo'))->id_persona ?? null;
         $actos = $this->getActos();
@@ -159,5 +172,56 @@ class ActoController extends Controller {
             $listadoActosHTML .= '</div>';
         }
         return $listadoActosHTML;
+    }
+
+    public function getActosJSON() {
+        try {
+            $actos = $this->getActos();
+
+            foreach ($actos as $acto) {
+                $acto->url = env('APP_URL') . 'get-acto/' . strval($acto->id_acto);
+            }
+            return response()->json(['actos' => $actos], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e], 500);
+        }
+    }
+
+    public function getActoDetails($id) {
+        $actoModel = new Acto();
+        $actoData = $actoModel->getActoByIDModel($id);
+
+
+        $actoData->ponentes = $actoData->ponentes ? explode(',', $actoData->ponentes) : [];
+        $ponenteModel = new Ponente();
+        $ponentesData = [];
+        foreach($actoData->ponentes as $ponenteId) {
+            $ponentesData[] = $ponenteModel->getPonenteById($ponenteId);
+        }
+        $actoData->ponentes = $ponentesData;
+
+        $actoData->inscritos = $actoData->inscritos ? explode(',', $actoData->inscritos) : [];
+        $inscritoModel = new Inscrito();
+        $inscritoData = [];
+        foreach($actoData->inscritos as $inscritoId) {
+            $inscritoData[] = $inscritoModel->getInscritoById($inscritoId);
+        }
+        $actoData->inscritos = $inscritoData;
+
+        $actoData->documentacion = $actoData->documentacion ? explode(',', $actoData->documentacion) : [];
+        $documentacionModel = new Documentacion();
+        $documentosData = [];
+        foreach($actoData->documentacion as $documentoId) {
+            $documentosData[] = $documentacionModel->getFileDataById($documentoId);
+        }
+        $actoData->documentacion = $documentosData;
+
+        return $actoData;
+    }
+
+    public function getActoDetailsJSON($id) {
+            $actoData = $this->getActoDetails($id);     
+            
+            return response()->json(['actoData' => $actoData], 200);
     }
 }

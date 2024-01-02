@@ -11,14 +11,22 @@ use App\Http\Controllers\PonenteController;
 use App\Http\Controllers\PersonasController;
 use App\Http\Controllers\DocumentacionController;
 use Carbon\Carbon;
+use App\Models\Acto;
 
+
+
+//REST webService que retorna el JSON
+Route::get('/get-actos', [ActoController::class, 'getActosJSON'])->name('getActosJSON.get');
+
+Route::get('/get-acto/{id}', [ActoController::class, 'getActoDetailsJSON'])->name('getActoJSON.get');
+
+//Landing page
 Route::get('/', function () {
     (new SessionController())->shareData();
     return view('landing');
 })->name('landing');
 
 // NAVBAR
-
 Route::get('/listado-actos', function () {
     (new SessionController())->shareData();
     $idPersona = optional(session('userInfo'))->id_persona ?? null;
@@ -175,7 +183,6 @@ Route::post('/addInscripcion', [InscritoController::class, 'addInscripcion'])->n
 
 Route::delete('/deleteActoInscrito', [InscritoController::class, 'deleteActoInscrito'])->name('delete-inscrito.delete');
 
-
 // Tipo acto routes
 Route::post('/panel-administracion/addTipoActo', [TiposActoController::class, 'addTipoActo'])->name('add-tipo-acto.post');
 
@@ -187,6 +194,14 @@ Route::delete('/panel-administracion/deleteTipoActo', [TiposActoController::clas
 Route::post('/panel-administracion/addPonente', [PonenteController::class, 'addPonente'])->name('add-ponente.post');
 
 Route::delete('/panel-administracion/deletePonente', [PonenteController::class, 'deletePonente'])->name('delete-ponente.delete');
+
+Route::get('/panel-administracion/getActoPonentes/{id}', [PonenteController::class, 'getActoPonentes'])->name('get-acto-ponentes.get');
+
+Route::post('/update-ponentes', [PonenteController::class, 'updatePonentes'])->name('updatePonentes.post');
+
+//Documentación routes
+Route::get('/panel-administracion/getActoDocumentacion/{id}', [DocumentacionController::class, 'getActoDocumentacion'])->name('get-acto-documentacion.get');
+
 
 // PRUEBAS:
 

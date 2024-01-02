@@ -10,6 +10,19 @@ class DocumentacionController extends Controller {
     public function getFiles(){
         return (new Documentacion())->getFilesModel();
     }
+
+    public function getActoDocumentacion($idActo){
+        (new SessionController())->shareData();
+        $id_personal = optional(session('userInfo'))->id_persona;
+
+        $documentacionModel = new Documentacion();
+        $actoDocumentos = $documentacionModel->getFilesById($idActo);
+
+        $actoDocumentosOrdenados = collect($actoDocumentos)->sortBy('orden')->values()->all();
+
+        return view('update-acto-documentacion',['documentos' => $actoDocumentosOrdenados, 'idPersona' => $id_personal, 'idActo' => $idActo]);
+    }
+
     //Obtiene los archivos mediante id_persona
     public function getFilesPersona($id_persona,$id_acto) {
         return (new Documentacion())->getFilesPersonaModel($id_persona,$id_acto);
@@ -43,7 +56,8 @@ class DocumentacionController extends Controller {
             $filesUploaded += $status;
         }
         if($filesUploaded === count($newFiles)){
-            return redirect()->route('listado-actos.get')->with(['success', 'Archivo/s subido/s correctamente.']);
+            return back()->with('success', 'Archivo subido correctamente.');
+            // return redirect()->route('listado-actos.get')->with(['success', 'Archivo/s subido/s correctamente.']);
         }
     }
 
@@ -55,12 +69,12 @@ class DocumentacionController extends Controller {
                 $status = (new Documentacion())->updateOrder($documento['id_presentacion'], $documento['orden']);
                 $filesUpdated += $status;
             }
+
+            if($filesUpdated === count($documentos)) {
             return response()->json(["success" => true,'message' => 'Archivo subido correctamente.']);
-    
-            if($filesUploaded === count($documentos)){
-                return redirect()->route('listado-actos.get')->with(['success', 'Archivo subido correctamente.']);
-            }
+            } 
         } catch (\Exception $e) {
+            \Log::error($e);
             return response()->json(['error' => $e], 500);
         }
     }

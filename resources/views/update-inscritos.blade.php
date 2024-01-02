@@ -56,6 +56,7 @@
                     </form>
                 </tbody>
             </table>
+        </div>
     </main>
 </body>
 </html>

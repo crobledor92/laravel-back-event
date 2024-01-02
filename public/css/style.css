@@ -103,6 +103,10 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
     margin-bottom: 5px;
     background-color: white;
     position: relative;
+    display: block;
+}
+.acto-finished {
+    background-color: rgb(230, 226, 226);
 }
 .acto-summary {
     display: flex;
@@ -199,6 +203,7 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 .acto-description {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px 0;
 }
 
@@ -210,12 +215,27 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 .filter label::after{content:'';margin-left:15px;border-left:1px solid #000;height:12px;}
 .filter label:last-child::after{content:none;}
 .filter label input{width:auto;margin:0;}
+
 .file_upload{margin:10px 0px;display:flex;gap:20px;justify-content:space-between;}
 .file_upload .submit{width:200px;margin:0;}
 .file_upload summary{cursor:pointer;}
 .file_upload .content_form{display:flex;width:-webkit-fill-available;align-items:center;}
 .file_upload label{width:-webkit-fill-available;max-width:max-content;margin:0;}
 .file_upload input[type="file"]{margin:0 0 0 10px;}
+
+.ponente-container{
+    margin:10px 0px;
+    display:flex;
+    gap:20px;
+    justify-content:space-around;
+    align-items: center;
+    background-color: rgba(128, 128, 128, 0.346);
+    border-radius: 5px;
+}
+.handle-files {
+    height: 42.53px;
+
+}
 
 /*Acto files section*/
 .acto-files {
@@ -261,7 +281,14 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 .acto-list-popup button.noins{background-color:#006200;cursor:pointer;}
 .acto-list-popup button.speaker{background-color:#959595;cursor:no-drop;}
 .acto-list-popup button.ins:hover{background-color:#7d0000;}
-.acto-list-popup button.noins:hover{background-color:#023902;}  
+.acto-list-popup button.noins:hover{background-color:#023902;} 
+.acto-list-popup-close {
+    cursor: pointer;
+    position: absolute;
+    z-index: 2;
+    right: 6px;
+    
+}
 
 /*Acto list popup drag and drop*/
 .draggable-container {
@@ -278,4 +305,22 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 
 .draggable.dragging {
     opacity: .5;
+}
+
+/* Ponentes view*/
+.container-ponentes {
+    text-align: center;
+}
+.ponentes-title {
+    text-align: center;
+}
+.ponentes-section {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    text-align: center;
+}
+
+.anchor {
+    text-decoration: none;
 }

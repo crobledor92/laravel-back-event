@@ -10,6 +10,17 @@ class Inscrito extends Model {
         return DB::table('inscritos')->get();
     }
 
+    public function getInscritoById($idInscrito) {
+        $inscrito = DB::table('inscritos')
+            ->where('id_inscripcion', $idInscrito)
+            ->join('personas', 'inscritos.id_persona', '=', 'personas.id_persona')
+            ->select('inscritos.*', 'personas.nombre', 'personas.apellido1', 'personas.apellido2')
+            ->first();
+        return $inscrito;
+    }
+
+
+
     public function getInscritosActo($idActo) {
         return DB::table('inscritos')
             ->join('personas', 'inscritos.id_persona', '=', 'personas.id_persona')

@@ -15,6 +15,15 @@ class Ponente extends Model {
         return $ponentes;
     }
 
+    public function getPonenteById($idPonente) {
+        $ponentes = DB::table('lista_ponentes')
+            ->where('id_ponente', $idPonente)
+            ->join('personas', 'lista_ponentes.id_persona', '=', 'personas.id_persona')
+            ->select('lista_ponentes.*', 'personas.nombre', 'personas.apellido1', 'personas.apellido2')
+            ->first();
+        return $ponentes;
+    }
+
     public function addPonente($idPersona, $idActo, $orden = null) {
         DB::table('lista_ponentes')->insert([
             'id_persona' => $idPersona,
@@ -35,6 +44,18 @@ class Ponente extends Model {
                 'updated_at' => now(),
         ]);
     }
+
+    public function updatePonenteOrden($idPonente, $orden) {
+        
+        DB::table('lista_ponentes')
+            ->where('id_ponente', $idPonente)
+            ->update([
+                'orden' => $orden,
+                'updated_at' => now(),
+        ]);
+    }
+
+
 
     public function deletePonente($idPersona, $idActo) {
         DB::table('lista_ponentes')
