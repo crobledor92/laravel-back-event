@@ -187,7 +187,6 @@ class ActoController extends Controller {
             }
             $response = response()->json(['actos' => $actos], 200);
             $response->setEncodingOptions($response->getEncodingOptions() | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-            dd(phpinfo());
             return $response;
         } catch (\Exception $e) {
             return response()->json(['error' => $e], 500);
