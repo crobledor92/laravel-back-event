@@ -177,18 +177,18 @@ class ActoController extends Controller {
     public function getActosJSON() {
         try {
             $actos = $this->getActos();
-
             foreach ($actos as $acto) {
                 $acto->url = env('APP_URL') . 'get-acto/' . strval($acto->id_acto);
-
                 $acto->created_at = strval($acto->created_at);
                 $acto->updated_at = strval($acto->updated_at);
                 $acto->id_tipo_acto = strval($acto->id_tipo_acto);
                 $acto->id_acto = strval($acto->id_acto);
                 $acto->num_asistentes = strval($acto->num_asistentes);
             }
-
-            return response()->json(['actos' => $actos], 200);
+            $response = response()->json(['actos' => $actos], 200);
+            $response->setEncodingOptions($response->getEncodingOptions() | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            dd(phpinfo());
+            return $response;
         } catch (\Exception $e) {
             return response()->json(['error' => $e], 500);
         }
