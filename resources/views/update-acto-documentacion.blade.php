@@ -36,7 +36,9 @@
                 </ul>
                 @endif
             </div>
+            <div class="update-button">
             <button onClick="updateActoFiles({{ $idActo }})" class="primary-button">Actualizar</button>
+            </div>
         </div>
     </section>
     <script>

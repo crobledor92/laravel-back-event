@@ -324,3 +324,7 @@ a.secondary_a{padding:3px 3px;background:#326e44;color:#fff;text-decoration:none
 .anchor {
     text-decoration: none;
 }
+
+.update-button {
+    text-align: center;
+}
