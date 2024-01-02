@@ -27,7 +27,7 @@
             </thead>
         @if(count($actos) > 0)    
             <tbody>
-            @foreach($actos as $acto)
+                @foreach($actos as $acto)
                 <tr class="data">
                     <td>{{ $acto->fecha }}</td>
                     <td>{{ $acto->hora }}</td>

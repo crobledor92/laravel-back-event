@@ -19,7 +19,7 @@
                     <ul class="draggable-container">
                         @foreach($personas as $persona)
                         <li id="{{ $persona->id_persona }}" class="draggable" draggable="true">
-                            <strong>{{ $persona->nombre }} {{ $persona->apellido1 }} {{ $persona->nombre }}</strong>
+                            <strong>{{ $persona->nombre }} {{ $persona->apellido1 }} {{ $persona->apellido2 }}</strong>
                         </li>
                         @endforeach
                     </ul>
@@ -29,7 +29,7 @@
                     <ul class="draggable-container ponentes-container">
                         @foreach($ponentes as $index => $ponente)
                         <li id="{{ $ponente->id_persona }}" class="draggable" draggable="true">
-                            <strong>{{ $index + 1 }} - {{ $ponente->nombre }} {{ $ponente->apellido1 }} {{ $ponente->nombre }}</strong>
+                            <strong>{{ $index + 1 }} - {{ $ponente->nombre }} {{ $ponente->apellido1 }} {{ $ponente->apellido2 }}</strong>
                         </li>
                         @endforeach
                     </ul>

@@ -63,12 +63,13 @@ class Acto extends Model {
                 'actos.descripcion_corta',
                 'actos.descripcion_larga',
                 'actos.num_asistentes',
+                'actos.id_tipo_acto',
                 'tipo_acto.descripcion',
                 DB::raw('GROUP_CONCAT(DISTINCT lista_ponentes.id_ponente) as ponentes'),
                 DB::raw('GROUP_CONCAT(DISTINCT inscritos.id_inscripcion) as inscritos'),
                 DB::raw('GROUP_CONCAT(DISTINCT documentacion.id_presentacion) as documentacion')
             )
-            ->groupBy('actos.id_acto', 'actos.fecha', 'actos.hora', 'actos.titulo', 'actos.descripcion_corta', 'actos.descripcion_larga', 'actos.num_asistentes', 'tipo_acto.descripcion')
+            ->groupBy('actos.id_acto', 'actos.fecha', 'actos.hora', 'actos.titulo', 'actos.descripcion_corta', 'actos.descripcion_larga', 'actos.num_asistentes', 'tipo_acto.descripcion', 'actos.id_tipo_acto')
             ->first();
     }
 }

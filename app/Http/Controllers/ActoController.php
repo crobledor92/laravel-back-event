@@ -180,7 +180,12 @@ class ActoController extends Controller {
 
             foreach ($actos as $acto) {
                 $acto->url = env('APP_URL') . 'get-acto/' . strval($acto->id_acto);
+
+                $acto->id_tipo_acto = strval($acto->id_tipo_acto);
+                $acto->id_acto = strval($acto->id_acto);
+                $acto->num_asistentes = strval($acto->num_asistentes);
             }
+
             return response()->json(['actos' => $actos], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e], 500);
