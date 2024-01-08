@@ -108,7 +108,6 @@
                 container.insertBefore(draggingElement, afterElement)
             }
         })
-
     }
 
     function getDragAfterElement(draggables, y) {

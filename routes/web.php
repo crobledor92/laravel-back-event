@@ -43,8 +43,6 @@ Route::get('/listado-actos', function () {
     $documentacionController = new DocumentacionController();
     $documentos = $documentacionController->getFiles()->toArray();
 
-    // dd($actosInscrito);
-
     foreach($listadoActos as $acto) {
         if ($actosPonente !== null) {
             $isPonente = array_filter($actosPonente, function ($ponente) use ($acto) {
@@ -91,10 +89,6 @@ Route::get('/listado-actos', function () {
         $documentosActo = array_filter($documentos, function ($documento) use ($acto) {
             return $documento->id_acto === $acto->id_acto;
         });
-
-        // if(count($documentosActo) > 0) {
-        //     dd($documentosActo);
-        // }
 
         $documentosOrdenados = collect($documentosActo)->sortBy('orden')->values()->all();
         

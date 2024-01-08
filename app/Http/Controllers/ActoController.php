@@ -13,6 +13,7 @@ use App\Http\Controllers\DocumentacionController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class ActoController extends Controller {
 
@@ -176,7 +177,8 @@ class ActoController extends Controller {
 
     public function getActosJSON() {
         try {
-            $actos = $this->getActos();
+            $actos = $this->getActos()->toArray();
+
             foreach ($actos as $acto) {
                 $acto->url = env('APP_URL') . 'get-acto/' . strval($acto->id_acto);
                 $acto->created_at = strval($acto->created_at);
@@ -184,13 +186,28 @@ class ActoController extends Controller {
                 $acto->id_tipo_acto = strval($acto->id_tipo_acto);
                 $acto->id_acto = strval($acto->id_acto);
                 $acto->num_asistentes = strval($acto->num_asistentes);
+                $acto->combinedDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $acto->fecha . ' ' . $acto->hora);
             }
+
+            usort($actos, [$this, 'compareDates']);
+
             $response = response()->json(['actos' => $actos], 200);
             $response->setEncodingOptions($response->getEncodingOptions() | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
             return $response;
         } catch (\Exception $e) {
             return response()->json(['error' => $e], 500);
         }
+    }
+
+    private function compareDates($a, $b) {
+        $dateA = strtotime($a->combinedDateTime);
+        $dateB = strtotime($b->combinedDateTime);
+    
+        if ($dateA == $dateB) {
+            return 0;
+        }
+    
+        return ($dateA < $dateB) ? -1 : 1;
     }
 
     public function getActoDetails($id) {
